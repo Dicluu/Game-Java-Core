@@ -52,6 +52,9 @@ public class GameExecutor {
                 case "show inv id":
                     AdminCommandManager.showInventoryId(currentPlayer);
                     break;
+                case "give item":
+                    AdminCommandManager.giveItem();
+                    break;
                 case "get":
                     CommandManager.getAction(timecounter);
                     break;

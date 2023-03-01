@@ -1,5 +1,7 @@
 package Main.Singletones.Utils;
 
+import Main.Items.Materials.Wood;
+import Main.Items.Tools.Axe;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
@@ -89,4 +91,25 @@ public class AdminCommandManager {
     }
 
     public static void showInventoryId(Character person) {person.showInventoryId();}
+
+    public static void giveItem() {
+        Scanner num = new Scanner(System.in);
+        Character cc = GameExecutor.getGame().getCurrentPlayer();
+        System.out.println("Write id of item you want to get");
+        try {
+            int id = num.nextInt();
+            switch (id) { // temp
+                case 1:
+                    cc.putItem(new Wood());
+                    break;
+                case 2:
+                    cc.putItem(new Axe());
+                    break;
+                default:
+                    Messenger.ingameMessage("Item with this id not found");
+            }
+        } catch (InputMismatchException e) {
+            Messenger.ingameMessage("You wrote wrong id of item");
+        }
+    }
 }
