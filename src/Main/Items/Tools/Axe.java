@@ -9,11 +9,11 @@ public class Axe extends Item {
 
     @Override
     public int getId() {
-        return 0;
+        return ID;
     }
 
     @Override
     public String getName() {
-        return null;
+        return NAME;
     }
 }
