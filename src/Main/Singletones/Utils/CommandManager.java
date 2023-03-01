@@ -103,7 +103,7 @@ public class CommandManager {
                 Messenger.ingameMessage("Here is nothing to get");
                 break;
             case 1:
-                putInventory(cp, timecounter, cc, cellMaterials.get(0));
+                    extract(cp, timecounter, cc, cellMaterials.get(0));
                 break;
             default:
                 askWhichMaterialToGet(cp, cellMaterials, timecounter, cc);
@@ -111,12 +111,17 @@ public class CommandManager {
         }
     }
 
-    public static void putInventory(Character person, TimeCounter timecounter, Cell cc, Material material) {
+private static void extract(Character person, TimeCounter timecounter, Cell cc, Material material) {
         if (!person.putItem(material.toItem())) {
             Messenger.ingameMessage("Your inventory is full");
         } else {
-            timecounter.createObjectTimeline(material, cc);
-            Messenger.ingameMessage("You got a " + material.toItem().getName());
+            if (person.isPresence(material.getTOOLID())) {
+                timecounter.createObjectTimeline(material, cc);
+                Messenger.ingameMessage("You got a " + material.toItem().getName());
+            }
+            else {
+                Messenger.ingameMessage("You don't have necessary tools to get this material");
+            }
         }
     }
 
@@ -128,7 +133,7 @@ public class CommandManager {
         Messenger.ingameMessage("Type id of material you want to get");
         int answer = num.nextInt();
         if (answer > 0 && answer <= materials.size()) {
-            putInventory(cp, timecounter, cc, materials.get(answer - 1));
+            extract(cp, timecounter, cc, materials.get(answer - 1));
         } else {
             Messenger.ingameMessage("You wrote wrong id");
         }
