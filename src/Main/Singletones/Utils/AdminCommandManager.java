@@ -1,6 +1,7 @@
 package Main.Singletones.Utils;
 
 import Main.Maps.Map;
+import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Unique.Entrance;
@@ -87,4 +88,5 @@ public class AdminCommandManager {
         Entity.showAllEntities();
     }
 
+    public static void showInventoryId(Character person) {person.showInventoryId();}
 }

@@ -73,6 +73,29 @@ public abstract class Character extends Entity {
         }
     }
 
+
+    public void showInventoryId() {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
+                System.out.print(i + ") " + inventory[i].getId() + " ");
+            }
+            else {
+                System.out.print(i + ") " + "- ");
+            }
+        }
+    }
+
+    public boolean isPresence(int desired) {
+        for (Item item : inventory) {
+            if (item != null) {
+                if (item.getId() == desired) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean putItem(Item item) {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] == null) {
