@@ -113,17 +113,17 @@ public class CommandManager {
     }
 
 private static void extract(Character person, TimeCounter timecounter, Cell cc, Material material) {
+    if (person.isPresence(material.getTOOLID())) {
         if (!person.putItem(material.toItem())) {
             Messenger.ingameMessage("Your inventory is full");
         } else {
-            if (person.isPresence(material.getTOOLID())) {
                 timecounter.createObjectTimeline(material, cc);
                 Messenger.ingameMessage("You got a " + material.toItem().getName());
             }
-            else {
-                Messenger.ingameMessage("You don't have necessary tools to get this material");
-            }
         }
+    else {
+        Messenger.ingameMessage("You don't have necessary tools to get this material");
+    }
     }
 
     public static void askWhichMaterialToGet(Character cp, List<Material> materials, TimeCounter timecounter, Cell cc) {
