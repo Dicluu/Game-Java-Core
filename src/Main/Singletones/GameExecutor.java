@@ -73,6 +73,9 @@ public class GameExecutor {
                 case "entities":
                     AdminCommandManager.showAllEntities();
                     break;
+                case "animation":
+                    AdminCommandManager.playAnimation();
+                    break;
                 case "stop":
                     return;
                 default:

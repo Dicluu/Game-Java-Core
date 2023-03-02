@@ -1,7 +1,5 @@
 package Main.Items.Materials;
 
-import Main.Items.Item;
-
 public class Wood extends Material{
 
     private final int ID = 1;
