@@ -34,7 +34,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Messenger.setSystem(true);
+        Messenger.setSystem(false);
         Messenger.setHelp(true);
         Map map1 = new Forest(15,5, forest1);
         Map map2 = new Forest(20,5, forest2);

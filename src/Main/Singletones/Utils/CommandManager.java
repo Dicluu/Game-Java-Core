@@ -10,6 +10,7 @@ import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,28 +30,28 @@ public class CommandManager {
                 currentPlayer.setY(currentPlayer.getY() - 1);
                 if (currentPlayer.getY() < 0) {
                     currentPlayer.setY(0);
-                    Messenger.ingameMessage("You stuck in the edge of map");
+                    Messenger.helpMessage("You stuck in the edge of map");
                 }
                 break;
             case "down":
                 currentPlayer.setY(currentPlayer.getY() + 1);
                 if (currentPlayer.getY() >= currentMap.getY()) {
                     currentPlayer.setY(currentMap.getY() - 1);
-                    Messenger.ingameMessage("You stuck in the edge of map");
+                    Messenger.helpMessage("You stuck in the edge of map");
                 }
                 break;
             case "right":
                 currentPlayer.setX(currentPlayer.getX() + 1);
                 if (currentPlayer.getX() >= currentMap.getX()) {
                     currentPlayer.setX(currentMap.getX() - 1);
-                    Messenger.ingameMessage("You stuck in the edge of map");
+                    Messenger.helpMessage("You stuck in the edge of map");
                 }
                 break;
             case "left":
                 currentPlayer.setX(currentPlayer.getX() - 1);
                 if (currentPlayer.getX() < 0) {
                     currentPlayer.setX(0);
-                    Messenger.ingameMessage("You stuck in the edge of map");
+                    Messenger.helpMessage("You stuck in the edge of map");
                 }
                 break;
         }
@@ -151,5 +152,31 @@ public class CommandManager {
 
     public static void showMap() {
         GameExecutor.getGame().getCurrentMap().showMap();
+    }
+
+    public static void switchSettings() {
+        Scanner num = new Scanner(System.in);
+        Messenger.ingameMessage("write which setting you want to switch");
+        String status = num.nextLine();
+        switch (status) {
+            case "help":
+                if (Messenger.isHelp()) {
+                    Messenger.setHelp(false);
+                } else {
+                    Messenger.setHelp(true);
+                }
+                Messenger.ingameMessage("Help information switched");
+                break;
+            case "system":
+                if (Messenger.isSystem()) {
+                    Messenger.setSystem(false);
+                } else {
+                    Messenger.setSystem(true);
+                }
+                Messenger.ingameMessage("System information switched");
+                break;
+            default:
+                Messenger.ingameMessage("setting's attribute is wrong");
+        }
     }
 }

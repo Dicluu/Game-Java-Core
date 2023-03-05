@@ -67,6 +67,9 @@ public class GameExecutor {
                 case "entities":
                     AdminCommandManager.showAllEntities();
                     break;
+                case "switch":
+                    CommandManager.switchSettings();
+                    break;
                 case "stop":
                     return;
                 default:
