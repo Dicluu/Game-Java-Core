@@ -2,9 +2,9 @@ package Main.Objects;
 
 import Main.Objects.Characters.NPC.Dealer;
 import Main.Objects.Characters.Player;
-import Main.Objects.Materials.Tree;
+import Main.Objects.Materials.Material;
+import Main.Objects.Materials.Materials;
 import Main.Objects.Unique.Entrance;
-import Main.Utils.Messenger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public abstract class Entity {
     public static Entity getObjectById(int id, int x, int y) {
             switch (id) {
                 case 1:
-                    return new Tree(x,y);
+                    return new Material(x,y, Materials.Tree);
                 case 2:
                     return new Entrance(x,y,0);
                 case 3:

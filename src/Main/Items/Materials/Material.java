@@ -2,8 +2,12 @@ package Main.Items.Materials;
 
 import Main.Items.Item;
 
-public abstract class Material extends Item {
+public class Material extends Item {
 
-    public abstract float getRare();
+    Materials material;
 
+    public Material(Materials material) {
+        super(material.getID(), material.getNAME());
+        this.material = material;
+    }
 }

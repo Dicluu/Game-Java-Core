@@ -16,7 +16,7 @@ public class ObjectTimeline {
 
     public ObjectTimeline(Material material, Map map, Cell cell) {
         this.start = new Date().getTime();
-        this.interval = material.getRespawnTime();
+        this.interval = material.getMaterial().getRespawnTime();
         this.end = start+interval;
         this.map = map;
         this.material = material;

@@ -2,7 +2,19 @@ package Main.Items;
 
 public abstract class Item {
 
-    public abstract int getId();
-    public abstract String getName();
+    private int id;
+    private String name;
 
+    public Item(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

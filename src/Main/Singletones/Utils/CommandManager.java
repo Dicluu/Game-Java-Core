@@ -114,13 +114,13 @@ public class CommandManager {
     }
 
 private static void extract(Character person, TimeCounter timecounter, Cell cc, Material material) {
-    if (person.isPresence(material.getTOOLID())) {
-        if (!person.putItem(material.toItem())) {
+    if (person.isPresence(material.getMaterial().getTOOLID())) {
+        if (!person.putItem(material.getMaterial().toItem())) {
             Messenger.ingameMessage("Your inventory is full");
         } else {
-            playAnimation((long) material.getComplexity());
+            playAnimation((long) material.getMaterial().getComplexity());
                 timecounter.createObjectTimeline(material, cc);
-                Messenger.ingameMessage("You got a " + material.toItem().getName());
+                Messenger.ingameMessage("You got a " + material.getMaterial().toItem().getName());
             }
         }
     else {
@@ -130,7 +130,7 @@ private static void extract(Character person, TimeCounter timecounter, Cell cc, 
 
     public static void askWhichMaterialToGet(Character cp, List<Material> materials, TimeCounter timecounter, Cell cc) {
         for (int i = 0; i < materials.size(); i++) {
-            System.out.print(i + 1 + ") " + materials.get(i).getName() + " ");
+            System.out.print(i + 1 + ") " + materials.get(i).getMaterial().getName() + " ");
         }
         System.out.println(" ");
         Messenger.ingameMessage("Type id of material you want to get");

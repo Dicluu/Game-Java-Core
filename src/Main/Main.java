@@ -4,7 +4,8 @@ import Main.Maps.Instances.Forest;
 import Main.Maps.Map;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
-import Main.Objects.Materials.Tree;
+import Main.Objects.Materials.Material;
+import Main.Objects.Materials.Materials;
 import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
@@ -19,17 +20,17 @@ public class Main {
     private static Set<Entity> forest2 = new HashSet<>();
 
     static {
-        forest1.add(new Tree(4,4));
-        forest1.add(new Tree(4,3));
-        forest1.add(new Tree(3,3));
-        forest1.add(new Tree(3,4));
+        forest1.add(new Material(4, 4, Materials.Tree));
+        forest1.add(new Material(4,3,Materials.Tree));
+        forest1.add(new Material(3,3, Materials.Tree));
+        forest1.add(new Material(3,4, Materials.Tree));
         forest1.add(new Entrance(1,1,1));
 
-        forest2.add(new Tree(14,4));
-        forest2.add(new Tree(14,3));
-        forest2.add(new Tree(13,4));
-        forest2.add(new Tree(13,3));
-        forest2.add(new Tree(12,4));
+        forest2.add(new Material(14,4, Materials.Tree));
+        forest2.add(new Material(14,3, Materials.Tree));
+        forest2.add(new Material(13,4, Materials.Tree));
+        forest2.add(new Material(13,3, Materials.Tree));
+        forest2.add(new Material(12,4, Materials.Tree));
         forest2.add(new Entrance(1,1,0));
     }
 

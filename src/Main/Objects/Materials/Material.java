@@ -4,51 +4,42 @@ import Main.Items.Item;
 import Main.Objects.Entity;
 import Main.Objects.Priority;
 
-public abstract class Material extends Entity {
+public class Material extends Entity {
 
     private final static int priority = Priority.MIN.toInt();
-    private final Item item;
-    private final int TOOLID;
-    private final String name;
-    private Long respawnTime;
-    private float complexity;
+    private final Materials material;
 
-    public Material(int x, int y, Item item, String name, Long respawnTime, int TOOLID, float complexity) {
+    public Material(int x, int y, Materials material) {
         super(x, y);
-        this.item = item;
-        this.TOOLID = TOOLID;
-        this.name = name;
-        this.respawnTime = respawnTime;
-        this.complexity = complexity;
+        this.material = material;
+    }
+
+    @Override
+    public char getSymbol() {
+        return material.getSymbol();
     }
 
     public int getPriority() {
         return priority;
     }
 
+    @Override
+    public int getId() {
+        return material.getId();
+    }
+
+    public Materials getMaterial() {
+        return material;
+    }
+
     public static Material getMaterialById(int id, int x, int y) {
-        switch (id) {
+        switch (id) { // temp
             case 1:
-                return new Tree(x,y);
+                return new Material(x,y, Materials.Tree);
             default:
                 return null;
         }
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public Item toItem() {
-        return item;
-    }
-
-    public Long getRespawnTime() {
-        return respawnTime;
-    }
-
-    public int getTOOLID() { return TOOLID; }
-    public float getComplexity() {
-        return complexity;
-    }
 }

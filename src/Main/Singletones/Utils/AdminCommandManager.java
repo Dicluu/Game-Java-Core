@@ -1,7 +1,10 @@
 package Main.Singletones.Utils;
 
-import Main.Items.Materials.Wood;
-import Main.Items.Tools.Axe;
+import Main.Items.Materials.Material;
+import Main.Items.Materials.Materials;
+import Main.Items.Tools.Tiers;
+import Main.Items.Tools.Tool;
+import Main.Items.Tools.Tools;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
@@ -10,7 +13,6 @@ import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.Timer;
-import com.sun.source.doctree.EntityTree;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -100,10 +102,10 @@ public class AdminCommandManager {
             int id = num.nextInt();
             switch (id) { // temp
                 case 1:
-                    cc.putItem(new Wood());
+                    cc.putItem(new Material(Materials.WOOD));
                     break;
                 case 2:
-                    cc.putItem(new Axe());
+                    cc.putItem(new Tool(Tools.AXE, Tiers.WOODEN));
                     break;
                 default:
                     Messenger.ingameMessage("Item with this id not found");
