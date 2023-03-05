@@ -11,13 +11,15 @@ public abstract class Material extends Entity {
     private final int TOOLID;
     private final String name;
     private Long respawnTime;
+    private float complexity;
 
-    public Material(int x, int y, Item item, String name, Long respawnTime, int TOOLID) {
+    public Material(int x, int y, Item item, String name, Long respawnTime, int TOOLID, float complexity) {
         super(x, y);
         this.item = item;
         this.TOOLID = TOOLID;
         this.name = name;
         this.respawnTime = respawnTime;
+        this.complexity = complexity;
     }
 
     public int getPriority() {
@@ -46,4 +48,7 @@ public abstract class Material extends Entity {
     }
 
     public int getTOOLID() { return TOOLID; }
+    public float getComplexity() {
+        return complexity;
+    }
 }

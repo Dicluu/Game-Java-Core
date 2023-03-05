@@ -10,6 +10,7 @@ import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
+import Main.Utils.Timers.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +118,7 @@ private static void extract(Character person, TimeCounter timecounter, Cell cc, 
         if (!person.putItem(material.toItem())) {
             Messenger.ingameMessage("Your inventory is full");
         } else {
+            playAnimation((long) material.getComplexity());
                 timecounter.createObjectTimeline(material, cc);
                 Messenger.ingameMessage("You got a " + material.toItem().getName());
             }
@@ -183,5 +185,18 @@ private static void extract(Character person, TimeCounter timecounter, Cell cc, 
             default:
                 Messenger.ingameMessage("setting's attribute is wrong");
         }
+    }
+
+    private static void playAnimation(Long complexity) {
+        Long interval = complexity * 1000;
+        Timer timer = new Timer(interval);
+        System.out.print("[");
+        while (!timer.touch()) {
+            Timer microtimer = new Timer(interval / 15);
+            while (!microtimer.touch()) {
+            }
+            System.out.print("|");
+        }
+        System.out.println("]");
     }
 }
