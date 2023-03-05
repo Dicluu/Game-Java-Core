@@ -76,6 +76,12 @@ public class GameExecutor {
                 case "switch":
                     CommandManager.switchSettings();
                     break;
+                case "show wallet":
+                    CommandManager.showWallet();
+                    break;
+                case "change wallet":
+                    AdminCommandManager.changeWallet();
+                    break;
                 case "stop":
                     return;
                 default:

@@ -199,4 +199,9 @@ private static void extract(Character person, TimeCounter timecounter, Cell cc, 
         }
         System.out.println("]");
     }
+
+    public static void showWallet() {
+        Character cp = GameExecutor.getGame().getCurrentPlayer();
+        Messenger.ingameMessage("You have " + cp.getWallet() + " $ in your bag");
+    }
 }

@@ -9,7 +9,7 @@ public class Player extends Character{
     private String name;
     private static final int ID = 3;
     public Player(String name, int x, int y) {
-        super(name, x, y, ID);
+        super(name, x, y, ID, 0f);
         this.name = name;
     }
 

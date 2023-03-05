@@ -108,6 +108,7 @@ public class AdminCommandManager {
                 default:
                     Messenger.ingameMessage("Item with this id not found");
             }
+            Messenger.ingameMessage("Done!");
         } catch (InputMismatchException e) {
             Messenger.ingameMessage("You wrote wrong id of item");
         }
@@ -125,5 +126,19 @@ public class AdminCommandManager {
         }
         System.out.println("]");
         System.out.println("done");
+    }
+
+    public static void changeWallet() {
+        Scanner num = new Scanner(System.in);
+        Messenger.ingameMessage("How much money do you want to add");
+        try {
+            float value = num.nextInt();
+            Character cp = GameExecutor.getGame().getCurrentPlayer();
+            cp.changeBalance(value);
+            Messenger.ingameMessage("Done!");
+        } catch (InputMismatchException e) {
+            Messenger.systemMessage("changeWallet try-catch exception", AdminCommandManager.class);
+            Messenger.ingameMessage("You wrote wrong value");
+        }
     }
 }

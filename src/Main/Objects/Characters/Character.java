@@ -3,9 +3,11 @@ package Main.Objects.Characters;
 import Main.Items.Item;
 import Main.Objects.Entity;
 import Main.Objects.Priority;
+import Main.Utils.Messenger;
 
 public abstract class Character extends Entity {
     String name;
+    private float wallet;
     int x,y;
     private final static int priority = Priority.MAX.toInt();
     private Item[] inventory;
@@ -27,6 +29,17 @@ public abstract class Character extends Entity {
         this.y = y;
         this.ID = id;
         this.inventory = new Item[10];
+    }
+
+
+    public Character(String name, int x, int y, int id, float wallet) {
+        super(x,y);
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.ID = id;
+        this.inventory = new Item[10];
+        this.wallet = wallet;
     }
 
     public String getName() {
@@ -60,6 +73,18 @@ public abstract class Character extends Entity {
 
     public int getPriority() {
         return priority;
+    }
+
+    public float getWallet() {
+        return wallet;
+    }
+
+    private void setWallet(float value) {
+        if (value < 0) {
+            Messenger.systemMessage("setWallet() catch encapsulation violation", Character.class);
+        } else {
+            this.wallet = value;
+        }
     }
 
     public void showInventory() {
@@ -104,5 +129,8 @@ public abstract class Character extends Entity {
             }
         }
         return false;
+    }
+    public void changeBalance(float value) {
+        setWallet(this.wallet + value);
     }
 }
