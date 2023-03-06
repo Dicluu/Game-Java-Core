@@ -41,7 +41,7 @@ public class Main {
         Map map1 = new Forest(15,5, forest1);
         Map map2 = new Forest(20,5, forest2);
         initiateEntities();
-        Entity.showInstances();
+        Entity.showInstancesSystem();
         GameExecutor.getGame().setCurrentMap(map1);
         GameExecutor.getGame().setCurrentPlayer(new Player("Dicluu",0,1));
         GameExecutor.getGame().render();

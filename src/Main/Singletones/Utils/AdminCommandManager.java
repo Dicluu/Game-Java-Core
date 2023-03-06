@@ -23,6 +23,7 @@ public class AdminCommandManager {
         try {
             Scanner num = new Scanner(System.in);
             Messenger.ingameMessage("write id of object you want to set");
+            Entity.showInstances();
             int id = num.nextInt();
             Messenger.ingameMessage("write x coordinate");
             int x = num.nextInt();

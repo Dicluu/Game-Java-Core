@@ -90,10 +90,16 @@ public abstract class Entity {
             instances.add(clazz.newInstance());
         }
 
-        public static void showInstances() {
+        public static void showInstancesSystem() {
             Messenger.systemMessage("isEmpty: " + instances.isEmpty(), Entity.class);
             for (Entity entity : instances) {
                 Messenger.systemMessage("instance id: " + entity.getId() + "; instance name: " + entity.getName(), Entity.class);
             }
         }
+
+    public static void showInstances() {
+        for (Entity entity : instances) {
+            Messenger.helpMessage("id: " + entity.getId() + "; name: " + entity.getName());
+        }
+    }
     }
