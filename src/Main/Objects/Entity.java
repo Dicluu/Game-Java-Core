@@ -1,10 +1,8 @@
 package Main.Objects;
 
-import Main.Objects.Characters.NPC.Dealer;
-import Main.Objects.Characters.Player;
 import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
-import Main.Objects.Unique.Entrance;
+import Main.Utils.Messenger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,11 @@ public abstract class Entity {
     private static int freeID;
     private static List<Entity> allEntities = new ArrayList<>();
     private int objectID;
+    private static List<Entity> instances = new ArrayList<>();
+
+    static {
+        addEnumsInstances();
+    }
 
     public Entity(int x, int y) {
         this.x = x;
@@ -21,6 +24,10 @@ public abstract class Entity {
         this.objectID = freeID;
         freeID++;
         allEntities.add(this);
+    }
+
+    public Entity() {
+
     }
 
     public int getX() {
@@ -42,24 +49,19 @@ public abstract class Entity {
     public abstract char getSymbol();
     public abstract int getPriority();
     public abstract int getId();
+    public abstract String getName();
 
     public int getObjectID() {
         return objectID;
     }
 
-    public static Entity getObjectById(int id, int x, int y) {
-            switch (id) {
-                case 1:
-                    return new Material(x,y, Materials.Tree);
-                case 2:
-                    return new Entrance(x,y,0);
-                case 3:
-                    return new Player("default",x,y);
-                case 4:
-                    return new Dealer("default",x,y);
-                default:
-                    return null;
+    public static Entity getObjectById(int id) {
+        for (Entity entity : instances) {
+            if (entity.getId() == id) {
+                return entity;
             }
+        }
+        return null;
         }
 
         public static void showAllEntities() {
@@ -68,6 +70,7 @@ public abstract class Entity {
             }
         }
 
+        /*
         public static Entity getObjectByObjectID(int id) {
             for (Entity entity : allEntities) {
                 if (entity.getObjectID() == id) {
@@ -75,5 +78,22 @@ public abstract class Entity {
                 }
             }
             return null;
+        }
+         */
+        private static void addEnumsInstances() {
+            for (Materials material : Materials.values()) {
+                instances.add(new Material(0,0,material));
+            }
+        }
+
+        public static void addInstance(int id, Class<? extends Entity> clazz) throws InstantiationException, IllegalAccessException {
+            instances.add(clazz.newInstance());
+        }
+
+        public static void showInstances() {
+            Messenger.systemMessage("isEmpty: " + instances.isEmpty(), Entity.class);
+            for (Entity entity : instances) {
+                Messenger.systemMessage("instance id: " + entity.getId() + "; instance name: " + entity.getName(), Entity.class);
+            }
         }
     }

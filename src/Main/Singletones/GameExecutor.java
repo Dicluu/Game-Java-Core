@@ -26,8 +26,9 @@ public class GameExecutor {
     }
 
 
-    public void render() {
+    public void render() throws InterruptedException {
         timecounter = new TimeCounter();
+        Thread.sleep(10);
         currentMap.showMap();
         Scanner num = new Scanner(System.in);
         String answer;

@@ -1,5 +1,6 @@
 package Main.Singletones.Utils;
 
+import Main.Items.Item;
 import Main.Items.Materials.Material;
 import Main.Items.Materials.Materials;
 import Main.Items.Tools.Tiers;
@@ -35,13 +36,15 @@ public class AdminCommandManager {
                 Messenger.ingameMessage("y coordinate is wrong");
                 throw new ArrayIndexOutOfBoundsException();
             }
-            Entity newObject = Entity.getObjectById(id, x, y);
+            Entity newObject = Entity.getObjectById(id);
             if (newObject == null) {
                 throw new NullPointerException();
             }
             if (id == 2) {
                 setEntrance(x, y);
             } else {
+                newObject.setX(x);
+                newObject.setY(y);
                 GameExecutor.getGame().getCurrentMap().setObject(newObject);
                 Messenger.ingameMessage("object " + newObject + " has been set on coordinates " + "x = " + x + " y = " + y);
             }
@@ -97,18 +100,14 @@ public class AdminCommandManager {
     public static void giveItem() {
         Scanner num = new Scanner(System.in);
         Character cc = GameExecutor.getGame().getCurrentPlayer();
-        System.out.println("Write id of item you want to get");
+        Messenger.ingameMessage("Write id of item you want to get");
         try {
+            Item.showInstances();
             int id = num.nextInt();
-            switch (id) { // temp
-                case 1:
-                    cc.putItem(new Material(Materials.WOOD));
-                    break;
-                case 2:
-                    cc.putItem(new Tool(Tools.AXE, Tiers.WOODEN));
-                    break;
-                default:
-                    Messenger.ingameMessage("Item with this id not found");
+            if (Item.getItemById(id) != null) {
+                cc.putItem(Item.getItemById(id));
+            } else {
+                Messenger.ingameMessage("Item with this id not found");
             }
             Messenger.ingameMessage("Done!");
         } catch (InputMismatchException e) {

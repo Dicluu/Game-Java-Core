@@ -2,6 +2,7 @@ package Main;
 
 import Main.Maps.Instances.Forest;
 import Main.Maps.Map;
+import Main.Objects.Characters.NPC.Dealer;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
@@ -34,14 +35,23 @@ public class Main {
         forest2.add(new Entrance(1,1,0));
     }
 
-    public static void main(String[] args) {
-        Messenger.setSystem(false);
+    public static void main(String[] args) throws InterruptedException {
+        Messenger.setSystem(true);
         Messenger.setHelp(true);
         Map map1 = new Forest(15,5, forest1);
         Map map2 = new Forest(20,5, forest2);
+        initiateEntities();
+        Entity.showInstances();
         GameExecutor.getGame().setCurrentMap(map1);
         GameExecutor.getGame().setCurrentPlayer(new Player("Dicluu",0,1));
         GameExecutor.getGame().render();
         TimeCounter.setActive(false);
+    }
+
+    private static void initiateEntities() {
+        new Material(Materials.Tree);
+        new Entrance();
+        new Player();
+        new Dealer();
     }
 }

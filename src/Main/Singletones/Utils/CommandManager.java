@@ -6,6 +6,7 @@ import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
+import Main.Objects.Materials.Materials;
 import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
@@ -72,7 +73,7 @@ public class CommandManager {
         Set<Entity> objects = cm.getObjects(cp.getX(), cp.getY());
         boolean isMaterial = false, isEntrance = false;
         for (Entity object : objects) {
-            if (Material.getMaterialById(object.getId(), 0, 0) != null) {
+            if (Material.getMaterialById(object.getId()) != null) {
                 isMaterial = true;
             }
             if (object.getId() == 2) {
@@ -96,7 +97,7 @@ public class CommandManager {
         Cell cc = cp.getCurrentCell();
         List<Material> cellMaterials = new ArrayList<>();
         for (Entity entity : cc.getObjects()) {
-            if (Material.getMaterialById(entity.getId(), entity.getX(), entity.getY()) != null) {
+            if (Material.getMaterialById(entity.getId()) != null) {
                 cellMaterials.add((Material) entity);
             }
         }

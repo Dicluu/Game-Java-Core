@@ -10,6 +10,7 @@ public abstract class UniqueEntity extends Entity {
     public UniqueEntity(int x, int y) {
         super(x, y);
     }
+    public UniqueEntity() {super();}
 
     public int getPriority() {
         return priority;

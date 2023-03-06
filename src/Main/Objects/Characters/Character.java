@@ -42,6 +42,12 @@ public abstract class Character extends Entity {
         this.wallet = wallet;
     }
 
+    public Character(String name) {
+        super();
+        this.name = name;
+        this.ID = -1;
+    }
+
     public String getName() {
         return name;
     }
