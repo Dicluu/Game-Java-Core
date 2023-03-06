@@ -25,6 +25,10 @@ public class AdminCommandManager {
             Messenger.ingameMessage("write id of object you want to set");
             Entity.showInstances();
             int id = num.nextInt();
+            if (Entity.getObjectById(id) == null) {
+                Messenger.ingameMessage("object with this id not found");
+                throw new NullPointerException();
+            }
             Messenger.ingameMessage("write x coordinate");
             int x = num.nextInt();
             if (GameExecutor.getGame().getCurrentMap().getX() < x || x < 0) {
@@ -38,9 +42,6 @@ public class AdminCommandManager {
                 throw new ArrayIndexOutOfBoundsException();
             }
             Entity newObject = Entity.getObjectById(id);
-            if (newObject == null) {
-                throw new NullPointerException();
-            }
             if (id == 2) {
                 setEntrance(x, y);
             } else {
@@ -107,10 +108,10 @@ public class AdminCommandManager {
             int id = num.nextInt();
             if (Item.getItemById(id) != null) {
                 cc.putItem(Item.getItemById(id));
+                Messenger.ingameMessage("Done!");
             } else {
                 Messenger.ingameMessage("Item with this id not found");
             }
-            Messenger.ingameMessage("Done!");
         } catch (InputMismatchException e) {
             Messenger.ingameMessage("You wrote wrong id of item");
         }
