@@ -1,7 +1,9 @@
 package Main.Singletones;
 
+import Main.Items.Item;
 import Main.Maps.Map;
 import Main.Objects.Characters.Player;
+import Main.Objects.Entity;
 import Main.Singletones.Utils.AdminCommandManager;
 import Main.Singletones.Utils.CommandManager;
 import Main.Utils.Messenger;
@@ -29,6 +31,8 @@ public class GameExecutor {
     public void render() throws InterruptedException {
         timecounter = new TimeCounter();
         Thread.sleep(10);
+        Item.showLastInstance();
+        Entity.showLastInstance();
         currentMap.showMap();
         Scanner num = new Scanner(System.in);
         String answer;

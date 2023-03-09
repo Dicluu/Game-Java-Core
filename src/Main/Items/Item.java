@@ -55,4 +55,14 @@ public abstract class Item {
             Messenger.helpMessage("id: " + instance.getId() + "; name: " + instance.getName());
         }
     }
+
+    public static void showInstancesSystem() {
+        for (Item instance : instances) {
+            Messenger.systemMessage("id: " + instance.getId() + "; name: " + instance.getName(), Item.class);
+        }
+    }
+
+    public static void showLastInstance() {
+        Messenger.systemMessage("Last id of Item instance: " + instances.get(instances.size()-1).getId(), Item.class);
+    }
 }
