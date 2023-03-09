@@ -90,7 +90,7 @@ public class CommandManager {
         person.showInventory();
     }
 
-    public static void getAction(TimeCounter timecounter) {
+    public static void getAction(TimeCounter timecounter) throws CloneNotSupportedException {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Cell cc = cp.getCurrentCell();
         List<Material> cellMaterials = new ArrayList<>();
@@ -127,7 +127,7 @@ public class CommandManager {
         }
     }
 
-    public static void askWhichMaterialToGet(Character cp, List<Material> materials, TimeCounter timecounter, Cell cc) {
+    public static void askWhichMaterialToGet(Character cp, List<Material> materials, TimeCounter timecounter, Cell cc) throws CloneNotSupportedException {
         for (int i = 0; i < materials.size(); i++) {
             System.out.print(i + 1 + ") " + materials.get(i).getMaterial().getName() + " ");
         }

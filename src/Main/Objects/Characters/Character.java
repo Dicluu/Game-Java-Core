@@ -116,6 +116,26 @@ public abstract class Character extends Entity {
         }
     }
 
+    public void showInventoryHash() {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
+                System.out.print(i + ") " + inventory[i].toString() + " ");
+            } else {
+                System.out.print(i + ") " + "- ");
+            }
+        }
+    }
+
+    public void showInventoryUID() {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
+                System.out.print(i + ") " + inventory[i].getUID() + " ");
+            } else {
+                System.out.print(i + ") " + "- ");
+            }
+        }
+    }
+
     public boolean isPresence(int desired) {
         for (Item item : inventory) {
             if (item != null) {

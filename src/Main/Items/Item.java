@@ -10,22 +10,30 @@ import Main.Utils.Messenger;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Item {
-    private int id;
+public abstract class Item implements Cloneable{
+    private int ID, UID;
+    private static int freeID = 0;
     private String name;
     private static List<Item> instances = new ArrayList<>();
+    private static ArrayList<Item> allItems = new ArrayList<>();
 
     static {
         addEnumsInstances();
     }
 
     public Item(int id, String name) {
-        this.id = id;
+        this.ID = id;
         this.name = name;
+        this.UID = freeID++;
+        allItems.add(this);
     }
 
     public int getId() {
-        return id;
+        return ID;
+    }
+
+    public int getUID() {
+        return UID;
     }
 
     public String getName() {
@@ -39,6 +47,19 @@ public abstract class Item {
             }
         }
         return null;
+    }
+
+    public static void showAllItems() {
+        for (Item item : allItems) {
+            System.out.println(item.getUID() + ") " + item.getId() + " " + item);
+        }
+    }
+
+    public static Item newInstance(int id) throws CloneNotSupportedException {
+        Item item = getItemById(id);
+        item.setUID(freeID++);
+        allItems.add(item);
+        return (Item) item.clone();
     }
 
     private static void addEnumsInstances() {
@@ -64,5 +85,9 @@ public abstract class Item {
 
     public static void showLastInstance() {
         Messenger.systemMessage("Last id of Item instance: " + instances.get(instances.size()-1).getId(), Item.class);
+    }
+
+    private void setUID(int UID) {
+        this.UID = UID;
     }
 }

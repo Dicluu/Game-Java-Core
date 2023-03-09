@@ -38,7 +38,7 @@ public class Main {
         forest2.add(new Entrance(1,1,0));
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
         Messenger.setSystem(true);
         Messenger.setHelp(true);
         Map map1 = new Forest(15,5, forest1);

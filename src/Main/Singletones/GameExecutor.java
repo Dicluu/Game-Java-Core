@@ -28,7 +28,7 @@ public class GameExecutor {
     }
 
 
-    public void render() throws InterruptedException {
+    public void render() throws InterruptedException, CloneNotSupportedException {
         timecounter = new TimeCounter();
         Thread.sleep(10);
         Item.showLastInstance();
@@ -57,6 +57,12 @@ public class GameExecutor {
                 case "show inv id":
                     AdminCommandManager.showInventoryId(currentPlayer);
                     break;
+                case "show inv hash":
+                    AdminCommandManager.showInventoryHash(currentPlayer);
+                    break;
+                case "show inv uid":
+                    AdminCommandManager.showInventoryUID(currentPlayer);
+                    break;
                 case "give item":
                     AdminCommandManager.giveItem();
                     break;
@@ -77,6 +83,9 @@ public class GameExecutor {
                     break;
                 case "entities":
                     AdminCommandManager.showAllEntities();
+                    break;
+                case "items":
+                    AdminCommandManager.showAllItems();
                     break;
                 case "switch":
                     CommandManager.switchSettings();

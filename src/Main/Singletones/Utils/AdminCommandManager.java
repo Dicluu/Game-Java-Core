@@ -95,8 +95,18 @@ public class AdminCommandManager {
         Entity.showAllEntities();
     }
 
+    public static void showAllItems() {Item.showAllItems();}
+
     public static void showInventoryId(Character person) {
         person.showInventoryId();
+    }
+
+    public static void showInventoryHash(Character person) {
+        person.showInventoryHash();
+    }
+
+    public static void showInventoryUID(Character person) {
+        person.showInventoryUID();
     }
 
     public static void giveItem() {
@@ -114,6 +124,8 @@ public class AdminCommandManager {
             }
         } catch (InputMismatchException e) {
             Messenger.ingameMessage("You wrote wrong id of item");
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
     }
 
