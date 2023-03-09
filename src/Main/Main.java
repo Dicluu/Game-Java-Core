@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Items.Item;
 import Main.Maps.Instances.Forest;
 import Main.Maps.Map;
 import Main.Objects.Characters.NPC.Dealer;
@@ -7,7 +8,9 @@ import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
+import Main.Objects.Unique.Building;
 import Main.Objects.Unique.Entrance;
+import Main.Objects.Unique.Town;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
@@ -53,5 +56,7 @@ public class Main {
         new Entrance();
         new Player();
         new Dealer();
+        new Building();
+        new Town();
     }
 }
