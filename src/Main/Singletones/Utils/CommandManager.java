@@ -1,22 +1,20 @@
 package Main.Singletones.Utils;
 
+import Main.Items.Item;
+import Main.Items.Tools.Tool;
 import Main.Maps.Map;
 import Main.Maps.Cell;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
-import Main.Objects.Materials.Materials;
 import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 import Main.Utils.Timers.Timer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 
 public class CommandManager {
@@ -106,7 +104,7 @@ public class CommandManager {
                 Messenger.ingameMessage("Here is nothing to get");
                 break;
             case 1:
-                    extract(cp, timecounter, cc, cellMaterials.get(0));
+                extract(cp, timecounter, cc, cellMaterials.get(0));
                 break;
             default:
                 askWhichMaterialToGet(cp, cellMaterials, timecounter, cc);
@@ -114,19 +112,19 @@ public class CommandManager {
         }
     }
 
-private static void extract(Character person, TimeCounter timecounter, Cell cc, Material material) {
-    if (person.isPresence(material.getMaterial().getTOOLID())) {
-        if (!person.putItem(material.getMaterial().toItem())) {
-            Messenger.ingameMessage("Your inventory is full");
-        } else {
-            playAnimation((long) material.getMaterial().getComplexity());
+    private static void extract(Character person, TimeCounter timecounter, Cell cc, Material material) throws CloneNotSupportedException {
+        if (person.isPresence(material.getMaterial().getTOOLID())) {
+            if (!person.putItem(Item.newInstance(material.getMaterial().toItem().getId()))) {
+                Messenger.ingameMessage("Your inventory is full");
+            } else {
+                Tool ct = chooseTool((Player) person, material);
+                playAnimation((long) material.getMaterial().getComplexity(), (long) ct.getEfficiency());
                 timecounter.createObjectTimeline(material, cc);
                 Messenger.ingameMessage("You got a " + material.getMaterial().toItem().getName());
             }
+        } else {
+            Messenger.ingameMessage("You don't have necessary tools to get this material");
         }
-    else {
-        Messenger.ingameMessage("You don't have necessary tools to get this material");
-    }
     }
 
     public static void askWhichMaterialToGet(Character cp, List<Material> materials, TimeCounter timecounter, Cell cc) {
@@ -188,12 +186,12 @@ private static void extract(Character person, TimeCounter timecounter, Cell cc, 
         }
     }
 
-    private static void playAnimation(Long complexity) {
-        Long interval = complexity * 1000;
+    private static void playAnimation(Long complexity, Long efficiency) {
+        Long interval = ((complexity * 1000) / efficiency);
         Timer timer = new Timer(interval);
         System.out.print("[");
         while (!timer.touch()) {
-            Timer microtimer = new Timer(interval / 15);
+            Timer microtimer = new Timer((interval / 15));
             while (!microtimer.touch()) {
             }
             System.out.print("|");
@@ -204,5 +202,31 @@ private static void extract(Character person, TimeCounter timecounter, Cell cc, 
     public static void showWallet() {
         Character cp = GameExecutor.getGame().getCurrentPlayer();
         Messenger.ingameMessage("You have " + cp.getWallet() + " $ in your bag");
+    }
+
+    private static Tool chooseTool(Player cp, Material cm) {
+        ArrayList<Item> desired = cp.getAllOfKind(cm.getMaterial().getTOOLID());
+        Scanner num = new Scanner(System.in);
+        int id;
+        if (desired.size() > 1) {
+            Messenger.ingameMessage("Choose what a tool you want to use");
+            showDesired(desired);
+            try {
+                id = num.nextInt();
+                System.out.println(desired.get(id-1).getUID());
+                return (Tool) desired.get(id-1);
+            } catch (InputMismatchException | ArrayIndexOutOfBoundsException | NullPointerException ae) {
+                Messenger.systemMessage("Exception in method chooseTool() catch", CommandManager.class);
+            }
+        } else {
+            return (Tool) desired.get(0);
+        }
+        return null;
+    }
+
+    private static void showDesired(ArrayList<Item> items) {
+        for (int i = 0; i < items.size(); i++) {
+            Messenger.ingameMessage("id: " + (i+1) + "; name: " + items.get(i).getName());
+        }
     }
 }

@@ -70,7 +70,7 @@ public abstract class Entity {
 
     public static void showAllEntities() {
         for (Entity entity : allEntities) {
-            System.out.println(entity.getObjectID() + ") " + entity.getId() + " " + entity.getSymbol() + " " + entity);
+            Messenger.systemMessage(entity.getObjectID() + ") " + entity.getId() + " " + entity.getSymbol() + " " + entity);
         }
     }
 

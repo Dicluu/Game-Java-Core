@@ -5,16 +5,18 @@ import Main.Objects.Entity;
 import Main.Objects.Priority;
 import Main.Utils.Messenger;
 
+import java.util.ArrayList;
+
 public abstract class Character extends Entity {
     String name;
     private float wallet;
-    int x,y;
+    int x, y;
     private final static int priority = Priority.MAX.toInt();
     private Item[] inventory;
     private final int ID;
 
     public Character(String name, int x, int y, int id, Item[] inventory) {
-        super(x,y);
+        super(x, y);
         this.name = name;
         this.x = x;
         this.y = y;
@@ -23,7 +25,7 @@ public abstract class Character extends Entity {
     }
 
     public Character(String name, int x, int y, int id) {
-        super(x,y);
+        super(x, y);
         this.name = name;
         this.x = x;
         this.y = y;
@@ -33,7 +35,7 @@ public abstract class Character extends Entity {
 
 
     public Character(String name, int x, int y, int id, float wallet) {
-        super(x,y);
+        super(x, y);
         this.name = name;
         this.x = x;
         this.y = y;
@@ -97,8 +99,7 @@ public abstract class Character extends Entity {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {
                 System.out.print(i + ") " + inventory[i].getName() + " ");
-            }
-            else {
+            } else {
                 System.out.print(i + ") " + "- ");
             }
         }
@@ -109,8 +110,7 @@ public abstract class Character extends Entity {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {
                 System.out.print(i + ") " + inventory[i].getId() + " ");
-            }
-            else {
+            } else {
                 System.out.print(i + ") " + "- ");
             }
         }
@@ -136,7 +136,28 @@ public abstract class Character extends Entity {
         }
         return false;
     }
+
     public void changeBalance(float value) {
         setWallet(this.wallet + value);
+    }
+
+
+    public ArrayList<Item> getAllOfKind(int id) {
+        ArrayList<Item> desired = new ArrayList<>();
+        for (Item item : inventory) {
+            try {
+                if (item.getId() == id) {
+                    desired.add(item);
+                }
+            }
+            catch (NullPointerException e) {
+
+            }
+        }
+        if (desired.isEmpty()) {
+            return null;
+        } else {
+            return desired;
+        }
     }
 }

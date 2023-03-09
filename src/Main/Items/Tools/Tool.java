@@ -6,9 +6,12 @@ public class Tool extends Item {
 
     private final Tools tool;
     private Tiers tier;
+    private String name;
 
     public Tool(Tools tool) {
-        super(tool.getId(), tool.getName());
+        super(tool.getId(),tool.getName());
+        this.name = tool.getName();
+        this.tier = Tiers.DIAMOND;
         this.tool = tool;
     }
 
@@ -16,7 +19,15 @@ public class Tool extends Item {
         super(tool.getId(), tool.getName());
         this.tool = tool;
         this.tier = tier;
+        this.name = tier.name() + " " + tool.name();
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
 
+    public float getEfficiency() {
+        return tier.getEfficiency();
+    }
 }

@@ -107,7 +107,7 @@ public class AdminCommandManager {
             Item.showInstances();
             int id = num.nextInt();
             if (Item.getItemById(id) != null) {
-                cc.putItem(Item.getItemById(id));
+                cc.putItem(Item.newInstance(id));
                 Messenger.ingameMessage("Done!");
             } else {
                 Messenger.ingameMessage("Item with this id not found");
