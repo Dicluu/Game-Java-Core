@@ -8,7 +8,7 @@ import Main.Utils.Messenger;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity {
+public abstract class Entity implements Cloneable{
     private int x, y;
     private static int freeID;
     private static List<Entity> allEntities = new ArrayList<>();
@@ -68,22 +68,20 @@ public abstract class Entity {
         return null;
     }
 
-    public static void showAllEntities() {
-        for (Entity entity : allEntities) {
-            Messenger.systemMessage(entity.getObjectID() + ") " + entity.getId() + " " + entity.getSymbol() + " " + entity);
-        }
+    public static List<Entity> getAllEntities() {
+        return allEntities;
     }
 
     /*
-    public static Entity getObjectByObjectID(int id) {
-        for (Entity entity : allEntities) {
-            if (entity.getObjectID() == id) {
-                return entity;
+        public static Entity getObjectByObjectID(int id) {
+            for (Entity entity : allEntities) {
+                if (entity.getObjectID() == id) {
+                    return entity;
+                }
             }
+            return null;
         }
-        return null;
-    }
-     */
+         */
     private static void addEnumsInstances() {
         for (Materials material : Materials.values()) {
             instances.add(new Material(0, 0, material));
@@ -94,11 +92,27 @@ public abstract class Entity {
         instances.add(clazz.newInstance());
     }
 
+    public void setObjectID(int objectID) {
+        this.objectID = objectID;
+    }
+
     public static void showInstancesSystem() {
         Messenger.systemMessage("isEmpty: " + instances.isEmpty(), Entity.class);
         for (Entity entity : instances) {
             Messenger.systemMessage("instance id: " + entity.getId() + "; instance name: " + entity.getName(), Entity.class);
         }
+    }
+    public static Entity newInstance(int id) {
+        try {
+            Entity entity = getObjectById(id);
+            entity.setObjectID(freeID++);
+            allEntities.add(entity);
+            return (Entity) entity.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            Messenger.systemMessage(e.getMessage());
+        }
+        return null;
     }
 
     public static void showInstances() {
@@ -106,6 +120,8 @@ public abstract class Entity {
             Messenger.helpMessage("id: " + entity.getId() + "; name: " + entity.getName());
         }
     }
+
+
 
     public static void showLastInstance() {
         Messenger.systemMessage("Last id of Entity instance: " + instances.get(instances.size()-1).getId(), Entity.class);

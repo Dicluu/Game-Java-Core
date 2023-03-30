@@ -15,7 +15,9 @@ import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.Timer;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminCommandManager {
@@ -47,7 +49,7 @@ public class AdminCommandManager {
             } else {
                 newObject.setX(x);
                 newObject.setY(y);
-                GameExecutor.getGame().getCurrentMap().setObject(newObject);
+                GameExecutor.getGame().getCurrentMap().setObject(Entity.newInstance(newObject.getId()));
                 Messenger.ingameMessage("object " + newObject + " has been set on coordinates " + "x = " + x + " y = " + y);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -92,7 +94,10 @@ public class AdminCommandManager {
     }
 
     public static void showAllEntities() {
-        Entity.showAllEntities();
+        List<Entity> allEntities = Entity.getAllEntities();
+        for (Entity entity : allEntities) {
+            Messenger.systemMessage(entity.getObjectID() + ") " + entity.getId() + " " + entity.getSymbol() + " " + entity);
+        }
     }
 
     public static void showAllItems() {Item.showAllItems();}
