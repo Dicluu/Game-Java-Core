@@ -87,6 +87,10 @@ public abstract class Character extends Entity {
         return wallet;
     }
 
+    public char getSymbol() {
+        return name.toUpperCase().charAt(0);
+    }
+
     private void setWallet(float value) {
         if (value < 0) {
             Messenger.systemMessage("setWallet() catch encapsulation violation", Character.class);

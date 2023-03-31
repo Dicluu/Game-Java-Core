@@ -1,7 +1,6 @@
 package Main.Objects.Characters;
 
 import Main.Maps.Cell;
-import Main.Objects.Characters.NPC.Dealer;
 import Main.Objects.Entity;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
@@ -39,8 +38,5 @@ public class Player extends Character{
         return GameExecutor.getGame().getCurrentMap().getCell(x,y);
     }
 
-    @Override
-    public char getSymbol() {
-        return name.toUpperCase().charAt(0);
-    }
+
 }
