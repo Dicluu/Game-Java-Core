@@ -1,6 +1,7 @@
 package Main.Objects;
 
 import Main.Items.Item;
+import Main.Objects.Characters.Character;
 import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
 import Main.Utils.Messenger;
@@ -102,15 +103,23 @@ public abstract class Entity implements Cloneable{
             Messenger.systemMessage("instance id: " + entity.getId() + "; instance name: " + entity.getName(), Entity.class);
         }
     }
-    public static Entity newInstance(int id) {
+    public static Entity newInstance(int id) throws CloneNotSupportedException {
         try {
             Entity entity = (Entity) getObjectById(id).clone();
+            ((Character) entity).getInventory();
             entity.setObjectID(freeID++);
             allEntities.add(entity);
+            Character.register((Character) entity);
             return entity;
         }
         catch (CloneNotSupportedException e) {
             Messenger.systemMessage(e.getMessage());
+        }
+        catch (ClassCastException e) {
+            Entity entity = (Entity) getObjectById(id).clone();
+            entity.setObjectID(freeID++);
+            allEntities.add(entity);
+            return entity;
         }
         return null;
     }

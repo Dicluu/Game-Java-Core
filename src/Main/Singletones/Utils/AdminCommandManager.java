@@ -59,6 +59,8 @@ public class AdminCommandManager {
         } catch (InputMismatchException e) {
             Messenger.ingameMessage("You wrote wrong value");
             Messenger.systemMessage("InputMismatchException int setObject() catched", AdminCommandManager.class);
+        } catch (CloneNotSupportedException e) {
+            Messenger.systemMessage("CloneNotSupportedException int setObject() catched", AdminCommandManager.class);
         }
     }
 
@@ -74,7 +76,7 @@ public class AdminCommandManager {
     public static void showCharacters() {
         List<Character> characters = getCharacters();
         for (Character character : characters) {
-            System.out.println(character.getId() + " " + character);
+            System.out.println(character.getUID() + " " + character.getId() + " " + character);
         }
     }
 

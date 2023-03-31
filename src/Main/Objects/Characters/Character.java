@@ -6,14 +6,18 @@ import Main.Objects.Priority;
 import Main.Utils.Messenger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Character extends Entity {
     String name;
     private float wallet = 0;
     int x, y;
+    private static int freeID = 0;
+    private int UID;
     private final static int priority = Priority.MAX.toInt();
     private Item[] inventory;
     private final int ID;
+    private static List<Character> allCharacters = new ArrayList<>();
 
     public Character(String name, int x, int y, int id, Item[] inventory) {
         super(x, y);
@@ -21,7 +25,9 @@ public abstract class Character extends Entity {
         this.x = x;
         this.y = y;
         this.ID = id;
+        this.UID = freeID++;
         this.inventory = inventory;
+        allCharacters.add(this);
     }
 
     public Character(String name, int x, int y, int id) {
@@ -30,7 +36,9 @@ public abstract class Character extends Entity {
         this.x = x;
         this.y = y;
         this.ID = id;
+        this.UID = freeID++;
         this.inventory = new Item[10];
+        allCharacters.add(this);
     }
 
 
@@ -42,12 +50,16 @@ public abstract class Character extends Entity {
         this.ID = id;
         this.inventory = new Item[10];
         this.wallet = wallet;
+        this.UID = freeID++;
+        allCharacters.add(this);
     }
 
     public Character(String name) {
         super();
         this.name = name;
         this.ID = -1;
+        this.UID = freeID++;
+        allCharacters.add(this);
     }
 
     public String getName() {
@@ -64,6 +76,10 @@ public abstract class Character extends Entity {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public int getUID() {
+        return UID;
     }
 
     public int getY() {
@@ -87,8 +103,16 @@ public abstract class Character extends Entity {
         return wallet;
     }
 
+    public Item[] getInventory() {
+        return inventory;
+    }
+
     public char getSymbol() {
         return name.toUpperCase().charAt(0);
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
     }
 
     private void setWallet(float value) {
@@ -165,6 +189,10 @@ public abstract class Character extends Entity {
         setWallet(this.wallet + value);
     }
 
+    public static void register(Character c) {
+        c.setUID(freeID++);
+        allCharacters.add(c);
+    }
 
     public ArrayList<Item> getAllOfKind(int id) {
         ArrayList<Item> desired = new ArrayList<>();
