@@ -84,6 +84,9 @@ public class GameExecutor {
                 case "entities":
                     AdminCommandManager.showAllEntities();
                     break;
+                case "characters":
+                    AdminCommandManager.showCharacters();
+                    break;
                 case "items":
                     AdminCommandManager.showAllItems();
                     break;

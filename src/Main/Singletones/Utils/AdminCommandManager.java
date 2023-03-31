@@ -67,8 +67,30 @@ public class AdminCommandManager {
         Map cm = GameExecutor.getGame().getCurrentMap();
         Messenger.systemMessage("Cell objects: ");
         for (Entity object : cp.getCurrentCell().getObjects()) {
-            System.out.print(object.getId() + " " + object);
+            System.out.println(object.getId() + " " + object);
         }
+    }
+
+    public static void showCharacters() {
+        List<Character> characters = getCharacters();
+        for (Character character : characters) {
+            System.out.println(character.getId() + " " + character);
+        }
+    }
+
+    protected static List<Character> getCharacters() {
+        List<Entity> entities = Entity.getAllEntities();
+        List<Character> characters = new ArrayList<>();
+        for (Entity entity : entities) {
+            try {
+                Character ce = (Character) entity;
+                ce.getWallet();
+                characters.add(ce);
+            } catch (Exception e) {
+
+            }
+        }
+        return characters;
     }
 
     public static void setEntrance(int x, int y) {

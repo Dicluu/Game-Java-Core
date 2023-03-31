@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public abstract class Character extends Entity {
     String name;
-    private float wallet;
+    private float wallet = 0;
     int x, y;
     private final static int priority = Priority.MAX.toInt();
     private Item[] inventory;
