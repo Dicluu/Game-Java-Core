@@ -102,7 +102,7 @@ public abstract class Map {
             return allMaps.get(id);
         }
         catch (NullPointerException e) {
-            Messenger.systemMessage("InputMismatchException catched in getMapById(int id))", Map.class);
+            Messenger.systemMessage("InputMismatchException caught in getMapById(int id))", Map.class);
             return null;
         }
     }

@@ -53,14 +53,14 @@ public class AdminCommandManager {
                 Messenger.ingameMessage("object " + newObject + " has been set on coordinates " + "x = " + x + " y = " + y);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            Messenger.systemMessage("ArrayIndexOutOfBoundsException in setObject() catched ", AdminCommandManager.class);
+            Messenger.systemMessage("ArrayIndexOutOfBoundsException in setObject() caught ", AdminCommandManager.class);
         } catch (NullPointerException e) {
-            Messenger.systemMessage("NullPointerException in setObject() catched ", AdminCommandManager.class);
+            Messenger.systemMessage("NullPointerException in setObject() caught ", AdminCommandManager.class);
         } catch (InputMismatchException e) {
             Messenger.ingameMessage("You wrote wrong value");
-            Messenger.systemMessage("InputMismatchException int setObject() catched", AdminCommandManager.class);
+            Messenger.systemMessage("InputMismatchException int setObject() caught", AdminCommandManager.class);
         } catch (CloneNotSupportedException e) {
-            Messenger.systemMessage("CloneNotSupportedException int setObject() catched", AdminCommandManager.class);
+            Messenger.systemMessage("CloneNotSupportedException int setObject() caught", AdminCommandManager.class);
         }
     }
 
