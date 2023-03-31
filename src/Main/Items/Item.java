@@ -56,10 +56,10 @@ public abstract class Item implements Cloneable{
     }
 
     public static Item newInstance(int id) throws CloneNotSupportedException {
-        Item item = getItemById(id);
+        Item item = (Item) getItemById(id).clone();
         item.setUID(freeID++);
         allItems.add(item);
-        return (Item) item.clone();
+        return item;
     }
 
     private static void addEnumsInstances() {

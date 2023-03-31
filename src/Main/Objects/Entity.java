@@ -104,10 +104,10 @@ public abstract class Entity implements Cloneable{
     }
     public static Entity newInstance(int id) {
         try {
-            Entity entity = getObjectById(id);
+            Entity entity = (Entity) getObjectById(id).clone();
             entity.setObjectID(freeID++);
             allEntities.add(entity);
-            return (Entity) entity.clone();
+            return entity;
         }
         catch (CloneNotSupportedException e) {
             Messenger.systemMessage(e.getMessage());
