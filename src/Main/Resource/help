@@ -1,0 +1,8 @@
+Welcome to replicator
+Replicator is a program to make a unique NPC's and their speeches
+It uses personID to create a path to text files with other information about this person
+Every command uses different amount of arguments otherwise uses unified format
+Example: read:-1:1 - read speech with id 1 of person with id -1.
+To more information about commands write 'commands'
+Be careful when you gonna delete speech manually you can break speechID sequence
+To avoid confusion of the id sequences you should not make a speeches for primitive id's

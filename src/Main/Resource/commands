@@ -1,0 +1,3 @@
+read:[personID]:[speechID] - read speech with speechID of person with personID
+write:[personID]:[speech] - append new speech to person, speechID will be generate automatically
+exit - end the program
