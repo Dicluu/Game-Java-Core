@@ -1,3 +1,4 @@
 read:[personID]:[speechID] - read speech with speechID of person with personID
-write:[personID]:[speech] - append new speech to person, speechID will be generate automatically
+write:[personID]:[speech]:[isAnswerable]:[answers] - append new speech to person, speechID will be generate automatically
+readAll:[personID] - read all speeches of person
 exit - end the program

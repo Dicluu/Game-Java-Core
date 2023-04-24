@@ -56,11 +56,23 @@ public class Replicator {
                 break;
             case "write":
                 try {
-                    write(Integer.parseInt(args[1]), args[2]);
+                    if (Boolean.parseBoolean(args[3])) {
+                        write(Integer.parseInt(args[1]), args[2], args[3], args[4]);
+                    } else {
+                        write(Integer.parseInt(args[1]), args[2], args[3], "");
+                    }
                 }
                 catch (Exception e) {
                     e.printStackTrace();
-                    System.out.println("Wrong format of second argument");
+                    System.out.println("Exception in case 'write' ");
+                }
+                break;
+            case "readAll":
+                try {
+                    readAll(Integer.parseInt(args[1]));
+                }
+                catch (Exception e) {
+                    System.out.println("Exception in case 'readAll' ");
                 }
                 break;
             case "help":
@@ -88,7 +100,7 @@ public class Replicator {
         }
     }
 
-    private static void write(int personID, String speech) throws IOException {
+    private static void write(int personID, String speech, String answerable, String answers) throws IOException {
         File dir = new File ("src/Main/Resource/" + personID + "");
 
         if (!dir.exists()) {
@@ -107,7 +119,7 @@ public class Replicator {
         int counter = 0;
 
 
-        bw.write(speech);
+        bw.write(speech + ":" + answerable + ":" + answers);
         bw.newLine();
         bw.flush();
         bw.close();
@@ -117,6 +129,15 @@ public class Replicator {
         }
         System.out.println("speech '" + speech + "' added. speechID: " + (counter-1));
 
+    }
+
+    private static void readAll(int PersonID) throws IOException {
+        File speeches = new File("src/Main/Resource/" + PersonID + "/speeches.txt");
+        BufferedReader br = new BufferedReader(new FileReader(speeches));
+        int count = 0;
+        while (br.ready()) {
+            System.out.println("[" + count++ + "] " + br.readLine());
+        }
     }
 
 }
