@@ -11,7 +11,7 @@ import java.util.List;
 public class PersonLoader {
 
     public static String loadName(int ID) throws Exception {
-        File file = new File("src/Main/Resource/" + ID + "/name");
+        File file = new File("src/Main/Resource/" + ID + "/name.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         return br.readLine();
     }

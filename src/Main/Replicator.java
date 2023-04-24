@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Replicator {
+
+    static boolean print = false;
+
     public static void main(String[] args) throws Exception {
 
         System.out.println("Welcome to replicator");
@@ -20,7 +23,7 @@ public class Replicator {
         }
     }
 
-    private static void read(int personID, int speechID) {
+    private static void read(int personID, int speechID) throws IOException {
         try {
             File speeches = new File("src/Main/Resource/" + personID + "/" + "speeches.txt");
             int counter = 0;
@@ -36,53 +39,82 @@ public class Replicator {
                 counter++;
             }
             System.out.println("speech with this id not found");
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("Person with this id not found");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     private static void analyze(String command) throws IOException {
         String[] args = command.split(":");
-        switch (args[0]) {
-            case "read":
-                try {
-                    read(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-                } catch (Exception e) {
-                    System.out.println("Wrong format of second argument");
-                }
-                break;
-            case "write":
-                try {
-                    if (Boolean.parseBoolean(args[3])) {
-                        write(Integer.parseInt(args[1]), args[2], args[3], args[4]);
-                    } else {
-                        write(Integer.parseInt(args[1]), args[2], args[3], "");
+        try {
+            switch (args[0]) {
+                case "read":
+                    try {
+                        read(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+                    } catch (Exception e) {
+                        System.out.println("Exception in case 'read'");
+                        System.out.println("Use command 'commands' to help");
                     }
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Exception in case 'write' ");
-                }
-                break;
-            case "readAll":
-                try {
-                    readAll(Integer.parseInt(args[1]));
-                }
-                catch (Exception e) {
-                    System.out.println("Exception in case 'readAll' ");
-                }
-                break;
-            case "help":
-                help(0);
-                break;
-            case "commands":
-                help(1);
-                break;
-            default:
-                System.out.println("this command not found");
+                    break;
+                case "write":
+                    try {
+                        if (Boolean.parseBoolean(args[3])) {
+                            write(Integer.parseInt(args[1]), args[2], args[3], args[4]);
+                        } else {
+                            write(Integer.parseInt(args[1]), args[2], args[3], "");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Exception in case 'write' ");
+                        System.out.println("Use command 'commands' to help");
+                    }
+                    break;
+                case "readAll":
+                    try {
+                        readAll(Integer.parseInt(args[1]));
+                    } catch (Exception e) {
+                        System.out.println("Exception in case 'readAll' ");
+                        System.out.println("Use command 'commands' to help");
+                    }
+                    break;
+                case "create":
+                    try {
+                        create(Integer.parseInt(args[1]), args[2]);
+                    } catch (Exception e) {
+                        System.out.println("Exception in case 'create'");
+                        System.out.println("Use command 'commands' to help");
+                    }
+                    break;
+                case "info":
+                    try {
+                        info(Integer.parseInt(args[1]));
+                    }
+                    catch (Exception e) {
+                        System.out.println("Exception in case 'info'");
+                    }
+                    break;
+                case "help":
+                    help(0);
+                    break;
+                case "commands":
+                    help(1);
+                    break;
+                case "print":
+                    if (print) {
+                        System.out.println("print stack trace disabled");
+                        print = false;
+                    } else {
+                        System.out.println("print stack trace enabled");
+                        print = true;
+                    }
+                    break;
+                default:
+                    System.out.println("this command not found");
+                    System.out.println("Use command 'commands' to help");
+            }
+        } catch (Exception e) {
+            if (print) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -101,11 +133,11 @@ public class Replicator {
     }
 
     private static void write(int personID, String speech, String answerable, String answers) throws IOException {
-        File dir = new File ("src/Main/Resource/" + personID + "");
+        File dir = new File("src/Main/Resource/" + personID + "");
 
         if (!dir.exists()) {
-            System.out.println(dir.getAbsolutePath());
-            dir.mkdir();
+            System.out.println("Person with this id not found");
+            System.out.println("To create person you need to use command 'create'");
         }
 
         File speeches = new File("src/Main/Resource/" + personID + "/speeches.txt");
@@ -127,7 +159,7 @@ public class Replicator {
             br.readLine();
             counter++;
         }
-        System.out.println("speech '" + speech + "' added. speechID: " + (counter-1));
+        System.out.println("speech '" + speech + "' added. speechID: " + (counter - 1));
 
     }
 
@@ -140,4 +172,34 @@ public class Replicator {
         }
     }
 
+    private static void create(int personID, String name) throws IOException {
+        File dir = new File("src/Main/Resource/" + personID);
+        File nf = new File("src/Main/Resource/" + personID + "/name.txt");
+        if (!dir.exists()) {
+            dir.mkdir();
+        } else {
+            System.out.println("person with this id already exists");
+        }
+        if (!nf.exists()) {
+            nf.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(nf));
+            bw.write(name);
+            bw.flush();
+            bw.close();
+            System.out.println("name.txt was created");
+        }
+    }
+
+    private static void info(int personID) throws IOException {
+        File dir = new File("src/Main/Resource/" + personID);
+        try {
+            File name = new File(dir.getPath() + "/name.txt");
+            BufferedReader brn = new BufferedReader(new FileReader(name));
+            System.out.println("name: " + brn.readLine());
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("[exception] name not found for this person");
+        }
+        readAll(personID);
+    }
 }
