@@ -33,8 +33,8 @@ public class Peasant extends Character {
 
     @Override
     public void talk() {
-        List<String> speeches = getSpeeches();
+        List<Speech> speeches = getSpeeches();
         int r = (int) (Math.random() * (speeches.size()));
-        Messenger.ingameMessage(speeches.get(r));
+        Messenger.ingameMessage(speeches.get(r).getSpeech());
     }
 }

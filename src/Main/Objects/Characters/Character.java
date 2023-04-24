@@ -1,6 +1,7 @@
 package Main.Objects.Characters;
 
 import Main.Items.Item;
+import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Entity;
 import Main.Objects.Priority;
 import Main.Utils.Messenger;
@@ -19,7 +20,7 @@ public abstract class Character extends Entity implements Talkable{
     private Item[] inventory;
     private final int ID;
     private static List<Character> allCharacters = new ArrayList<>();
-    private static List<String> speeches = new ArrayList<>();
+    private static List<Speech> speeches = new ArrayList<>();
 
     public Character(String name, int x, int y, int id, Item[] inventory) {
         super(x, y);
@@ -111,12 +112,13 @@ public abstract class Character extends Entity implements Talkable{
         return ID;
     }
 
-    public static List<String> getSpeeches() {
+    public static List<Speech> getSpeeches() {
         if (speeches.size() == 0) {
             try {
                 speeches = PersonLoader.loadSpeeches(0);
             }
             catch (Exception e) {
+                e.printStackTrace();
                 Messenger.systemMessage("Exception getSpeeches()", Character.class);
             }
         }
