@@ -34,6 +34,11 @@ public class Player extends Character{
         return ID;
     }
 
+    @Override
+    public void talk() {
+
+    }
+
     public Cell getCurrentCell() {
         return GameExecutor.getGame().getCurrentMap().getCell(x,y);
     }

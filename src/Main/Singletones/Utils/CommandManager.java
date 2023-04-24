@@ -6,6 +6,7 @@ import Main.Maps.Map;
 import Main.Maps.Cell;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
+import Main.Objects.Characters.Talkable;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
 import Main.Objects.Unique.Entrance;
@@ -213,8 +214,8 @@ public class CommandManager {
             showDesired(desired);
             try {
                 id = num.nextInt();
-                System.out.println(desired.get(id-1).getUID());
-                return (Tool) desired.get(id-1);
+                System.out.println(desired.get(id - 1).getUID());
+                return (Tool) desired.get(id - 1);
             } catch (InputMismatchException | ArrayIndexOutOfBoundsException | NullPointerException ae) {
                 Messenger.systemMessage("Exception in method chooseTool() catch", CommandManager.class);
             }
@@ -226,7 +227,30 @@ public class CommandManager {
 
     private static void showDesired(ArrayList<Item> items) {
         for (int i = 0; i < items.size(); i++) {
-            Messenger.ingameMessage("id: " + (i+1) + "; name: " + items.get(i).getName());
+            Messenger.ingameMessage("id: " + (i + 1) + "; name: " + items.get(i).getName());
         }
+    }
+
+    public static void talk() {
+        GameExecutor ge = GameExecutor.getGame();
+        Cell cc = ge.getCurrentPlayer().getCurrentCell();
+        Set<Entity> objects = cc.getObjects();
+        List <Character> c = new ArrayList<>();
+        for (Entity e : objects) {
+            if (e instanceof Talkable) {
+                c.add((Character) e);
+            }
+        }
+        c.remove(ge.getCurrentPlayer());
+        if (c.size() == 0) {
+            Messenger.ingameMessage("Here is no one to talk");
+        }
+        if (c.size() == 1) {
+            c.get(0).talk();
+        }
+        if (c.size() < 1) {
+            // choose
+        }
+
     }
 }

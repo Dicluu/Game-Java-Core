@@ -4,6 +4,7 @@ import Main.Items.Item;
 import Main.Maps.Instances.Forest;
 import Main.Maps.Map;
 import Main.Objects.Characters.NPC.Dealer;
+import Main.Objects.Characters.NPC.Peasant;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
@@ -59,5 +60,6 @@ public class Main {
         new Dealer();
         new Building();
         new Town();
+        new Peasant();
     }
 }

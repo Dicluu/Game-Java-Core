@@ -4,11 +4,12 @@ import Main.Items.Item;
 import Main.Objects.Entity;
 import Main.Objects.Priority;
 import Main.Utils.Messenger;
+import Main.Utils.PersonLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Character extends Entity {
+public abstract class Character extends Entity implements Talkable{
     String name;
     private float wallet = 0;
     int x, y;
@@ -18,6 +19,7 @@ public abstract class Character extends Entity {
     private Item[] inventory;
     private final int ID;
     private static List<Character> allCharacters = new ArrayList<>();
+    private static List<String> speeches = new ArrayList<>();
 
     public Character(String name, int x, int y, int id, Item[] inventory) {
         super(x, y);
@@ -27,6 +29,20 @@ public abstract class Character extends Entity {
         this.ID = id;
         this.UID = freeID++;
         this.inventory = inventory;
+        allCharacters.add(this);
+    }
+
+    public Character(int x, int y, int ID) {
+
+        super(x, y);
+        this.ID = ID;
+        try {
+            this.name = PersonLoader.loadName(ID);
+        }
+        catch (Exception e) {
+            Messenger.systemMessage("Exception Character(int,int,int)", Character.class);
+        }
+        this.UID = freeID;
         allCharacters.add(this);
     }
 
@@ -54,6 +70,10 @@ public abstract class Character extends Entity {
         allCharacters.add(this);
     }
 
+    /**
+     * Constructor for initializing instances
+     * @param name
+     */
     public Character(String name) {
         super();
         this.name = name;
@@ -89,6 +109,18 @@ public abstract class Character extends Entity {
     @Override
     public int getId() {
         return ID;
+    }
+
+    public static List<String> getSpeeches() {
+        if (speeches.size() == 0) {
+            try {
+                speeches = PersonLoader.loadSpeeches(0);
+            }
+            catch (Exception e) {
+                Messenger.systemMessage("Exception getSpeeches()", Character.class);
+            }
+        }
+        return speeches;
     }
 
     public void setY(int y) {
@@ -212,4 +244,6 @@ public abstract class Character extends Entity {
             return desired;
         }
     }
+
+    public abstract void talk();
 }

@@ -36,4 +36,9 @@ public class Dealer extends NonPlayerCharacter {
     public int getId() {
         return ID;
     }
+
+    @Override
+    public void talk() {
+
+    }
 }

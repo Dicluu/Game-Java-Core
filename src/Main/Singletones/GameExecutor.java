@@ -99,6 +99,9 @@ public class GameExecutor {
                 case "change wallet":
                     AdminCommandManager.changeWallet();
                     break;
+                case "talk":
+                    CommandManager.talk();
+                    break;
                 case "stop":
                     return;
                 default:
