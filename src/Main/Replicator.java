@@ -150,9 +150,39 @@ public class Replicator {
         BufferedReader br = new BufferedReader(new FileReader(speeches));
         int counter = 0;
 
+        if ((!Boolean.parseBoolean(answerable)) && (!answerable.equals("false"))) {
+            System.out.println("answerable argument have only 2 conditions: true/false");
+            return;
+        }
 
-        bw.write(speech + ":" + answerable + ":" + answers);
-        bw.newLine();
+        if (Boolean.parseBoolean(answerable)) {
+            String[] answersArr = answers.split(",");
+            for (String a : answersArr) {
+                try {
+                    int ans = Integer.parseInt(a);
+                    if (ans < 0) {
+                        System.out.println("answers IDs must be positive");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("answersList have to contain player's speeches IDs divided by symbol ','");
+                    return;
+                }
+            }
+        }
+
+        try {
+            if (Boolean.parseBoolean(answerable)) {
+                bw.write(speech + ":" + answerable + ":" + answers);
+                bw.newLine();
+            } else {
+                bw.write(speech + ":" + answerable);
+                bw.newLine();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Exception write() caught");
+        }
         bw.flush();
         bw.close();
         while (br.ready()) {
