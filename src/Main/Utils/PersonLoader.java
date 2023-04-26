@@ -23,18 +23,19 @@ public class PersonLoader {
         while (br.ready()) {
             String line = br.readLine();
             String[] args = line.split(":");
-            String speech = args[0];
-            boolean answerable = Boolean.parseBoolean(args[1]);
+            int id = Integer.parseInt(args[0]);
+            String speech = args[1];
+            boolean answerable = Boolean.parseBoolean(args[2]);
             if (answerable) {
-                String rawStrAnswers = args[2];
+                String rawStrAnswers = args[3];
                 String[] strAnswers = rawStrAnswers.split(",");
                 List<Integer> answers = new ArrayList<>();
                 for (int i = 0; i < strAnswers.length; i++) {
                     answers.add(Integer.parseInt(strAnswers[i]));
                 }
-                speeches.add(new Speech(speech, true, answers));
+                speeches.add(new Speech(speech, true, answers, id));
             } else {
-                speeches.add(new Speech(speech, false));
+                speeches.add(new Speech(speech, false, id));
             }
         }
         return speeches;

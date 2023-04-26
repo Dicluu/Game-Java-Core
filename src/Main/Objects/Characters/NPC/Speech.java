@@ -8,11 +8,13 @@ public class Speech {
     private String speech;
     private boolean isAnswerable;
     private List<Integer> answers = new ArrayList<>();
+    private int id;
 
-    public Speech(String speech, boolean isAnswerable, List<Integer> answers) {
+    public Speech(String speech, boolean isAnswerable, List<Integer> answers, int id) {
         this.speech = speech;
         this.isAnswerable = isAnswerable;
         this.answers = answers;
+        this.id = id;
     }
 
     /**
@@ -20,9 +22,10 @@ public class Speech {
      * @param speech
      * @param isAnswerable
      */
-    public Speech(String speech, boolean isAnswerable) {
+    public Speech(String speech, boolean isAnswerable, int id) {
         this.speech = speech;
         this.isAnswerable = isAnswerable;
+        this.id = id;
     }
 
     public String getSpeech() {
@@ -35,5 +38,9 @@ public class Speech {
 
     public List<Integer> getAnswers() {
         return answers;
+    }
+
+    public int getId() {
+        return id;
     }
 }

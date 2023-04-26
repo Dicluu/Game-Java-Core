@@ -166,12 +166,17 @@ public class Replicator {
             }
         }
 
+        while (br.ready()) {
+            br.readLine();
+            counter++;
+        }
+
         try {
             if (Boolean.parseBoolean(answerable)) {
-                bw.write(speech + ":" + answerable + ":" + answers);
+                bw.write(counter + ":" + speech + ":" + answerable + ":" + answers);
                 bw.newLine();
             } else {
-                bw.write(speech + ":" + answerable);
+                bw.write(counter + ":" + speech + ":" + answerable);
                 bw.newLine();
             }
         }
@@ -180,11 +185,8 @@ public class Replicator {
         }
         bw.flush();
         bw.close();
-        while (br.ready()) {
-            br.readLine();
-            counter++;
-        }
-        System.out.println("speech '" + speech + "' added. speechID: " + (counter - 1));
+
+        System.out.println("speech '" + speech + "' added. speechID: " + counter);
 
     }
 
