@@ -246,7 +246,7 @@ public class CommandManager {
             Messenger.ingameMessage("Here is no one to talk");
         }
         if (c.size() == 1) {
-            c.get(0).talk();
+            c.get(0).talk(c.get(0));
         }
         if (c.size() < 1) {
             // choose

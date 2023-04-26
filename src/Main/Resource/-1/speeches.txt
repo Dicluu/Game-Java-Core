@@ -1,3 +1,13 @@
+
 0:test:false
 1:test:true:1,2
 2:TEST:false
+TEST
+test:false
+test:true:1,2
+test:true:1
+test:true:-1
+test:true:1
+test:false
+test:false
+hello:false

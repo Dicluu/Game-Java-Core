@@ -124,7 +124,9 @@ public class AdminCommandManager {
         }
     }
 
-    public static void showAllItems() {Item.showAllItems();}
+    public static void showAllItems() {
+        Item.showAllItems();
+    }
 
     public static void showInventoryId(Character person) {
         person.showInventoryId();
@@ -183,6 +185,30 @@ public class AdminCommandManager {
         } catch (InputMismatchException e) {
             Messenger.systemMessage("changeWallet try-catch exception", AdminCommandManager.class);
             Messenger.ingameMessage("You wrote wrong value");
+        }
+    }
+
+    public static void showSpeeches() {
+        Scanner num = new Scanner(System.in);
+        try {
+            Messenger.ingameMessage("write uid of person you want to get list of speeches");
+            int uid = num.nextInt();
+            try {
+                Character c = (Character) Entity.getEntityById(uid);
+                if (c != null) {
+                    c.showAllSpeeches();
+                } else {
+                    Messenger.ingameMessage("You wrote wrong id");
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                Messenger.ingameMessage("You wrote id of other object");
+                Messenger.systemMessage("Exception in showSpeeches()", AdminCommandManager.class);
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("UID is a number");
+            Messenger.systemMessage("InputMismatchException in showSpeeches()", AdminCommandManager.class);
         }
     }
 }

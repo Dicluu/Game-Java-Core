@@ -3,11 +3,15 @@ package Main.Objects.Characters.NPC;
 import Main.Objects.Characters.Character;
 import Main.Objects.Entity;
 import Main.Utils.Messenger;
+import Main.Utils.PersonLoader;
 
 import java.util.List;
 
 public class Peasant extends Character {
 
+    private static final int ID = 7;
+    private static final String name = PersonLoader.loadName(0);
+    private static List<Speech> speeches = PersonLoader.loadSpeeches(0);
 
     static {
         try {
@@ -19,10 +23,10 @@ public class Peasant extends Character {
         }
     }
 
-    private static final int ID = 7;
 
     public Peasant() {
-        super("peasant");
+        super("peasant", speeches);
+        Messenger.systemMessage("instance initiated", Peasant.class);
     }
 
     @Override
@@ -33,8 +37,6 @@ public class Peasant extends Character {
 
     @Override
     public void talk() {
-        List<Speech> speeches = getSpeeches();
-        int r = (int) (Math.random() * (speeches.size()));
-        Messenger.ingameMessage(speeches.get(r).getSpeech());
+
     }
 }

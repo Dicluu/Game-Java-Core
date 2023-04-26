@@ -4,6 +4,7 @@ import Main.Items.Item;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Entity;
 import Main.Objects.Priority;
+import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.PersonLoader;
 
@@ -20,7 +21,8 @@ public abstract class Character extends Entity implements Talkable{
     private Item[] inventory;
     private final int ID;
     private static List<Character> allCharacters = new ArrayList<>();
-    private static List<Speech> speeches = new ArrayList<>();
+    private List<Speech> speeches = new ArrayList<>();
+    private Speech introduce;
 
     public Character(String name, int x, int y, int id, Item[] inventory) {
         super(x, y);
@@ -83,6 +85,16 @@ public abstract class Character extends Entity implements Talkable{
         allCharacters.add(this);
     }
 
+    public Character(String name, List<Speech> speeches) {
+        super();
+        this.name = name;
+        this.speeches = speeches;
+        this.introduce = speeches.get(0);
+        this.ID = -1;
+        this.UID = freeID++;
+        allCharacters.add(this);
+    }
+
     public String getName() {
         return name;
     }
@@ -112,17 +124,14 @@ public abstract class Character extends Entity implements Talkable{
         return ID;
     }
 
-    public static List<Speech> getSpeeches() {
-        if (speeches.size() == 0) {
-            try {
-                speeches = PersonLoader.loadSpeeches(0);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                Messenger.systemMessage("Exception getSpeeches()", Character.class);
-            }
-        }
+    public List<Speech> getSpeeches() {
         return speeches;
+    }
+
+    public void showAllSpeeches() {
+        for (Speech s : speeches) {
+            Messenger.ingameMessage("[" + s.getId() + "] " + s.getSpeech());
+        }
     }
 
     public void setY(int y) {
@@ -147,6 +156,14 @@ public abstract class Character extends Entity implements Talkable{
 
     public void setUID(int UID) {
         this.UID = UID;
+    }
+
+    public Speech getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(Speech introduce) {
+        this.introduce = introduce;
     }
 
     private void setWallet(float value) {
@@ -247,5 +264,10 @@ public abstract class Character extends Entity implements Talkable{
         }
     }
 
-    public abstract void talk();
+   @Override
+    public void talk(Character c) {
+            GameExecutor.initiateDialogue(c, c.getIntroduce());
+    }
+
+
 }

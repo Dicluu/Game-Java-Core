@@ -2,11 +2,16 @@ package Main.Objects.Characters.NPC;
 
 import Main.Objects.Entity;
 import Main.Utils.Messenger;
+import Main.Utils.PersonLoader;
+
+import java.util.List;
 
 public class Dealer extends NonPlayerCharacter {
 
 
     private static final int ID = 4;
+    private static final String name = PersonLoader.loadName(-2);
+    private static List<Speech> speeches = PersonLoader.loadSpeeches(-2);
 
     static {
         try {
@@ -19,7 +24,7 @@ public class Dealer extends NonPlayerCharacter {
     }
 
     public Dealer() {
-        super("Dealer");
+        super("Dealer", speeches);
         Messenger.systemMessage("instance initiated", Dealer.class);
     }
 

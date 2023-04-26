@@ -2,10 +2,13 @@ package Main.Singletones;
 
 import Main.Items.Item;
 import Main.Maps.Map;
+import Main.Objects.Characters.Character;
+import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Singletones.Utils.AdminCommandManager;
 import Main.Singletones.Utils.CommandManager;
+import Main.Singletones.Utils.DialogueExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 
@@ -102,12 +105,19 @@ public class GameExecutor {
                 case "talk":
                     CommandManager.talk();
                     break;
+                case "show speeches" :
+                    AdminCommandManager.showSpeeches();
+                    break;
                 case "stop":
                     return;
                 default:
                     Messenger.ingameMessage("unknown command");
             }
         }
+    }
+
+    public static void initiateDialogue(Character companion, Speech speech) {
+        DialogueExecutor.start(GameExecutor.getGame().getCurrentPlayer(), companion, speech);
     }
 
     public void setCurrentPlayer (Player player) {

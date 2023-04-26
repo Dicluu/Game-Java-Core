@@ -73,6 +73,15 @@ public abstract class Entity implements Cloneable{
         return allEntities;
     }
 
+    public static Entity getEntityById(int id) {
+        for (Entity e : allEntities) {
+            if (e.getObjectID() == id) {
+                return e;
+            }
+        }
+         return null;
+    }
+
     /*
         public static Entity getObjectByObjectID(int id) {
             for (Entity entity : allEntities) {
