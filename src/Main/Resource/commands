@@ -1,5 +1,6 @@
 read:[personID]:[speechID] - read speech with speechID of person with personID
-write:[personID]:[speech]:[isAnswerable]:[answers] - append new speech to person, speechID will be generate automatically
+write:[personID]:[speech] - append new speech to person, speechID will be generate automatically
+write:[personID]:[speech]:[answers] - append new speech to person with answers
 readAll:[personID] - read all speeches of person
 create:[personID]:[name] - create a person
 print - enable/disable print stack trace

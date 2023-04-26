@@ -58,10 +58,10 @@ public class Replicator {
                     break;
                 case "write":
                     try {
-                        if (Boolean.parseBoolean(args[3])) {
-                            write(Integer.parseInt(args[1]), args[2], args[3], args[4]);
+                        if (args.length == 4) {
+                            write(Integer.parseInt(args[1]), args[2], "true", args[3]);
                         } else {
-                            write(Integer.parseInt(args[1]), args[2], args[3], "");
+                            write(Integer.parseInt(args[1]), args[2], "false", "");
                         }
                     } catch (Exception e) {
                         System.out.println("Exception in case 'write' ");
@@ -149,11 +149,6 @@ public class Replicator {
         BufferedWriter bw = new BufferedWriter(new FileWriter(speeches, true));
         BufferedReader br = new BufferedReader(new FileReader(speeches));
         int counter = 0;
-
-        if ((!Boolean.parseBoolean(answerable)) && (!answerable.equals("false"))) {
-            System.out.println("answerable argument have only 2 conditions: true/false");
-            return;
-        }
 
         if (Boolean.parseBoolean(answerable)) {
             String[] answersArr = answers.split(",");
