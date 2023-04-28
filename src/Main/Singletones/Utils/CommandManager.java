@@ -258,9 +258,6 @@ public class CommandManager {
             try {
                 int in = num.nextInt();
                 Character ccr = c.get(in-1);
-                if (ccr == null) {
-                    throw new NullPointerException();
-                }
                 ccr.talk(ccr);
             } catch (InputMismatchException ime) {
                 Messenger.ingameMessage("ID must be a number");
