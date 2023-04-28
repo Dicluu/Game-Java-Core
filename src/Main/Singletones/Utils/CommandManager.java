@@ -233,6 +233,7 @@ public class CommandManager {
 
     public static void talk() {
         GameExecutor ge = GameExecutor.getGame();
+        Scanner num = new Scanner(System.in);
         Cell cc = ge.getCurrentPlayer().getCurrentCell();
         Set<Entity> objects = cc.getObjects();
         List <Character> c = new ArrayList<>();
@@ -248,8 +249,27 @@ public class CommandManager {
         if (c.size() == 1) {
             c.get(0).talk(c.get(0));
         }
-        if (c.size() < 1) {
-            // choose
+        if (c.size() > 1) {
+            Messenger.ingameMessage("Here is more than 1 character, choose which one you want to talk");
+            for (int i = 1; i < c.size()+1; i++) {
+                Messenger.ingameMessage(i + ") " + c.get(i-1).getName());
+            }
+            Messenger.helpMessage("Write ID of character");
+            try {
+                int in = num.nextInt();
+                Character ccr = c.get(in-1);
+                if (ccr == null) {
+                    throw new NullPointerException();
+                }
+                ccr.talk(ccr);
+            } catch (InputMismatchException ime) {
+                Messenger.ingameMessage("ID must be a number");
+                Messenger.systemMessage("InputMismatchException caught in talk()", CommandManager.class);
+            }
+            catch (IndexOutOfBoundsException ibe) {
+                Messenger.ingameMessage("Character with this ID doesn't exist");
+                Messenger.systemMessage("IndexOutOfBoundsException caught in talk()", CommandManager.class);
+            }
         }
 
     }
