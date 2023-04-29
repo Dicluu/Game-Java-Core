@@ -184,7 +184,9 @@ public abstract class Character extends Entity implements Talkable{
         }
     }
 
-
+    /**
+     * shows ID of things that keeps in inventory
+     */
     public void showInventoryId() {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {
@@ -194,7 +196,9 @@ public abstract class Character extends Entity implements Talkable{
             }
         }
     }
-
+    /**
+     * shows Hash of things that keeps in inventory
+     */
     public void showInventoryHash() {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {
@@ -205,6 +209,9 @@ public abstract class Character extends Entity implements Talkable{
         }
     }
 
+    /**
+     * shows UID of things that keeps in inventory
+     */
     public void showInventoryUID() {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {
@@ -215,6 +222,11 @@ public abstract class Character extends Entity implements Talkable{
         }
     }
 
+    /**
+     * looks for desired thing in inventory
+     * @param desired
+     * @return
+     */
     public boolean isPresence(int desired) {
         for (Item item : inventory) {
             if (item != null) {
@@ -240,11 +252,20 @@ public abstract class Character extends Entity implements Talkable{
         setWallet(this.wallet + value);
     }
 
+    /**
+     * registers a new objects that was cloned by instance and giving a unique ID
+     * @param c
+     */
     public static void register(Character c) {
         c.setUID(freeID++);
         allCharacters.add(c);
     }
 
+    /**
+     * looks for a desired thing
+     * @param id
+     * @return
+     */
     public ArrayList<Item> getAllOfKind(int id) {
         ArrayList<Item> desired = new ArrayList<>();
         for (Item item : inventory) {

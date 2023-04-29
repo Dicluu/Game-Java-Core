@@ -4,8 +4,11 @@ import Main.Maps.Cell;
 import Main.Maps.Map;
 import Main.Objects.Materials.Material;
 import Main.Utils.Messenger;
+import Main.Utils.Annotations.NeedImprovement;
+
 import java.util.Date;
 
+@NeedImprovement(comment = "serialization for objectTimelines")
 public class ObjectTimeline {
 
     private Long start, end;

@@ -17,7 +17,9 @@ import Main.Utils.Timers.Timer;
 
 import java.util.*;
 
-
+/**
+ * handler of in game commands which written as an answer of GameExecutor's render
+ */
 public class CommandManager {
 
     private static GameExecutor ge = GameExecutor.getGame();
@@ -66,6 +68,9 @@ public class CommandManager {
         GameExecutor.getGame().getCurrentMap().showMap();
     }
 
+    /**
+     * renders objects of cell where player located
+     */
     public static void renderObjects() {
         Map cm = ge.getCurrentMap();
         Player cp = ge.getCurrentPlayer();
@@ -91,6 +96,11 @@ public class CommandManager {
         person.showInventory();
     }
 
+    /**
+     * pre-realizes action 'get'
+     * @param timecounter
+     * @throws CloneNotSupportedException
+     */
     public static void getAction(TimeCounter timecounter) throws CloneNotSupportedException {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Cell cc = cp.getCurrentCell();
@@ -113,6 +123,14 @@ public class CommandManager {
         }
     }
 
+    /**
+     * realizes action 'get'
+     * @param person
+     * @param timecounter
+     * @param cc
+     * @param material
+     * @throws CloneNotSupportedException
+     */
     private static void extract(Character person, TimeCounter timecounter, Cell cc, Material material) throws CloneNotSupportedException {
         if (person.isPresence(material.getMaterial().getTOOLID())) {
             if (!person.putItem(Item.newInstance(material.getMaterial().toItem().getId()))) {
@@ -142,6 +160,9 @@ public class CommandManager {
         }
     }
 
+    /**
+     * realizes command 'come'
+     */
     public static void come() {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Cell cc = cp.getCurrentCell();
@@ -225,6 +246,10 @@ public class CommandManager {
         return null;
     }
 
+    /**
+     * shows desired tools for extract a resource
+     * @param items
+     */
     private static void showDesired(ArrayList<Item> items) {
         for (int i = 0; i < items.size(); i++) {
             Messenger.ingameMessage("id: " + (i + 1) + "; name: " + items.get(i).getName());

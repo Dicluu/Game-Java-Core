@@ -1,5 +1,8 @@
 package Main.Utils;
 
+import Main.Utils.Annotations.NeedImprovement;
+
+@NeedImprovement(comment = "add a locales")
 public class Messenger {
 
     private static boolean system, help;

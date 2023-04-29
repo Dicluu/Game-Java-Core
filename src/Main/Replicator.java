@@ -1,8 +1,13 @@
 package Main;
 
+import Main.Utils.Annotations.NeedImprovement;
+
 import java.io.*;
 import java.util.Scanner;
 
+@NeedImprovement(comment = "add a locales")
+@NeedImprovement(comment = "add an about")
+@NeedImprovement(comment = "add an ability to change speeches")
 public class Replicator {
 
     static boolean print = false;

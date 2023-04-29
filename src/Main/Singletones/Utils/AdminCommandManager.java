@@ -12,6 +12,7 @@ import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
+import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.Timer;
 
@@ -20,7 +21,12 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * handler of admin commands which written as an answer of GameExecutor's render
+ */
 public class AdminCommandManager {
+
+    @NeedRevision(comment = " ")
     public static void setObject() {
         try {
             Scanner num = new Scanner(System.in);
