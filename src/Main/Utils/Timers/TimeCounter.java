@@ -14,15 +14,18 @@ public class TimeCounter implements Runnable {
     private static boolean active;
     private List<ObjectTimeline> timelines = new ArrayList<>();
 
+    /**
+     * TimeCounter is a manager for timers of objects which was extracted
+     */
     public TimeCounter() {
         this.active = true;
         thread = new Thread(this, "Main.Utils.Timers.TimeCounter");
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
-            Messenger.systemMessage("TimeCounter() interruptedException Catched", this.getClass());
+            Messenger.systemMessage("TimeCounter() interruptedException caught", this.getClass());
         }
-        Messenger.systemMessage("thread has been initializated", this.getClass());
+        Messenger.systemMessage("thread has been initialized", this.getClass());
         thread.start();
     }
 
@@ -44,6 +47,9 @@ public class TimeCounter implements Runnable {
         }
     }
 
+    /**
+     * Parsing all created object timers for relevance and destroy it if false
+     */
     private void touchTimelines() {
         if (timelines.size() > 0) {
             try {

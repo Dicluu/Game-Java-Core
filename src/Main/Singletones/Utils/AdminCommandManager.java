@@ -26,7 +26,7 @@ import java.util.Scanner;
  */
 public class AdminCommandManager {
 
-    @NeedRevision(comment = " ")
+    @NeedRevision(comment = "Make setObject() only for objects and divide Characters and Unique to other methods")
     public static void setObject() {
         try {
             Scanner num = new Scanner(System.in);

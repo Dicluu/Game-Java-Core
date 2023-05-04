@@ -26,6 +26,10 @@ public class ObjectTimeline {
         cell.removeObject(material);
     }
 
+    /**
+     * verifies relevance of object timer
+     * @return result of verifying
+     */
     public boolean touch() {
         Date date = new Date();
         if (date.getTime() > end) {
@@ -37,6 +41,9 @@ public class ObjectTimeline {
         }
     }
 
+    /**
+     * returning object on map
+     */
     private void returnObject() {
         Messenger.systemMessage("Object " + material + " returned on x = " + material.getX() + " y = " + material.getY() );
         map.setObject(material);
