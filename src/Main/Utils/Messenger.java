@@ -46,7 +46,7 @@ public class Messenger {
 
     public static void helpMessage(String message) {
         if (help) {
-            System.out.println(message);
+            System.out.println("[help] " + message);
         }
     }
 

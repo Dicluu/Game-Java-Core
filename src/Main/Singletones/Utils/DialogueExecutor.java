@@ -48,7 +48,11 @@ public class DialogueExecutor {
                 int range = speech.getAnswers().size();
                 while (true) {
                     if ((in <= 0) || (in > range)) {
-                        Messenger.ingameMessage("You wrong number of speech");
+                        if (in == 0) {
+                            Messenger.helpMessage("You exit the dialogue");
+                            return;
+                        }
+                        Messenger.ingameMessage("You wrote wrong number of speech");
                         in = num.nextInt();
                     } else {
                         break;
@@ -85,8 +89,9 @@ public class DialogueExecutor {
 
     private static void help() {
         if (helpFlag) {
-            Messenger.helpMessage("[help] Now you are in dialogue");
-            Messenger.helpMessage("[help] Use numbers to choose an answer");
+            Messenger.helpMessage("Now you are in dialogue");
+            Messenger.helpMessage("Use numbers to choose an answer");
+            Messenger.helpMessage("Write '0' to exit the dialogue");
         }
         helpFlag = false;
     }
