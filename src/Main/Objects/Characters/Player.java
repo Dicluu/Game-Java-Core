@@ -24,13 +24,14 @@ public class Player extends Character{
 
     private String name;
     private static final int ID = 3;
-    private static List<Speech> speeches = PersonLoader.loadSpeeches(-3);
+    private static final int DEFAULT_CID = -3;
+    private static List<Speech> speeches = PersonLoader.loadSpeeches(DEFAULT_CID);
     public Player(String name, int x, int y) {
-        super(name, x, y, ID, 0f);
+        super(name, x, y, ID, 0f, DEFAULT_CID);
         this.name = name;
     }
     public Player() {
-        super("Player");
+        super("Player", DEFAULT_CID);
         Messenger.systemMessage("instance initiated", Player.class);
     }
 

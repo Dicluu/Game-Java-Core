@@ -4,6 +4,7 @@ import Main.Items.Materials.Material;
 import Main.Items.Materials.Materials;
 import Main.Items.Tools.Tool;
 import Main.Items.Tools.Tools;
+import Main.Utils.ItemLoader;
 import Main.Utils.Messenger;
 
 
@@ -16,6 +17,7 @@ public abstract class Item implements Cloneable{
     private String name;
     private static List<Item> instances = new ArrayList<>();
     private static ArrayList<Item> allItems = new ArrayList<>();
+    private int price;
 
     static {
         addEnumsInstances();
@@ -25,6 +27,7 @@ public abstract class Item implements Cloneable{
         this.ID = id;
         this.name = name;
         this.UID = freeID++;
+        this.price = ItemLoader.getItemPrice(ID);
         allItems.add(this);
     }
 
@@ -38,6 +41,10 @@ public abstract class Item implements Cloneable{
 
     public String getName() {
         return name;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public static Item getItemById(int id) {

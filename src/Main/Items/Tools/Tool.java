@@ -27,6 +27,10 @@ public class Tool extends Item {
         return name;
     }
 
+    public void setTier(Tiers tier) {
+        this.tier = tier;
+    }
+
     public float getEfficiency() {
         return tier.getEfficiency();
     }

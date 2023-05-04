@@ -9,6 +9,7 @@ import Main.Objects.Entity;
 import Main.Singletones.Utils.AdminCommandManager;
 import Main.Singletones.Utils.CommandManager;
 import Main.Singletones.Utils.DialogueExecutor;
+import Main.Singletones.Utils.TradeExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 
@@ -105,6 +106,12 @@ public class GameExecutor {
                 case "talk":
                     CommandManager.talk();
                     break;
+                case "trade":
+                    AdminCommandManager.trade(); // only for testing
+                    break;
+                case "animation":
+                    AdminCommandManager.playAnimation(); // only for testing
+                    break;
                 case "show speeches" :
                     AdminCommandManager.showSpeeches();
                     break;
@@ -118,6 +125,10 @@ public class GameExecutor {
 
     public static void initiateDialogue(Character companion, Speech speech) {
         DialogueExecutor.start(GameExecutor.getGame().getCurrentPlayer(), companion, speech);
+    }
+
+    public static void initiateTrade(Character companion) {
+        TradeExecutor.start(GameExecutor.getGame().getCurrentPlayer(), companion);
     }
 
     public void setCurrentPlayer (Player player) {

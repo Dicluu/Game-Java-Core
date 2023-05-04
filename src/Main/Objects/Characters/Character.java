@@ -16,7 +16,12 @@ public abstract class Character extends Entity implements Talkable{
     private float wallet = 0;
     int x, y;
     private static int freeID = 0;
-    private int UID;
+    /*
+    ID - Identifier person's class (Like Dealer, Peasant, etc)
+    UID - Unique ID - auto increment.
+    CID - Character ID - ID from Replicator's list
+     */
+    private int UID, CID;
     private final static int priority = Priority.MAX.toInt();
     private Item[] inventory;
     private final int ID;
@@ -49,25 +54,29 @@ public abstract class Character extends Entity implements Talkable{
         allCharacters.add(this);
     }
 
-    public Character(String name, int x, int y, int id) {
+    public Character(String name, int x, int y, int id, int cid) {
         super(x, y);
         this.name = name;
         this.x = x;
         this.y = y;
         this.ID = id;
+        this.CID = cid;
         this.UID = freeID++;
-        this.inventory = new Item[10];
+        this.inventory = PersonLoader.loadInventory(CID);
+        this.speeches = PersonLoader.loadSpeeches(this.CID);
+        this.introduce = speeches.get(0);
         allCharacters.add(this);
     }
 
 
-    public Character(String name, int x, int y, int id, float wallet) {
+    public Character(String name, int x, int y, int id, float wallet, int CID) {
         super(x, y);
         this.name = name;
         this.x = x;
         this.y = y;
         this.ID = id;
-        this.inventory = new Item[10];
+        this.CID = CID;
+        this.inventory = PersonLoader.loadInventory(CID);
         this.wallet = wallet;
         this.UID = freeID++;
         allCharacters.add(this);
@@ -77,11 +86,14 @@ public abstract class Character extends Entity implements Talkable{
      * Constructor for initializing instances
      * @param name
      */
-    public Character(String name) {
+    public Character(String name, int CID) {
         super();
         this.name = name;
         this.ID = -1;
         this.UID = freeID++;
+        this.speeches = PersonLoader.loadSpeeches(CID);
+        this.introduce = speeches.get(0);
+        this.inventory = PersonLoader.loadInventory(CID);
         allCharacters.add(this);
     }
 
@@ -94,7 +106,6 @@ public abstract class Character extends Entity implements Talkable{
         this.UID = freeID++;
         allCharacters.add(this);
     }
-
     public String getName() {
         return name;
     }
@@ -111,6 +122,9 @@ public abstract class Character extends Entity implements Talkable{
         this.x = x;
     }
 
+    /**
+     * @return UID - Unique ID - auto increment.
+     */
     public int getUID() {
         return UID;
     }
@@ -119,6 +133,16 @@ public abstract class Character extends Entity implements Talkable{
         return y;
     }
 
+    /**
+     * @return CID - Character ID - ID from Replicator's list
+     */
+    public int getCID() {
+        return CID;
+    }
+
+    /**
+     * @return ID - Identifier person's class (Like Dealer, Peasant, etc)
+     */
     @Override
     public int getId() {
         return ID;
@@ -182,6 +206,23 @@ public abstract class Character extends Entity implements Talkable{
                 System.out.print(i + ") " + "- ");
             }
         }
+        System.out.println("");
+    }
+
+    public Item getItem(int idx) {
+        return inventory[idx];
+    }
+
+    public void deleteItemFromInventory(int idx) {
+        inventory[idx] = null;
+    }
+
+    public void addMoney(int value) {
+        this.wallet = wallet + value;
+    }
+
+    public void takeMoney(int value) {
+        this.wallet = wallet - value;
     }
 
     /**
@@ -195,6 +236,7 @@ public abstract class Character extends Entity implements Talkable{
                 System.out.print(i + ") " + "- ");
             }
         }
+        System.out.println("");
     }
     /**
      * shows Hash of things that keeps in inventory
@@ -207,6 +249,7 @@ public abstract class Character extends Entity implements Talkable{
                 System.out.print(i + ") " + "- ");
             }
         }
+        System.out.println("");
     }
 
     /**
@@ -220,6 +263,20 @@ public abstract class Character extends Entity implements Talkable{
                 System.out.print(i + ") " + "- ");
             }
         }
+        System.out.println("");
+    }
+    /**
+     * shows price of things that keeps in inventory
+     */
+    public void showInventoryPrice() {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
+                System.out.print(i + ") " + inventory[i].getPrice() + "$ ");
+            } else {
+                System.out.print(i + ") " + "- ");
+            }
+        }
+        System.out.println("");
     }
 
     /**

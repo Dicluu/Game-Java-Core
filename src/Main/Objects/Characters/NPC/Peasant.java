@@ -1,17 +1,17 @@
 package Main.Objects.Characters.NPC;
 
-import Main.Objects.Characters.Character;
 import Main.Objects.Entity;
 import Main.Utils.Messenger;
 import Main.Utils.PersonLoader;
 
 import java.util.List;
 
-public class Peasant extends Character {
+public class Peasant extends NonPlayerCharacter {
 
     private static final int ID = 7;
-    private static final String name = PersonLoader.loadName(0);
-    private static List<Speech> speeches = PersonLoader.loadSpeeches(0);
+    private static final int DEFAULT_CID = 0;
+    private static final String name = PersonLoader.loadName(DEFAULT_CID);
+    private static List<Speech> speeches = PersonLoader.loadSpeeches(DEFAULT_CID);
 
     static {
         try {
@@ -25,7 +25,7 @@ public class Peasant extends Character {
 
 
     public Peasant() {
-        super("peasant", speeches);
+        super("peasant", DEFAULT_CID);
         Messenger.systemMessage("instance initiated", Peasant.class);
     }
 

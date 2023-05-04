@@ -6,9 +6,11 @@ import Main.Items.Materials.Materials;
 import Main.Items.Tools.Tiers;
 import Main.Items.Tools.Tool;
 import Main.Items.Tools.Tools;
+import Main.Maps.Cell;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
+import Main.Objects.Characters.Talkable;
 import Main.Objects.Entity;
 import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
@@ -166,6 +168,9 @@ public class AdminCommandManager {
         }
     }
 
+    /**
+     * [TESTING] Playing instance with duration in 3 secs
+     */
     public static void playAnimation() {
         Timer timer = new Timer(3000L);
         System.out.println("");
@@ -215,6 +220,25 @@ public class AdminCommandManager {
         } catch (InputMismatchException e) {
             System.out.println("UID is a number");
             Messenger.systemMessage("InputMismatchException in showSpeeches()", AdminCommandManager.class);
+        }
+    }
+
+    /**
+     * [TESTING] Initiate trade around dialogue
+     */
+    public static void trade() {
+        Player cp = GameExecutor.getGame().getCurrentPlayer();;
+        Cell cc = cp.getCurrentCell();
+        Character c = null;
+        for (Entity e : cc.getObjects()) {
+            if (e.getId() == 4) {
+                c = (Character) e;
+            }
+        }
+        if (c != null) {
+            GameExecutor.initiateTrade(c);
+        } else {
+            Messenger.ingameMessage("Here is nothing to trade");
         }
     }
 }

@@ -10,8 +10,9 @@ public class Dealer extends NonPlayerCharacter {
 
 
     private static final int ID = 4;
-    private static final String name = PersonLoader.loadName(-2);
-    private static List<Speech> speeches = PersonLoader.loadSpeeches(-2);
+    public static final int DEFAULT_CID = -2;
+    private final String name = PersonLoader.loadName(-2);
+    private List<Speech> speeches = PersonLoader.loadSpeeches(-2);
 
     static {
         try {
@@ -23,13 +24,20 @@ public class Dealer extends NonPlayerCharacter {
         }
     }
 
+    /**
+     * ONLY FOR INITIALIZING
+     */
     public Dealer() {
-        super("Dealer", speeches);
+        super("Dealer", DEFAULT_CID);
         Messenger.systemMessage("instance initiated", Dealer.class);
     }
 
     public Dealer(String name, int x, int y) {
-        super(name, x, y, ID);
+        super(name, x, y, ID, DEFAULT_CID);
+    }
+
+    public Dealer(String name, int x, int y, int CID) {
+        super(name, x, y, ID, CID);
     }
 
     @Override
@@ -46,4 +54,6 @@ public class Dealer extends NonPlayerCharacter {
     public void talk() {
 
     }
+
+
 }

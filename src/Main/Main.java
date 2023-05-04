@@ -30,6 +30,7 @@ public class Main {
         forest1.add(new Material(3,3, Materials.Tree));
         forest1.add(new Material(3,4, Materials.Tree));
         forest1.add(new Entrance(1,1,1));
+        forest1.add(new Dealer("test",2, 1));
 
         forest2.add(new Material(14,4, Materials.Tree));
         forest2.add(new Material(14,3, Materials.Tree));

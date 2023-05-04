@@ -1,10 +1,11 @@
 package Main.Utils;
 
+import Main.Items.Item;
+import Main.Items.Tools.Tiers;
+import Main.Items.Tools.Tool;
 import Main.Objects.Characters.NPC.Speech;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,49 @@ public class PersonLoader {
             Messenger.systemMessage("Exception loadName()", PersonLoader.class);
             return null;
         }
+    }
+
+    public static Item[] loadInventory(int ID) {
+        List<Item> inv = new ArrayList<>();
+        try {
+            File file = new File("src/Main/Resource/" + ID + "/inventory.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            while(br.ready()) {
+                String arg = br.readLine();
+                String[] item = arg.split(":");
+                if (item.length == 1) {
+                    inv.add(Item.newInstance(Integer.parseInt(item[0])));
+                }
+                if (item.length == 2) {
+                    Tool i = (Tool) Item.newInstance(Integer.parseInt(item[0]));
+                    i.setTier(Tiers.getById(Integer.parseInt(item[1])));
+                    inv.add(i);
+                }
+            }
+            Item[] tr;
+            if (inv.size() > 10) {
+                tr = new Item[inv.size()];
+            }
+            else {
+                tr = new Item[10];
+            }
+            for (int i = 0; i < tr.length; i++) {
+                if (inv.size() == i) {
+                    break;
+                } else {
+                    tr[i] = inv.get(i);
+                }
+            }
+            return tr;
+        }
+        catch (FileNotFoundException e) {
+            Messenger.systemMessage("FileNotFoundException loadInventory()", PersonLoader.class);
+            return new Item[10];
+        }
+        catch (IOException | CloneNotSupportedException e) {
+            Messenger.systemMessage("Exception caught in loadInventory()", PersonLoader.class);
+        }
+        return null;
     }
 
     public static List<Speech> loadSpeeches(int ID) {

@@ -3,6 +3,7 @@ package Main.Singletones.Utils;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player;
+import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 
 import java.util.*;
@@ -31,7 +32,7 @@ public class DialogueExecutor {
         if (speech.isAnswerable()) {
             List<Speech> ps = player.getSpeeches();
             List<Speech> cs = companion.getSpeeches();
-            HashSet<Speech> ws = new HashSet<>();
+            List<Speech> ws = new ArrayList<>();
             for (int i = 0; i < ps.size(); i++) {
                 for (int j = 0; j < speech.getAnswers().size(); j++) {
                     if (ps.get(i).getId() == speech.getAnswers().get(j)) {
@@ -39,8 +40,8 @@ public class DialogueExecutor {
                     }
                 }
             }
-            for (Speech s : ws) {
-                Messenger.ingameMessage((s.getId()) + ") " + s.getSpeech());
+            for (int i = 0; i < ws.size(); i++) {
+                Messenger.ingameMessage(i+1 + ") " + ws.get(i).getSpeech());
             }
             Scanner num = new Scanner(System.in);
             try {
