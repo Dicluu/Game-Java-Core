@@ -169,7 +169,7 @@ public class AdminCommandManager {
     }
 
     /**
-     * [TESTING] Playing instance with duration in 3 secs
+     * [TESTING] Playing instance of animation with duration in 3 secs
      */
     public static void playAnimation() {
         Timer timer = new Timer(3000L);
