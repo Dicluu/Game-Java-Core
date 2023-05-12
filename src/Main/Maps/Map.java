@@ -2,12 +2,15 @@ package Main.Maps;
 
 import Main.Objects.Entity;
 import Main.Objects.Tile.Tile;
+import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public abstract class Map implements Serializable {
 
@@ -15,6 +18,7 @@ public abstract class Map implements Serializable {
     private Cell[][] map;
     private Tile tile;
     private static int freeId;
+    @NeedRevision(comment = "maybe gameExecutor should to store map list")
     private static List<Map> allMaps = new ArrayList<>();
 
 
@@ -106,5 +110,18 @@ public abstract class Map implements Serializable {
             Messenger.systemMessage("InputMismatchException caught in getMapById(int id))", Map.class);
             return null;
         }
+    }
+
+    public static List<Map> getAllMaps() {
+        return allMaps;
+    }
+
+    public static void setAllMaps(List<Map> allMaps) {
+        for (int i = 0; i < allMaps.size(); i++) {
+            if (allMaps.get(i).getId() > freeId) {
+                freeId = allMaps.get(i).getId() + 1;
+            }
+        }
+        Map.allMaps = allMaps;
     }
 }

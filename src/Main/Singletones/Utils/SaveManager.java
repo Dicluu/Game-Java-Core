@@ -1,10 +1,12 @@
 package Main.Singletones.Utils;
 
 import Main.Singletones.GameExecutor;
+import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.Messenger;
 
 import java.io.*;
 
+@NeedImprovement(comment = "make slots for saves")
 public class SaveManager {
 
     public static void save() {
@@ -14,7 +16,6 @@ public class SaveManager {
             oos.writeObject(GameExecutor.getGame());
         }
         catch (Exception e) {
-            e.printStackTrace();
             Messenger.systemMessage("Exception in saveGE", SaveManager.class);
         }
     }

@@ -125,11 +125,12 @@ public class Replicator {
 
     private static void help(int direction) throws IOException {
         File help = null;
-        if (direction == 0) {
-            help = new File("src/Main/Resource/help");
-        }
-        if (direction == 1) {
-            help = new File("src/Main/Resource/commands");
+        switch (direction) {
+            case 0:
+                help = new File("src/Main/Resource/help");
+                break;
+            case 1:
+                help = new File("src/Main/Resource/commands");
         }
         BufferedReader br = new BufferedReader(new FileReader(help));
         while (br.ready()) {

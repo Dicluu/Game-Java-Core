@@ -11,7 +11,9 @@ import Main.Singletones.Utils.*;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 
+import javax.swing.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameExecutor implements Serializable {
@@ -20,6 +22,7 @@ public class GameExecutor implements Serializable {
     private Player currentPlayer;
     private Map currentMap;
     private TimeCounter timecounter;
+    private List<Map> maps;
 
     private GameExecutor() {}
 
@@ -37,6 +40,7 @@ public class GameExecutor implements Serializable {
         Item.showLastInstance();
         Entity.showLastInstance();
         currentMap.showMap();
+        maps = Map.getAllMaps();
         Scanner num = new Scanner(System.in);
         String answer;
         while(true) {
@@ -114,17 +118,15 @@ public class GameExecutor implements Serializable {
                 case "show speeches" :
                     AdminCommandManager.showSpeeches();
                     break;
-                case "getx":
-                    System.out.println(currentPlayer.getX());
-                    break;
                 case "load":
-                    System.out.println(currentPlayer);
                     instanceGame = SaveManager.load();
-                    System.out.println(currentPlayer);
-                    return;
+                    Map.setAllMaps(instanceGame.maps);
+                    Messenger.ingameMessage("last auto-save loaded");
+                    CommandManager.showMap();
+                    break;
                 case "stop":
+                    maps = Map.getAllMaps();
                     SaveManager.save();
-                    Main.stop();
                     return;
                 default:
                     Messenger.ingameMessage("unknown command");
