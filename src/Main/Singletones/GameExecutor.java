@@ -13,6 +13,7 @@ import Main.Utils.Timers.TimeCounter;
 
 import javax.swing.*;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.List;
 import java.util.Scanner;
 
@@ -59,22 +60,22 @@ public class GameExecutor implements Serializable {
                     CommandManager.move("left");
                     break;
                 case "show inv":
-                    CommandManager.showInventory(currentPlayer);
+                    CommandManager.showInventory(GameExecutor.getGame().getCurrentPlayer());
                     break;
                 case "show inv id":
-                    AdminCommandManager.showInventoryId(currentPlayer);
+                    AdminCommandManager.showInventoryId(GameExecutor.getGame().getCurrentPlayer());
                     break;
                 case "show inv hash":
-                    AdminCommandManager.showInventoryHash(currentPlayer);
+                    AdminCommandManager.showInventoryHash(GameExecutor.getGame().getCurrentPlayer());
                     break;
                 case "show inv uid":
-                    AdminCommandManager.showInventoryUID(currentPlayer);
+                    AdminCommandManager.showInventoryUID(GameExecutor.getGame().getCurrentPlayer());
                     break;
                 case "give item":
                     AdminCommandManager.giveItem();
                     break;
                 case "get":
-                    CommandManager.getAction(timecounter);
+                    CommandManager.getAction(GameExecutor.getGame().getTimecounter());
                     break;
                 case "come":
                     CommandManager.come();
@@ -119,10 +120,12 @@ public class GameExecutor implements Serializable {
                     AdminCommandManager.showSpeeches();
                     break;
                 case "load":
+                    TimeCounter.setActive(false);
                     instanceGame = SaveManager.load();
                     Map.setAllMaps(instanceGame.maps);
                     Messenger.ingameMessage("last auto-save loaded");
                     CommandManager.showMap();
+                    instanceGame.timecounter.restart();
                     break;
                 case "stop":
                     maps = Map.getAllMaps();
@@ -157,6 +160,10 @@ public class GameExecutor implements Serializable {
 
     public Map getCurrentMap() {
         return currentMap;
+    }
+
+    public TimeCounter getTimecounter() {
+        return timecounter;
     }
 
     public static void setGame(GameExecutor instanceGame) {

@@ -6,10 +6,11 @@ import Main.Objects.Materials.Material;
 import Main.Utils.Messenger;
 import Main.Utils.Annotations.NeedImprovement;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @NeedImprovement(comment = "serialization for objectTimelines")
-public class ObjectTimeline {
+public class ObjectTimeline implements Serializable {
 
     private Long start, end;
     private Long interval;

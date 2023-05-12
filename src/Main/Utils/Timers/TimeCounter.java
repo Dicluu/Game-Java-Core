@@ -75,4 +75,16 @@ public class TimeCounter implements Runnable, Serializable {
     public static void setActive(boolean active) {
         TimeCounter.active = active;
     }
+
+    public void restart() {
+        active = true;
+        thread = new Thread(this, "Main.Utils.Timers.TimeCounter");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Messenger.systemMessage("TimeCounter() interruptedException caught", this.getClass());
+        }
+        Messenger.systemMessage("thread has been restarted", this.getClass());
+        thread.start();
+    }
 }
