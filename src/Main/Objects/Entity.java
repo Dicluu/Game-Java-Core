@@ -6,10 +6,11 @@ import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
 import Main.Utils.Messenger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity implements Cloneable{
+public abstract class Entity implements Cloneable, Serializable {
     private int x, y;
     private static int freeID;
     private static List<Entity> allEntities = new ArrayList<>();

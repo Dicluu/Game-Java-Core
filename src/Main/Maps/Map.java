@@ -4,11 +4,12 @@ import Main.Objects.Entity;
 import Main.Objects.Tile.Tile;
 import Main.Utils.Messenger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public abstract class Map {
+public abstract class Map implements Serializable {
 
     private int x,y,id;
     private Cell[][] map;

@@ -3,10 +3,11 @@ package Main.Maps;
 import Main.Objects.Entity;
 import Main.Objects.Tile.Tile;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Cell {
+public class Cell implements Serializable {
 
     int x,y;
     Set<Entity> objects = new HashSet<>();

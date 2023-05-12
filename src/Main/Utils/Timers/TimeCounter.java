@@ -4,13 +4,15 @@ import Main.Maps.Cell;
 import Main.Objects.Materials.Material;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
-public class TimeCounter implements Runnable {
+public class TimeCounter implements Runnable, Serializable {
 
-    private Thread thread;
+    private transient Thread thread;
     private static boolean active;
     private List<ObjectTimeline> timelines = new ArrayList<>();
 

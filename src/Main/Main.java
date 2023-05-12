@@ -21,6 +21,7 @@ import java.util.Set;
 
 public class Main {
 
+    private static boolean stop;
     private static Set<Entity> forest1 = new HashSet<>();
     private static Set<Entity> forest2 = new HashSet<>();
 
@@ -50,7 +51,9 @@ public class Main {
         Item.showInstancesSystem();
         GameExecutor.getGame().setCurrentMap(map1);
         GameExecutor.getGame().setCurrentPlayer(new Player("Dicluu",0,1));
-        GameExecutor.getGame().render();
+        while (!stop) {
+            GameExecutor.getGame().render();
+        }
         TimeCounter.setActive(false);
     }
 
@@ -62,5 +65,9 @@ public class Main {
         new Building();
         new Town();
         new Peasant();
+    }
+
+    public static void stop() {
+        stop = true;
     }
 }

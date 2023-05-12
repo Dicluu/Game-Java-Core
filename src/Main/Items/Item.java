@@ -8,10 +8,11 @@ import Main.Utils.ItemLoader;
 import Main.Utils.Messenger;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Item implements Cloneable{
+public abstract class Item implements Cloneable, Serializable {
     private int ID, UID;
     private static int freeID = 0;
     private String name;

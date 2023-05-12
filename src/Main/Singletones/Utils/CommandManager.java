@@ -22,12 +22,11 @@ import java.util.*;
  */
 public class CommandManager {
 
-    private static GameExecutor ge = GameExecutor.getGame();
     private static Scanner num = new Scanner(System.in);
 
     public static void move(String direction) {
-        Player currentPlayer = ge.getCurrentPlayer();
-        Map currentMap = ge.getCurrentMap();
+        Player currentPlayer = GameExecutor.getGame().getCurrentPlayer();
+        Map currentMap = GameExecutor.getGame().getCurrentMap();
         switch (direction) {
             case "up":
                 currentPlayer.setY(currentPlayer.getY() - 1);
@@ -72,8 +71,8 @@ public class CommandManager {
      * renders objects of cell where player located
      */
     public static void renderObjects() {
-        Map cm = ge.getCurrentMap();
-        Player cp = ge.getCurrentPlayer();
+        Map cm = GameExecutor.getGame().getCurrentMap();
+        Player cp = GameExecutor.getGame().getCurrentPlayer();
         Set<Entity> objects = cm.getObjects(cp.getX(), cp.getY());
         boolean isMaterial = false, isEntrance = false;
         for (Entity object : objects) {

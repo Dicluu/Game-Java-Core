@@ -1,21 +1,20 @@
 package Main.Singletones;
 
 import Main.Items.Item;
+import Main.Main;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
-import Main.Singletones.Utils.AdminCommandManager;
-import Main.Singletones.Utils.CommandManager;
-import Main.Singletones.Utils.DialogueExecutor;
-import Main.Singletones.Utils.TradeExecutor;
+import Main.Singletones.Utils.*;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class GameExecutor {
+public class GameExecutor implements Serializable {
 
     private static GameExecutor instanceGame;
     private Player currentPlayer;
@@ -115,7 +114,17 @@ public class GameExecutor {
                 case "show speeches" :
                     AdminCommandManager.showSpeeches();
                     break;
+                case "getx":
+                    System.out.println(currentPlayer.getX());
+                    break;
+                case "load":
+                    System.out.println(currentPlayer);
+                    instanceGame = SaveManager.load();
+                    System.out.println(currentPlayer);
+                    return;
                 case "stop":
+                    SaveManager.save();
+                    Main.stop();
                     return;
                 default:
                     Messenger.ingameMessage("unknown command");
@@ -146,5 +155,9 @@ public class GameExecutor {
 
     public Map getCurrentMap() {
         return currentMap;
+    }
+
+    public static void setGame(GameExecutor instanceGame) {
+        GameExecutor.instanceGame = instanceGame;
     }
 }

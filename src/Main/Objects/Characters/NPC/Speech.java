@@ -1,9 +1,10 @@
 package Main.Objects.Characters.NPC;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Speech {
+public class Speech implements Serializable {
 
     private String speech;
     private boolean isAnswerable;

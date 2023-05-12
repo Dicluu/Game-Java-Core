@@ -8,10 +8,11 @@ import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.PersonLoader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Character extends Entity implements Talkable{
+public abstract class Character extends Entity implements Talkable, Serializable {
     String name;
     private float wallet = 0;
     int x, y;
