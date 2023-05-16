@@ -70,4 +70,26 @@ public class Building extends UniqueEntity implements Enterable {
     public Cell getNode() {
         return node;
     }
+
+    @Override
+    public void setReferMapId(int referId) {
+        this.referId = referId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNode(Cell node) {
+        this.node = node;
+    }
+
+    public static Building loadBuildingFromFile(Building b, String name, int mapID) {
+        b.setName(name);
+        int referId = Map.generateDefaultBuildingFromFile("building", b.getX(), b.getY(), mapID).getId();
+        b.setReferMapId(referId);
+        Cell node = Map.getMapById(referId).getCell(0, 2);
+        b.setNode(node);
+        return b;
+    }
 }

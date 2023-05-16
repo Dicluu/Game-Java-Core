@@ -102,6 +102,7 @@ public abstract class Map implements Serializable {
         return id;
     }
 
+    @NeedRevision(comment = "review auto increment system")
     public static Map getMapById(int id) {
         try {
             return allMaps.get(id);
@@ -135,5 +136,16 @@ public abstract class Map implements Serializable {
                 return l;
         }
         return null;
+    }
+
+    public static Map generateDefaultBuildingFromFile(String name, int x, int y, int mapID) {
+        Location l = new Location(5,5,Tile.ROCK);
+        l.setObject(new Entrance(0, 2, mapID, x, y));
+        return l;
+    }
+
+    public void setUID(int id) {
+        this.id = id;
+        allMaps.put(id, this);
     }
 }

@@ -8,4 +8,8 @@ public class Location extends Map{
         super(x, y, tile);
     }
 
+    public Location (int x, int y, int tileID) {
+        super(x,y, Tile.findById(tileID));
+    }
+
 }

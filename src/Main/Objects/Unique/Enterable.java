@@ -5,4 +5,6 @@ import Main.Maps.Cell;
 public interface Enterable {
     int getReferMapId();
     Cell getNode();
+
+    void setReferMapId(int referMapId);
 }

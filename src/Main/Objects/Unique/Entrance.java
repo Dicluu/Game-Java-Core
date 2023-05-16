@@ -2,9 +2,7 @@ package Main.Objects.Unique;
 
 import Main.Maps.Cell;
 import Main.Maps.Map;
-import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
-import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 
 public class Entrance extends UniqueEntity implements Enterable {
@@ -19,7 +17,7 @@ public class Entrance extends UniqueEntity implements Enterable {
     }
 
     private final int ID = 2;
-    private final int referMapId;
+    private int referMapId;
     private Cell node = null;
     public Entrance(int x, int y, int referMapId) {
         super(x, y);
@@ -62,10 +60,13 @@ public class Entrance extends UniqueEntity implements Enterable {
             return node;
         }
         else {
-            System.out.println(super.getX());
-            System.out.println(super.getY());
             node = Map.getMapById(referMapId).getCell(super.getX(),super.getY());
             return node;
         }
+    }
+
+    @Override
+    public void setReferMapId(int referMapId) {
+        this.referMapId = referMapId;
     }
 }
