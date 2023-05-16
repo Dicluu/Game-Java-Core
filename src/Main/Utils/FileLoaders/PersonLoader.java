@@ -1,9 +1,10 @@
-package Main.Utils;
+package Main.Utils.FileLoaders;
 
 import Main.Items.Item;
 import Main.Items.Tools.Tiers;
 import Main.Items.Tools.Tool;
 import Main.Objects.Characters.NPC.Speech;
+import Main.Utils.Messenger;
 
 import java.io.*;
 import java.util.ArrayList;

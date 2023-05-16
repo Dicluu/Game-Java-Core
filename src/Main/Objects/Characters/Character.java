@@ -6,7 +6,7 @@ import Main.Objects.Entity;
 import Main.Objects.Priority;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
-import Main.Utils.PersonLoader;
+import Main.Utils.FileLoaders.PersonLoader;
 
 import java.io.Serializable;
 import java.util.*;

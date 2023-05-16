@@ -5,10 +5,9 @@ import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Entity;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
-import Main.Utils.PersonLoader;
+import Main.Utils.FileLoaders.PersonLoader;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Player extends Character{
 

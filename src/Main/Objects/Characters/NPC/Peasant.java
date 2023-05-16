@@ -2,10 +2,9 @@ package Main.Objects.Characters.NPC;
 
 import Main.Objects.Entity;
 import Main.Utils.Messenger;
-import Main.Utils.PersonLoader;
+import Main.Utils.FileLoaders.PersonLoader;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Peasant extends NonPlayerCharacter {
 

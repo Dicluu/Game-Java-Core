@@ -1,4 +1,6 @@
-package Main.Utils;
+package Main.Utils.FileLoaders;
+
+import Main.Utils.Messenger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +21,7 @@ public class ItemLoader {
             }
         }
         catch (Exception e) {
-            Messenger.systemMessage("Exception loadName()", PersonLoader.class);
+            Messenger.systemMessage("Exception getItemPrice()", ItemLoader.class);
         }
         return 0;
     }
