@@ -9,7 +9,10 @@ import Main.Objects.Characters.Player;
 import Main.Objects.Characters.Talkable;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
+import Main.Objects.Unique.Building;
+import Main.Objects.Unique.Enterable;
 import Main.Objects.Unique.Entrance;
+import Main.Objects.Unique.UniqueEntity;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
@@ -79,15 +82,15 @@ public class CommandManager {
             if (Material.getMaterialById(object.getId()) != null) {
                 isMaterial = true;
             }
-            if (object.getId() == 2) {
+            if (object instanceof Enterable) {
                 isEntrance = true;
             }
         }
         if (isMaterial) {
-            Messenger.ingameMessage("Here's some materials you can get by command 'get'");
+            Messenger.ingameMessage("Here is some materials you can get by command 'get'");
         }
         if (isEntrance) {
-            Messenger.ingameMessage("Here's portal you can come in by command 'come'");
+            Messenger.ingameMessage("Here is entrance you can come in by command 'come'");
         }
     }
 
@@ -165,10 +168,14 @@ public class CommandManager {
     public static void come() {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Cell cc = cp.getCurrentCell();
+        cc.removeObject(cp);
         for (Entity entity : cc.getObjects()) {
-            if (entity.getId() == 2) {
-                Entrance entrance = (Entrance) entity;
+            if (entity instanceof Enterable) {
+                Enterable entrance = (Enterable) entity;
+                Cell node = entrance.getNode();
                 GameExecutor.getGame().setCurrentMap(Map.getMapById(entrance.getReferMapId()));
+                cp.setX(node.getX());
+                cp.setY(node.getY());
                 GameExecutor.getGame().getCurrentMap().setObject(cp);
                 Messenger.ingameMessage("You moved to new place");
                 Messenger.systemMessage("Map changed to id: " + entrance.getReferMapId());

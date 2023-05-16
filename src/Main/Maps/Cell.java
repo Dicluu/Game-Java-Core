@@ -51,4 +51,12 @@ public class Cell implements Serializable {
     public void removeObject(Entity object) {
         objects.remove(object);
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

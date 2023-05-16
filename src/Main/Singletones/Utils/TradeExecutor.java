@@ -79,6 +79,11 @@ public class TradeExecutor {
             }
             catch (NullPointerException e) {
                 Messenger.systemMessage("NullPointerException in method sell()", TradeExecutor.class);
+                Messenger.helpMessage("You tried to sell the air");
+            }
+            catch (ArrayIndexOutOfBoundsException e) {
+                Messenger.systemMessage("ArrayIndexOutOfBoundsException in method sell()", TradeExecutor.class);
+                Messenger.helpMessage("You wrote wrong number");
             }
         }
     }

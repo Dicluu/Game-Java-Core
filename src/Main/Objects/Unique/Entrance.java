@@ -1,10 +1,13 @@
 package Main.Objects.Unique;
 
+import Main.Maps.Cell;
+import Main.Maps.Map;
 import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
+import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 
-public class Entrance extends UniqueEntity {
+public class Entrance extends UniqueEntity implements Enterable {
     static {
         try {
             Entity.addInstance(2, Entrance.class);
@@ -17,9 +20,16 @@ public class Entrance extends UniqueEntity {
 
     private final int ID = 2;
     private final int referMapId;
+    private Cell node = null;
     public Entrance(int x, int y, int referMapId) {
         super(x, y);
         this.referMapId = referMapId;
+    }
+
+    public Entrance(int x, int y, int referMapId, int xn, int yn) {
+        super(x, y);
+        this.referMapId = referMapId;
+        this.node = Map.getMapById(referMapId).getCell(xn, yn);
     }
 
     public Entrance () {
@@ -34,7 +44,7 @@ public class Entrance extends UniqueEntity {
 
     @Override
     public char getSymbol() {
-        return "E".charAt(0);
+        return "e".charAt(0);
     }
 
     public int getReferMapId() {
@@ -44,5 +54,18 @@ public class Entrance extends UniqueEntity {
     @Override
     public String getName() {
         return "Entrance";
+    }
+
+    @Override
+    public Cell getNode() {
+        if (node != null) {
+            return node;
+        }
+        else {
+            System.out.println(super.getX());
+            System.out.println(super.getY());
+            node = Map.getMapById(referMapId).getCell(super.getX(),super.getY());
+            return node;
+        }
     }
 }

@@ -12,7 +12,9 @@ import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player;
 import Main.Objects.Characters.Talkable;
 import Main.Objects.Entity;
+import Main.Objects.Unique.Building;
 import Main.Objects.Unique.Entrance;
+import Main.Objects.Unique.UniqueEntity;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
@@ -49,8 +51,8 @@ public class AdminCommandManager {
                 throw new ArrayIndexOutOfBoundsException();
             }
             Entity newObject = Entity.getObjectById(id);
-            if (id == 2) {
-                setEntrance(x, y);
+            if (newObject instanceof UniqueEntity) {
+                setEntrance(x, y, newObject);
             } else {
                 newObject.setX(x);
                 newObject.setY(y);
@@ -101,14 +103,31 @@ public class AdminCommandManager {
         return characters;
     }
 
-    public static void setEntrance(int x, int y) {
-        boolean isPortalAlreadyExistOnCell = false;
-        for (Entity entity : GameExecutor.getGame().getCurrentMap().getCell(x, y).getObjects()) {
-            if (entity.getId() == 2) {
-                isPortalAlreadyExistOnCell = true;
+    public static void setEntrance(int x, int y, Entity e) {
+        boolean isUniqueExist = false;
+        Cell cc = GameExecutor.getGame().getCurrentMap().getCell(x,y);
+        for (Entity entity : cc.getObjects()) {
+            if (entity instanceof UniqueEntity) {
+                isUniqueExist = true;
+                break;
             }
         }
-        if (!isPortalAlreadyExistOnCell) {
+        if (!isUniqueExist) {
+            switch (e.getId()) {
+                case 2:
+                    setPortal(x, y);
+                    break;
+                case 5:
+                    setBuilding(x,y);
+                    break;
+            }
+        }
+        else {
+            Messenger.ingameMessage("Unique entity already exist on this cell");
+        }
+    }
+
+    private static void setPortal(int x, int y) {
             Scanner num = new Scanner(System.in);
             Messenger.ingameMessage("Write id map what entrance have to refer");
             int id = num.nextInt();
@@ -116,10 +135,32 @@ public class AdminCommandManager {
                 GameExecutor.getGame().getCurrentMap().setObject(new Entrance(x, y, id));
                 Messenger.ingameMessage("You set portal on x = " + x + " and y = " + y);
             } else {
-                Messenger.ingameMessage("You wrote wrong id");
+                Messenger.ingameMessage("You wrote wrong id of map");
             }
-        } else {
-            Messenger.ingameMessage("Portal is already exist on this cell");
+    }
+
+    private static void setBuilding(int x, int y) {
+        Scanner str = new Scanner(System.in);
+        Scanner num = new Scanner(System.in);
+        Cell cc = GameExecutor.getGame().getCurrentMap().getCell(x,y);
+        Messenger.ingameMessage("Name a building");
+        String name = str.nextLine();
+        Messenger.ingameMessage("Write id map what entrance have to refer or -1 to set default map");
+        try {
+            int id = num.nextInt();
+            if (Map.getMapById(id) != null) {
+                cc.addObject(new Entrance(x, y, id));
+                Messenger.ingameMessage("You set building on x = " + x + " and y = " + y);
+            } else if (id == -1) {
+                cc.addObject(new Building(x, y, name));
+            } else {
+                Messenger.ingameMessage("You wrote wrong id of map");
+                return;
+            }
+        }
+        catch (NumberFormatException e) {
+            Messenger.ingameMessage("You wrote incorrect number");
+            Messenger.systemMessage("NumberFormatException in setBuilding()", AdminCommandManager.class);
         }
     }
 

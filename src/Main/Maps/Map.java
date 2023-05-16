@@ -1,7 +1,10 @@
 package Main.Maps;
 
+import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Tile.Tile;
+import Main.Objects.Unique.Entrance;
+import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
 
@@ -122,10 +125,14 @@ public abstract class Map implements Serializable {
         Map.allMaps = allMaps;
     }
 
-    public static Map generateLocations(String name) {
+    public static Map generateLocations(String name, int x, int y) {
         switch (name) {
             case "building":
-                return new Location(5,5,Tile.ROCK);
+                GameExecutor ge = GameExecutor.getGame();
+                Map cm = ge.getCurrentMap();
+                Location l = new Location(5,5,Tile.ROCK);
+                l.setObject(new Entrance(0, 2, cm.getId(), x, y));
+                return l;
         }
         return null;
     }
