@@ -18,10 +18,7 @@ import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.Timer;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * handler of admin commands which written as an answer of GameExecutor's render
@@ -82,15 +79,16 @@ public class AdminCommandManager {
     }
 
     public static void showCharacters() {
-        List<Character> characters = getCharacters();
+        Set<Character> characters = getCharacters();
         for (Character character : characters) {
             System.out.println(character.getUID() + " " + character.getId() + " " + character);
         }
     }
 
-    protected static List<Character> getCharacters() {
-        List<Entity> entities = Entity.getAllEntities();
-        List<Character> characters = new ArrayList<>();
+    @NeedRevision(comment = "review try-catch structure")
+    protected static Set<Character> getCharacters() {
+        Collection<Entity> entities = Entity.getAllEntities().values();
+        Set<Character> characters = new HashSet<>();
         for (Entity entity : entities) {
             try {
                 Character ce = (Character) entity;
@@ -126,9 +124,12 @@ public class AdminCommandManager {
     }
 
     public static void showAllEntities() {
-        List<Entity> allEntities = Entity.getAllEntities();
+        Collection<Entity> allEntities = Entity.getAllEntities().values();
         for (Entity entity : allEntities) {
-            Messenger.systemMessage(entity.getObjectID() + ") " + entity.getId() + " " + entity.getSymbol() + " " + entity);
+            Messenger.systemMessage(entity.getObjectID() + ") "
+                    + entity.getId() + " "
+                    + entity.getSymbol() + " "
+                    + entity);
         }
     }
 
@@ -211,8 +212,7 @@ public class AdminCommandManager {
                 } else {
                     Messenger.ingameMessage("You wrote wrong id");
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 Messenger.ingameMessage("You wrote id of other object");
                 Messenger.systemMessage("Exception in showSpeeches()", AdminCommandManager.class);
@@ -227,7 +227,8 @@ public class AdminCommandManager {
      * [TESTING] Initiate trade around dialogue
      */
     public static void trade() {
-        Player cp = GameExecutor.getGame().getCurrentPlayer();;
+        Player cp = GameExecutor.getGame().getCurrentPlayer();
+        ;
         Cell cc = cp.getCurrentCell();
         Character c = null;
         for (Entity e : cc.getObjects()) {

@@ -30,8 +30,8 @@ public class DialogueExecutor {
         Messenger.ingameMessage(companion.getName() + ": " + speech.getSpeech());
         help();
         if (speech.isAnswerable()) {
-            List<Speech> ps = player.getSpeeches();
-            List<Speech> cs = companion.getSpeeches();
+            HashMap<Integer, Speech> ps = player.getSpeeches();
+            HashMap<Integer, Speech> cs = companion.getSpeeches();
             List<Speech> ws = new ArrayList<>();
             for (int i = 0; i < ps.size(); i++) {
                 for (int j = 0; j < speech.getAnswers().size(); j++) {
@@ -73,8 +73,8 @@ public class DialogueExecutor {
     }
 
     private static boolean isDialogueExist(Character c) {
-        List<Speech> speeches = c.getSpeeches();
-        for (Speech s : speeches) {
+        HashMap<Integer, Speech> speeches = c.getSpeeches();
+        for (Speech s : speeches.values()) {
             if (s.isAnswerable()) {
                 return true;
             }
@@ -83,7 +83,7 @@ public class DialogueExecutor {
     }
 
     private static void randomizeSpeech() {
-        List<Speech> speeches = companion.getSpeeches();
+        HashMap<Integer, Speech> speeches = companion.getSpeeches();
         int r = (int) (Math.random() * (speeches.size()));
         Messenger.ingameMessage(companion.getName() + ": " + speeches.get(r).getSpeech());
     }

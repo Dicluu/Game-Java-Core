@@ -7,6 +7,7 @@ import Main.Objects.Characters.NPC.Speech;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PersonLoader {
@@ -66,9 +67,9 @@ public class PersonLoader {
         return null;
     }
 
-    public static List<Speech> loadSpeeches(int ID) {
+    public static HashMap<Integer, Speech> loadSpeeches(int ID) {
         try {
-            List<Speech> speeches = new ArrayList<>();
+            HashMap<Integer, Speech> speeches = new HashMap<>();
             File file = new File("src/Main/Resource/" + ID + "/speeches.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));
             while (br.ready()) {
@@ -85,9 +86,9 @@ public class PersonLoader {
                         for (int i = 0; i < strAnswers.length; i++) {
                             answers.add(Integer.parseInt(strAnswers[i]));
                         }
-                        speeches.add(new Speech(speech, true, answers, id));
+                        speeches.put(id,new Speech(speech, true, answers, id));
                     } else {
-                        speeches.add(new Speech(speech, false, id));
+                        speeches.put(id,new Speech(speech, false, id));
                     }
                 } catch (Exception e) {
                     Messenger.systemMessage("Exception in loadPerson()", PersonLoader.class);

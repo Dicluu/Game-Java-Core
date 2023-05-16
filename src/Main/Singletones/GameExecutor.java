@@ -14,6 +14,7 @@ import Main.Utils.Timers.TimeCounter;
 import javax.swing.*;
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class GameExecutor implements Serializable {
     private Player currentPlayer;
     private Map currentMap;
     private TimeCounter timecounter;
-    private List<Map> maps;
+    private HashMap<Integer, Map> maps;
 
     private GameExecutor() {}
 

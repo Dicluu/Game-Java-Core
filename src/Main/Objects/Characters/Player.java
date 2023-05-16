@@ -7,6 +7,7 @@ import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.PersonLoader;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Player extends Character{
@@ -25,7 +26,7 @@ public class Player extends Character{
     private String name;
     private static final int ID = 3;
     private static final int DEFAULT_CID = -3;
-    private static List<Speech> speeches = PersonLoader.loadSpeeches(DEFAULT_CID);
+    private static HashMap<Integer, Speech> speeches = PersonLoader.loadSpeeches(DEFAULT_CID);
     public Player(String name, int x, int y) {
         super(name, x, y, ID, 0f, DEFAULT_CID);
         this.name = name;
@@ -49,7 +50,7 @@ public class Player extends Character{
         return GameExecutor.getGame().getCurrentMap().getCell(x,y);
     }
 
-    public List<Speech> getSpeeches() {
+    public HashMap<Integer, Speech> getSpeeches() {
         return speeches;
     }
 }

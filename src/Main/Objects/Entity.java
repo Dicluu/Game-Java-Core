@@ -7,15 +7,14 @@ import Main.Objects.Materials.Materials;
 import Main.Utils.Messenger;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public abstract class Entity implements Cloneable, Serializable {
     private int x, y;
     private static int freeID;
-    private static List<Entity> allEntities = new ArrayList<>();
+    private static HashMap<Integer, Entity> allEntities = new HashMap<>();
     private int objectID;
-    private static List<Entity> instances = new ArrayList<>();
+    private static HashMap<Integer, Entity>  instances = new HashMap<>();
 
     static {
         addEnumsInstances();
@@ -26,7 +25,7 @@ public abstract class Entity implements Cloneable, Serializable {
         this.y = y;
         this.objectID = freeID;
         freeID++;
-        allEntities.add(this);
+        allEntities.put(objectID, this);
     }
 
     public Entity() {
@@ -62,25 +61,15 @@ public abstract class Entity implements Cloneable, Serializable {
     }
 
     public static Entity getObjectById(int id) {
-        for (Entity entity : instances) {
-            if (entity.getId() == id) {
-                return entity;
-            }
-        }
-        return null;
+        return instances.get(id);
     }
 
-    public static List<Entity> getAllEntities() {
+    public static HashMap<Integer, Entity> getAllEntities() {
         return allEntities;
     }
 
     public static Entity getEntityById(int id) {
-        for (Entity e : allEntities) {
-            if (e.getObjectID() == id) {
-                return e;
-            }
-        }
-         return null;
+         return allEntities.get(id);
     }
 
     /*
@@ -95,12 +84,12 @@ public abstract class Entity implements Cloneable, Serializable {
          */
     private static void addEnumsInstances() {
         for (Materials material : Materials.values()) {
-            instances.add(new Material(0, 0, material));
+            instances.put(material.getId(), new Material(0, 0, material));
         }
     }
 
     public static void addInstance(int id, Class<? extends Entity> clazz) throws InstantiationException, IllegalAccessException {
-        instances.add(clazz.newInstance());
+        instances.put(id, clazz.newInstance());
     }
 
     public void setObjectID(int objectID) {
@@ -109,7 +98,7 @@ public abstract class Entity implements Cloneable, Serializable {
 
     public static void showInstancesSystem() {
         Messenger.systemMessage("isEmpty: " + instances.isEmpty(), Entity.class);
-        for (Entity entity : instances) {
+        for (Entity entity : instances.values()) {
             Messenger.systemMessage("instance id: " + entity.getId() + "; instance name: " + entity.getName(), Entity.class);
         }
     }
@@ -118,7 +107,7 @@ public abstract class Entity implements Cloneable, Serializable {
             Entity entity = (Entity) getObjectById(id).clone();
             ((Character) entity).getInventory();
             entity.setObjectID(freeID++);
-            allEntities.add(entity);
+            allEntities.put(entity.getObjectID(),entity);
             Character.register((Character) entity);
             return entity;
         }
@@ -128,14 +117,14 @@ public abstract class Entity implements Cloneable, Serializable {
         catch (ClassCastException e) {
             Entity entity = (Entity) getObjectById(id).clone();
             entity.setObjectID(freeID++);
-            allEntities.add(entity);
+            allEntities.put(entity.getObjectID(),entity);
             return entity;
         }
         return null;
     }
 
     public static void showInstances() {
-        for (Entity entity : instances) {
+        for (Entity entity : instances.values()) {
             Messenger.helpMessage("id: " + entity.getId() + "; name: " + entity.getName());
         }
     }
@@ -143,6 +132,6 @@ public abstract class Entity implements Cloneable, Serializable {
 
 
     public static void showLastInstance() {
-        Messenger.systemMessage("Last id of Entity instance: " + instances.get(instances.size()-1).getId(), Entity.class);
+        Messenger.systemMessage("Last id of Entity instance: " + instances.get(instances.size()).getId(), Entity.class);
     }
 }

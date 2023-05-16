@@ -6,10 +6,7 @@ import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public abstract class Map implements Serializable {
@@ -19,7 +16,7 @@ public abstract class Map implements Serializable {
     private Tile tile;
     private static int freeId;
     @NeedRevision(comment = "maybe gameExecutor should to store map list")
-    private static List<Map> allMaps = new ArrayList<>();
+    private static HashMap<Integer, Map> allMaps = new HashMap();
 
 
     public Map(int x, int y, Tile tile) {
@@ -30,7 +27,7 @@ public abstract class Map implements Serializable {
         this.id = freeId;
         generateBlank();
         freeId++;
-        allMaps.add(this);
+        allMaps.put(id,this);
     }
 
     public Map(int x, int y, Tile tile, Set<Entity> entities) {
@@ -42,7 +39,7 @@ public abstract class Map implements Serializable {
         generateBlank();
         generateEntities(entities);
         freeId++;
-        allMaps.add(this);
+        allMaps.put(id,this);
     }
 
     private void generateEntities(Set<Entity> entities) {
@@ -112,11 +109,11 @@ public abstract class Map implements Serializable {
         }
     }
 
-    public static List<Map> getAllMaps() {
+    public static HashMap<Integer, Map> getAllMaps() {
         return allMaps;
     }
 
-    public static void setAllMaps(List<Map> allMaps) {
+    public static void setAllMaps(HashMap<Integer, Map> allMaps) {
         for (int i = 0; i < allMaps.size(); i++) {
             if (allMaps.get(i).getId() > freeId) {
                 freeId = allMaps.get(i).getId() + 1;

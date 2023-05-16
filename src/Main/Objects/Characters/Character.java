@@ -9,8 +9,7 @@ import Main.Utils.Messenger;
 import Main.Utils.PersonLoader;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public abstract class Character extends Entity implements Talkable, Serializable {
     String name;
@@ -26,8 +25,8 @@ public abstract class Character extends Entity implements Talkable, Serializable
     private final static int priority = Priority.MAX.toInt();
     private Item[] inventory;
     private final int ID;
-    private static List<Character> allCharacters = new ArrayList<>();
-    private List<Speech> speeches = new ArrayList<>();
+    private static HashMap<Integer, Character> allCharacters = new HashMap();
+    private HashMap<Integer, Speech> speeches = new HashMap<>();
     private Speech introduce;
 
     public Character(String name, int x, int y, int id, Item[] inventory) {
@@ -38,7 +37,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
         this.ID = id;
         this.UID = freeID++;
         this.inventory = inventory;
-        allCharacters.add(this);
+        allCharacters.put(UID, this);
     }
 
     public Character(int x, int y, int ID) {
@@ -52,7 +51,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
             Messenger.systemMessage("Exception Character(int,int,int)", Character.class);
         }
         this.UID = freeID;
-        allCharacters.add(this);
+        allCharacters.put(UID, this);
     }
 
     public Character(String name, int x, int y, int id, int cid) {
@@ -66,7 +65,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
         this.inventory = PersonLoader.loadInventory(CID);
         this.speeches = PersonLoader.loadSpeeches(this.CID);
         this.introduce = speeches.get(0);
-        allCharacters.add(this);
+        allCharacters.put(UID, this);
     }
 
 
@@ -80,7 +79,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
         this.inventory = PersonLoader.loadInventory(CID);
         this.wallet = wallet;
         this.UID = freeID++;
-        allCharacters.add(this);
+        allCharacters.put(UID, this);
     }
 
     /**
@@ -95,17 +94,17 @@ public abstract class Character extends Entity implements Talkable, Serializable
         this.speeches = PersonLoader.loadSpeeches(CID);
         this.introduce = speeches.get(0);
         this.inventory = PersonLoader.loadInventory(CID);
-        allCharacters.add(this);
+        allCharacters.put(UID, this);
     }
 
-    public Character(String name, List<Speech> speeches) {
+    public Character(String name, HashMap<Integer, Speech> speeches) {
         super();
         this.name = name;
         this.speeches = speeches;
         this.introduce = speeches.get(0);
         this.ID = -1;
         this.UID = freeID++;
-        allCharacters.add(this);
+        allCharacters.put(UID, this);
     }
     public String getName() {
         return name;
@@ -149,12 +148,12 @@ public abstract class Character extends Entity implements Talkable, Serializable
         return ID;
     }
 
-    public List<Speech> getSpeeches() {
+    public HashMap<Integer, Speech> getSpeeches() {
         return speeches;
     }
 
     public void showAllSpeeches() {
-        for (Speech s : speeches) {
+        for (Speech s : speeches.values()) {
             Messenger.ingameMessage("[" + s.getId() + "] " + s.getSpeech());
         }
     }
@@ -316,7 +315,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
      */
     public static void register(Character c) {
         c.setUID(freeID++);
-        allCharacters.add(c);
+        allCharacters.put(c.getUID(), c);
     }
 
     /**
