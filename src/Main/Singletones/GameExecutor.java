@@ -25,6 +25,7 @@ public class GameExecutor implements Serializable {
     private Map currentMap;
     private TimeCounter timecounter;
     private HashMap<Integer, Map> maps;
+    private HashMap<Integer, Entity> entities;
 
     private GameExecutor() {}
 
@@ -43,6 +44,7 @@ public class GameExecutor implements Serializable {
         Entity.showLastInstance();
         currentMap.showMap();
         maps = Map.getAllMaps();
+        entities = Entity.getAllEntities();
         Scanner num = new Scanner(System.in);
         String answer;
         while(true) {
@@ -124,13 +126,16 @@ public class GameExecutor implements Serializable {
                     TimeCounter.setActive(false);
                     instanceGame = SaveManager.load();
                     Map.setAllMaps(instanceGame.maps);
+                    Entity.setAllEntities(instanceGame.entities);
                     Messenger.ingameMessage("last auto-save loaded");
                     CommandManager.showMap();
                     instanceGame.timecounter.restart();
                     break;
                 case "stop":
+                    entities = Entity.getAllEntities();
                     maps = Map.getAllMaps();
                     SaveManager.save();
+                    Messenger.ingameMessage("Auto saved confirmed");
                     return;
                 default:
                     Messenger.ingameMessage("unknown command");

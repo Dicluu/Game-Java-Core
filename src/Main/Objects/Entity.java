@@ -134,4 +134,8 @@ public abstract class Entity implements Cloneable, Serializable {
     public static void showLastInstance() {
         Messenger.systemMessage("Last id of Entity instance: " + instances.get(instances.size()).getId(), Entity.class);
     }
+
+    public static void setAllEntities(HashMap<Integer, Entity> entities) {
+        allEntities = entities;
+    }
 }
