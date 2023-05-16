@@ -51,7 +51,7 @@ public abstract class Map implements Serializable {
     public void generateBlank() {
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
-                map[i][j] = new Cell(x,y,tile);
+                map[i][j] = new Cell(j,i,tile);
             }
         }
     }
@@ -84,7 +84,7 @@ public abstract class Map implements Serializable {
     }
 
     public Cell getCell(int x, int y) {
-    return map[y][x];
+        return map[y][x];
     }
 
     public int getX() {
@@ -120,5 +120,13 @@ public abstract class Map implements Serializable {
             }
         }
         Map.allMaps = allMaps;
+    }
+
+    public static Map generateLocations(String name) {
+        switch (name) {
+            case "building":
+                return new Location(5,5,Tile.ROCK);
+        }
+        return null;
     }
 }
