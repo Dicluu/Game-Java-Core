@@ -118,11 +118,7 @@ public abstract class Map implements Serializable {
     }
 
     public static void setAllMaps(HashMap<Integer, Map> allMaps) {
-        for (int i = 0; i < allMaps.size(); i++) {
-            if (allMaps.get(i).getId() > freeId) {
-                freeId = allMaps.get(i).getId() + 1;
-            }
-        }
+        freeId = allMaps.keySet().stream().mapToInt(Integer::intValue).max().getAsInt();
         Map.allMaps = allMaps;
     }
 
