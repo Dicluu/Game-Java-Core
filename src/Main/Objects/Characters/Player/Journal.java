@@ -36,6 +36,7 @@ public class Journal implements Serializable {
         possible.remove(id);
     }
 
+    @NeedRevision(comment = "this method doesn't observe sequence of quests, need to refactor in detached class maybe")
     public static HashMap<Integer, Quest> scanPossible() {
         HashMap<Integer, Character> characters = Character.getAllCharacters();
         HashMap<Integer, Quest> p = new HashMap();

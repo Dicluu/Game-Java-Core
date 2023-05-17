@@ -7,6 +7,7 @@ import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Entity;
 import Main.Singletones.Utils.*;
+import Main.Utils.FileLoaders.ScriptLoader;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 
@@ -122,6 +123,9 @@ public class GameExecutor implements Serializable {
                     break;
                 case "j":
                     CommandManager.showJournal();
+                    break;
+                case "quest":
+                    ScriptLoader.loadQuest(0);
                     break;
                 case "load":
                     TimeCounter.setActive(false);
