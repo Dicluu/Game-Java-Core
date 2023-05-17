@@ -18,7 +18,6 @@ public abstract class Map implements Serializable {
     private Cell[][] map;
     private Tile tile;
     private static int freeId;
-    @NeedRevision(comment = "maybe gameExecutor should to store map list")
     private static HashMap<Integer, Map> allMaps = new HashMap();
 
 
@@ -122,6 +121,13 @@ public abstract class Map implements Serializable {
         Map.allMaps = allMaps;
     }
 
+    /**
+     * generating building from game
+     * @param name
+     * @param x
+     * @param y
+     * @return
+     */
     public static Map generateLocations(String name, int x, int y) {
         switch (name) {
             case "building":
@@ -134,6 +140,14 @@ public abstract class Map implements Serializable {
         return null;
     }
 
+    /**
+     * generating default building from file
+     * @param name
+     * @param x
+     * @param y
+     * @param mapID
+     * @return
+     */
     public static Map generateDefaultBuildingFromFile(String name, int x, int y, int mapID) {
         Location l = new Location(5,5,Tile.ROCK);
         l.setObject(new Entrance(0, 2, mapID, x, y));
