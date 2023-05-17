@@ -1,6 +1,8 @@
 package Main.Objects.Characters.Player;
 
 import Main.Items.Item;
+import Main.Items.Tools.Tiers;
+import Main.Items.Tools.Tool;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Entity;
@@ -77,8 +79,15 @@ public class Action implements Serializable {
     }
 
     public void give(List<String> args) {
+        int ID = Integer.parseInt(args.get(1));
+        int value = Integer.parseInt(args.get(2));
+        Item item = Item.getItemById(ID);
+        if (item instanceof Tool) {
+            int TierID = Integer.parseInt(args.get(3));
+            ((Tool) item).setTier(Tiers.getById(TierID));
+        }
         Player cp = GameExecutor.getGame().getCurrentPlayer();
-        if (cp.putItem(Item.getItemById(Integer.parseInt(args.get(1))))) {
+        if (cp.putItem(item)) {
             done = true;
         }
     }

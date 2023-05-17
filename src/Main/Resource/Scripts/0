@@ -3,7 +3,7 @@ Scene
 Before
 say:hey, you, i need your help, can you please bring me 2 wood?
 say:i'll give my axe
-give:5:1
+give:5:1:2
 During
 have:1:2
 After
