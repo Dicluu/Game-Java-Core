@@ -1,8 +1,9 @@
 package Main.Objects.Characters.Player;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Quest {
+public class Quest implements Serializable {
 
     private String name;
     private int ID;

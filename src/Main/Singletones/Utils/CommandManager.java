@@ -314,5 +314,6 @@ public class CommandManager {
             System.out.println(" ");
         }
         cj.showActive();
+        cj.showPossible();
     }
 }

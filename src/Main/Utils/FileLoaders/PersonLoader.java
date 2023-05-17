@@ -9,6 +9,7 @@ import Main.Utils.Messenger;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class PersonLoader {
@@ -79,7 +80,20 @@ public class PersonLoader {
                     String[] args = line.split(":");
                     int id = Integer.parseInt(args[0]);
                     String speech = args[1];
-                    boolean answerable = Boolean.parseBoolean(args[2]);
+                    boolean answerable = false, quest = false, trade = false;
+                    switch (args[2]) {
+                        case "true":
+                            answerable = true;
+                            break;
+                        case "false":
+                            answerable = false;
+                            break;
+                        case "quest":
+                            quest = true;
+                            break;
+                        case "trade":
+                            trade = true;
+                    }
                     if (answerable) {
                         String rawStrAnswers = args[3];
                         String[] strAnswers = rawStrAnswers.split(",");
@@ -91,8 +105,11 @@ public class PersonLoader {
                     } else {
                         speeches.put(id,new Speech(speech, id));
                     }
-                } catch (Exception e) {
-                    Messenger.systemMessage("Exception in loadPerson()", PersonLoader.class);
+                    if (quest) {
+                        speeches.put(id, new Speech(speech, Integer.parseInt(args[3]), id));
+                    }
+                } catch (InputMismatchException e) {
+                    Messenger.systemMessage("InputMismatchException in loadPerson()", PersonLoader.class);
                 }
             }
             return speeches;
