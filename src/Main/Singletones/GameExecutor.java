@@ -1,21 +1,17 @@
 package Main.Singletones;
 
 import Main.Items.Item;
-import Main.Main;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
-import Main.Objects.Characters.Player;
+import Main.Objects.Characters.Player.Player;
 import Main.Objects.Entity;
 import Main.Singletones.Utils.*;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 
-import javax.swing.*;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class GameExecutor implements Serializable {
@@ -26,6 +22,7 @@ public class GameExecutor implements Serializable {
     private TimeCounter timecounter;
     private HashMap<Integer, Map> maps;
     private HashMap<Integer, Entity> entities;
+    private HashMap<Integer, Character> characters;
 
     private GameExecutor() {}
 
@@ -45,6 +42,7 @@ public class GameExecutor implements Serializable {
         currentMap.showMap();
         maps = Map.getAllMaps();
         entities = Entity.getAllEntities();
+        characters = Character.getAllCharacters();
         Scanner num = new Scanner(System.in);
         String answer;
         while(true) {
@@ -127,6 +125,7 @@ public class GameExecutor implements Serializable {
                     instanceGame = SaveManager.load();
                     Map.setAllMaps(instanceGame.maps);
                     Entity.setAllEntities(instanceGame.entities);
+                    Character.setAllCharacters(instanceGame.characters);
                     Messenger.ingameMessage("last auto-save loaded");
                     CommandManager.showMap();
                     instanceGame.timecounter.restart();
@@ -134,6 +133,7 @@ public class GameExecutor implements Serializable {
                 case "stop":
                     entities = Entity.getAllEntities();
                     maps = Map.getAllMaps();
+                    characters = Character.getAllCharacters();
                     SaveManager.save();
                     Messenger.ingameMessage("Auto saved confirmed");
                     return;

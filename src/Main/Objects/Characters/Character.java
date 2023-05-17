@@ -347,5 +347,11 @@ public abstract class Character extends Entity implements Talkable, Serializable
             GameExecutor.initiateDialogue(c, c.getIntroduce());
     }
 
+    public static HashMap<Integer, Character> getAllCharacters() {
+        return allCharacters;
+    }
 
+    public static void setAllCharacters(HashMap<Integer, Character> characters) {
+        allCharacters = characters;
+    }
 }
