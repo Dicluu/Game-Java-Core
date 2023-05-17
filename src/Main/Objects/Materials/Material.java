@@ -1,7 +1,5 @@
 package Main.Objects.Materials;
 
-import Main.Items.Item;
-import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Priority;
 import Main.Utils.Messenger;

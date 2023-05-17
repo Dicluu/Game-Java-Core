@@ -1,6 +1,5 @@
 package Main.Maps;
 
-import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
 import Main.Objects.Tile.Tile;
 import Main.Objects.Unique.Entrance;
@@ -10,7 +9,6 @@ import Main.Utils.Messenger;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public abstract class Map implements Serializable {
 

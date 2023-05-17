@@ -7,9 +7,9 @@ import java.util.List;
 public class Speech implements Serializable {
 
     private String speech;
-    private boolean isAnswerable;
+    private boolean isAnswerable, isQuest;
     private List<Integer> answers = new ArrayList<>();
-    private int id;
+    private int id, questID;
 
     public Speech(String speech, boolean isAnswerable, List<Integer> answers, int id) {
         this.speech = speech;
@@ -18,14 +18,17 @@ public class Speech implements Serializable {
         this.id = id;
     }
 
-    /**
-     * only if isAnswerable = false
-     * @param speech
-     * @param isAnswerable
-     */
-    public Speech(String speech, boolean isAnswerable, int id) {
+    public Speech(String speech, int id) {
         this.speech = speech;
-        this.isAnswerable = isAnswerable;
+        this.isAnswerable = false;
+        this.id = id;
+    }
+
+    public Speech(String speech, int questID, int id) {
+        this.speech = speech;
+        this.isAnswerable = false;
+        this.isQuest = true;
+        this.questID = questID;
         this.id = id;
     }
 
@@ -43,5 +46,13 @@ public class Speech implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isQuest() {
+        return isQuest;
+    }
+
+    public int getQuestID() {
+        return questID;
     }
 }

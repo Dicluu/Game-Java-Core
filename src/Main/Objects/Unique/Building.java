@@ -3,9 +3,7 @@ package Main.Objects.Unique;
 
 import Main.Maps.Cell;
 import Main.Maps.Map;
-import Main.Objects.Characters.Player;
 import Main.Objects.Entity;
-import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 
 public class Building extends UniqueEntity implements Enterable {

@@ -2,7 +2,7 @@ package Main.Singletones.Utils;
 
 import Main.Items.Item;
 import Main.Objects.Characters.Character;
-import Main.Objects.Characters.Player;
+import Main.Objects.Characters.Player.Player;
 import Main.Utils.Messenger;
 import Main.Utils.FileLoaders.TextReader;
 

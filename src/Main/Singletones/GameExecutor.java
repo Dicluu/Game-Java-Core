@@ -120,6 +120,9 @@ public class GameExecutor implements Serializable {
                 case "show speeches" :
                     AdminCommandManager.showSpeeches();
                     break;
+                case "j":
+                    CommandManager.showJournal();
+                    break;
                 case "load":
                     TimeCounter.setActive(false);
                     instanceGame = SaveManager.load();

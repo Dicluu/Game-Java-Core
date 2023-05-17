@@ -5,14 +5,13 @@ import Main.Items.Tools.Tool;
 import Main.Maps.Map;
 import Main.Maps.Cell;
 import Main.Objects.Characters.Character;
-import Main.Objects.Characters.Player;
+import Main.Objects.Characters.Player.Journal;
+import Main.Objects.Characters.Player.Player;
+import Main.Objects.Characters.Player.Quest;
 import Main.Objects.Characters.Talkable;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
-import Main.Objects.Unique.Building;
 import Main.Objects.Unique.Enterable;
-import Main.Objects.Unique.Entrance;
-import Main.Objects.Unique.UniqueEntity;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
@@ -100,6 +99,7 @@ public class CommandManager {
 
     /**
      * pre-realizes action 'get'
+     *
      * @param timecounter
      * @throws CloneNotSupportedException
      */
@@ -127,6 +127,7 @@ public class CommandManager {
 
     /**
      * realizes action 'get'
+     *
      * @param person
      * @param timecounter
      * @param cc
@@ -254,6 +255,7 @@ public class CommandManager {
 
     /**
      * shows desired tools for extract a resource
+     *
      * @param items
      */
     private static void showDesired(ArrayList<Item> items) {
@@ -267,7 +269,7 @@ public class CommandManager {
         Scanner num = new Scanner(System.in);
         Cell cc = ge.getCurrentPlayer().getCurrentCell();
         Set<Entity> objects = cc.getObjects();
-        List <Character> c = new ArrayList<>();
+        List<Character> c = new ArrayList<>();
         for (Entity e : objects) {
             if (e instanceof Talkable) {
                 c.add((Character) e);
@@ -282,23 +284,35 @@ public class CommandManager {
         }
         if (c.size() > 1) {
             Messenger.ingameMessage("Here is more than 1 character, choose which one you want to talk");
-            for (int i = 1; i < c.size()+1; i++) {
-                Messenger.ingameMessage(i + ") " + c.get(i-1).getName());
+            for (int i = 1; i < c.size() + 1; i++) {
+                Messenger.ingameMessage(i + ") " + c.get(i - 1).getName());
             }
             Messenger.helpMessage("Write ID of character");
             try {
                 int in = num.nextInt();
-                Character ccr = c.get(in-1);
+                Character ccr = c.get(in - 1);
                 ccr.talk(ccr);
             } catch (InputMismatchException ime) {
                 Messenger.ingameMessage("ID must be a number");
                 Messenger.systemMessage("InputMismatchException caught in talk()", CommandManager.class);
-            }
-            catch (IndexOutOfBoundsException ibe) {
+            } catch (IndexOutOfBoundsException ibe) {
                 Messenger.ingameMessage("Character with this ID doesn't exist");
                 Messenger.systemMessage("IndexOutOfBoundsException caught in talk()", CommandManager.class);
             }
         }
+    }
 
+    public static void showJournal() {
+        Player cp = GameExecutor.getGame().getCurrentPlayer();
+        Journal cj = cp.getJournal();
+        HashMap<Integer, Quest> p = cj.getPassed();
+        Messenger.ingameMessage("passed quests: ");
+        for (Quest q : p.values()) {
+            for (int i = 0; i < 5; i++) {
+                System.out.print(q.getID() + ") " + q.getName() + ". ");
+            }
+            System.out.println(" ");
+        }
+        cj.showActive();
     }
 }

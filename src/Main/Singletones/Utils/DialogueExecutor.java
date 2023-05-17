@@ -2,8 +2,7 @@ package Main.Singletones.Utils;
 
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
-import Main.Objects.Characters.Player;
-import Main.Singletones.GameExecutor;
+import Main.Objects.Characters.Player.Player;
 import Main.Utils.Messenger;
 
 import java.util.*;

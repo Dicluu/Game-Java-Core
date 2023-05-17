@@ -89,7 +89,7 @@ public class PersonLoader {
                         }
                         speeches.put(id,new Speech(speech, true, answers, id));
                     } else {
-                        speeches.put(id,new Speech(speech, false, id));
+                        speeches.put(id,new Speech(speech, id));
                     }
                 } catch (Exception e) {
                     Messenger.systemMessage("Exception in loadPerson()", PersonLoader.class);
