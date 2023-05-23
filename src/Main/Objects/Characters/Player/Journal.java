@@ -1,16 +1,11 @@
 package Main.Objects.Characters.Player;
 
-import Main.Objects.Characters.Character;
-import Main.Objects.Characters.NPC.Speech;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
 
 import java.io.Serializable;
-import java.security.cert.PolicyQualifierInfo;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Journal implements Serializable {
 
@@ -36,18 +31,8 @@ public class Journal implements Serializable {
         possible.remove(id);
     }
 
-    @NeedRevision(comment = "this method doesn't observe sequence of quests, need to refactor in detached class maybe")
-    public static HashMap<Integer, Quest> scanPossible() {
-        HashMap<Integer, Character> characters = Character.getAllCharacters();
-        HashMap<Integer, Quest> p = new HashMap();
-        for (Character c : characters.values()) {
-            for (Speech s : c.getSpeeches().values()) {
-                if (s.isQuest()) {
-                    p.put(s.getQuestID(), Quest.getQuestById(s.getQuestID()));
-                }
-            }
-        }
-        return p;
+    private HashMap<Integer, Quest> scanPossible() {
+        return GameExecutor.getGame().getQuestLineManager().getAvailable();
     }
 
     public HashMap<Integer, Quest> getPassed() {
@@ -57,7 +42,7 @@ public class Journal implements Serializable {
     public void showPossible() {
         possible = scanPossible();
         Messenger.ingameMessage("possible quests: ");
-        for (Quest q : active.values()) {
+        for (Quest q : possible.values()) {
             Messenger.ingameMessage(q.getID() + ") " + q.getName());
         }
     }

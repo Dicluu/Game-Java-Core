@@ -39,6 +39,9 @@ public class Dealer extends NonPlayerCharacter {
     public Dealer(String name, int x, int y, int CID) {
         super(name, x, y, ID, CID);
     }
+    public Dealer(String name, int x, int y, int CID, int questID) {
+        super(name, x, y, ID, CID, questID);
+    }
 
     @Override
     public char getSymbol() {

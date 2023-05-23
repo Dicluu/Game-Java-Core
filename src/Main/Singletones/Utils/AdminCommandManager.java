@@ -4,6 +4,7 @@ import Main.Items.Item;
 import Main.Maps.Cell;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
+import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Entity;
 import Main.Objects.Unique.Building;
@@ -263,7 +264,6 @@ public class AdminCommandManager {
      */
     public static void trade() {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
-        ;
         Cell cc = cp.getCurrentCell();
         Character c = null;
         for (Entity e : cc.getObjects()) {
@@ -275,6 +275,22 @@ public class AdminCommandManager {
             GameExecutor.initiateTrade(c);
         } else {
             Messenger.ingameMessage("Here is nothing to trade");
+        }
+    }
+    /**
+     * [TESTING] Initiate quest around dialogue
+     */
+    public static void initiateQuestLine() {
+        Player cp = GameExecutor.getGame().getCurrentPlayer();
+        Cell cc = cp.getCurrentCell();
+        NonPlayerCharacter c = null;
+        for (Entity e : cc.getObjects()) {
+            if (e instanceof NonPlayerCharacter) {
+                c = (NonPlayerCharacter) e;
+            }
+        }
+        if (c != null) {
+            GameExecutor.getGame().initiateQuestLine(c.getQuest());
         }
     }
 }

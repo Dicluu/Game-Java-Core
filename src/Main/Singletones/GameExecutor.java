@@ -5,6 +5,7 @@ import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player.Player;
+import Main.Objects.Characters.Player.Quest;
 import Main.Objects.Entity;
 import Main.Singletones.Utils.*;
 import Main.Utils.FileLoaders.ScriptLoader;
@@ -24,6 +25,7 @@ public class GameExecutor implements Serializable {
     private HashMap<Integer, Map> maps;
     private HashMap<Integer, Entity> entities;
     private HashMap<Integer, Character> characters;
+    private QuestLineManager qm;
 
     private GameExecutor() {}
 
@@ -44,6 +46,8 @@ public class GameExecutor implements Serializable {
         maps = Map.getAllMaps();
         entities = Entity.getAllEntities();
         characters = Character.getAllCharacters();
+        qm = new QuestLineManager();
+        initiateQuestLine(QuestLineManager.getQuestById(0));
         Scanner num = new Scanner(System.in);
         String answer;
         while(true) {
@@ -127,12 +131,16 @@ public class GameExecutor implements Serializable {
                 case "quest":
                     ScriptLoader.loadQuest(0);
                     break;
+                case "start quest":
+
+                    break;
                 case "load":
                     TimeCounter.setActive(false);
                     instanceGame = SaveManager.load();
                     Map.setAllMaps(instanceGame.maps);
                     Entity.setAllEntities(instanceGame.entities);
                     Character.setAllCharacters(instanceGame.characters);
+                    instanceGame.qm = qm;
                     Messenger.ingameMessage("last auto-save loaded");
                     CommandManager.showMap();
                     instanceGame.timecounter.restart();
@@ -158,6 +166,10 @@ public class GameExecutor implements Serializable {
         TradeExecutor.start(GameExecutor.getGame().getCurrentPlayer(), companion);
     }
 
+    public void initiateQuestLine(Quest quest) {
+        qm.startQuestLine(quest);
+    }
+
     public void setCurrentPlayer (Player player) {
         currentMap.setObject(player);
         this.currentPlayer = player;
@@ -177,6 +189,10 @@ public class GameExecutor implements Serializable {
 
     public TimeCounter getTimecounter() {
         return timecounter;
+    }
+
+    public QuestLineManager getQuestLineManager() {
+        return qm;
     }
 
     public static void setGame(GameExecutor instanceGame) {
