@@ -20,8 +20,10 @@ public class Action implements Serializable {
     private boolean done = false;
     private Method method;
     private List<String> args;
+    private Quest quest;
 
-    public Action(String... a) {
+    public Action(Quest quest, String... a) {
+        this.quest = quest;
         args = Arrays.asList(a);
         try {
             switch (args.get(0)) {
@@ -108,7 +110,7 @@ public class Action implements Serializable {
     }
 
     public void say(List<String> args) {
-        NonPlayerCharacter c = (NonPlayerCharacter) Entity.getEntityById(Integer.parseInt(args.get(0)));
+        NonPlayerCharacter c = quest.getOwner();
         Messenger.ingameMessage(c.getName() + ": " + args.get(2));
         done = true;
     }

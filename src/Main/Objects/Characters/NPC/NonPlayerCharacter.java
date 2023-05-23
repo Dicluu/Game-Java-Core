@@ -21,6 +21,7 @@ public abstract class NonPlayerCharacter extends Character {
     public NonPlayerCharacter(String name, int x, int y, int id, int cid, int questID) {
         super(name, x, y, id, cid);
         quest = QuestLineManager.getQuestById(questID);
+        quest.setOwner(this);
     }
 
     public Quest getQuest() {

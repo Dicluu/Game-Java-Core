@@ -38,7 +38,7 @@ public class Quest implements Serializable {
 
     public void putActionBefore(String... args) {
         try {
-            before.add(new Action(args));
+            before.add(new Action(this, args));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -46,11 +46,11 @@ public class Quest implements Serializable {
     }
 
     public void putActionDuring(String... args) {
-        during.add(new Action(args));
+        during.add(new Action(this, args));
     }
 
     public void putActionAfter(String... args) {
-        after.add(new Action(args));
+        after.add(new Action(this, args));
     }
 
     public void setLink(int id) {
@@ -67,5 +67,13 @@ public class Quest implements Serializable {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public NonPlayerCharacter getOwner() {
+        return owner;
+    }
+
+    public void setOwner(NonPlayerCharacter owner) {
+        this.owner = owner;
     }
 }
