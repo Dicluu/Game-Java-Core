@@ -242,7 +242,6 @@ public class CommandManager {
             showDesired(desired);
             try {
                 id = num.nextInt();
-                System.out.println(desired.get(id - 1).getUID());
                 return (Tool) desired.get(id - 1);
             } catch (InputMismatchException | ArrayIndexOutOfBoundsException | NullPointerException ae) {
                 Messenger.systemMessage("Exception in method chooseTool() catch", CommandManager.class);
