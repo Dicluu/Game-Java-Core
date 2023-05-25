@@ -4,11 +4,12 @@ import Main.Items.Item;
 import Main.Objects.Characters.Character;
 import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
+import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.Messenger;
 
 import java.io.Serializable;
 import java.util.*;
-
+@NeedImprovement(comment = "make a variable 'description' and add methods to show description")
 public abstract class Entity implements Cloneable, Serializable {
     private int x, y;
     private static int freeID;

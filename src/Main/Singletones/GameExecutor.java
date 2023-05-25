@@ -8,6 +8,7 @@ import Main.Objects.Characters.Player.Player;
 import Main.Objects.Characters.Player.Quest;
 import Main.Objects.Entity;
 import Main.Singletones.Utils.*;
+import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.FileLoaders.ScriptLoader;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
@@ -37,6 +38,7 @@ public class GameExecutor implements Serializable {
     }
 
 
+    @NeedImprovement(comment = "make a command 'inspect' that will provide description of a entity")
     public void render() throws InterruptedException, CloneNotSupportedException {
         timecounter = new TimeCounter();
         Thread.sleep(10);
