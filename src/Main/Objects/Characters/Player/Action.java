@@ -21,6 +21,10 @@ public class Action implements Serializable {
     private Method method;
     private List<String> args;
     private Quest quest;
+    private final Class clazz = this.getClass();
+
+    public Action() {
+    }
 
     public Action(Quest quest, String... a) {
         this.quest = quest;
@@ -31,23 +35,29 @@ public class Action implements Serializable {
                     method = Action.class.getMethod("remove", List.class);
                     break;
                 case "have":
-                    method = Action.class.getMethod("have", String[].class);
+                    method = Action.class.getMethod("have", List.class);
+                    break;
+                case "say":
+                    method = Action.class.getMethod("say", List.class);
+                    break;
+                case "give":
+                    method = Action.class.getMethod("give", List.class);
                     break;
             }
         }
         catch (NoSuchMethodException e) {
             Messenger.systemMessage("NoSuchMethodException caught in Action() constructor", Action.class);
         }
-    }
+        }
 
-    public void execute() {
-        try {
-            method.invoke(args);
-        } catch (InvocationTargetException e) {
+        public void execute() {
+            try {
+                method.invoke(this, args);
+            } catch (InvocationTargetException e) {
             Messenger.systemMessage("InvocationTargetException caught in execute()", Action.class);
         } catch (IllegalAccessException e) {
-            Messenger.systemMessage("IllegalAccessException caught in execute()", Action.class);
-        }
+                Messenger.systemMessage("IllegalAccessException caught in execute()", Action.class);
+            }
     }
 
     public void remove(List<String> args) {
@@ -111,7 +121,7 @@ public class Action implements Serializable {
 
     public void say(List<String> args) {
         NonPlayerCharacter c = quest.getOwner();
-        Messenger.ingameMessage(c.getName() + ": " + args.get(2));
+        Messenger.ingameMessage(c.getName() + ": " + args.get(1));
         done = true;
     }
 

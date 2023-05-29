@@ -28,11 +28,18 @@ public class GameExecutor implements Serializable {
     private HashMap<Integer, Character> characters;
     private QuestLineManager qm;
 
-    private GameExecutor() {}
+    private GameExecutor() {
+        maps = Map.getAllMaps();
+        entities = Entity.getAllEntities();
+        characters = Character.getAllCharacters();
+        qm = new QuestLineManager();
+        initiateQuestLine(QuestLineManager.getQuestById(0));
+    }
 
     public static GameExecutor getGame() {
         if (instanceGame == null) {
             instanceGame = new GameExecutor();
+
         }
         return instanceGame;
     }
@@ -45,11 +52,6 @@ public class GameExecutor implements Serializable {
         Item.showLastInstance();
         Entity.showLastInstance();
         currentMap.showMap();
-        maps = Map.getAllMaps();
-        entities = Entity.getAllEntities();
-        characters = Character.getAllCharacters();
-        qm = new QuestLineManager();
-        initiateQuestLine(QuestLineManager.getQuestById(0));
         Scanner num = new Scanner(System.in);
         String answer;
         while(true) {

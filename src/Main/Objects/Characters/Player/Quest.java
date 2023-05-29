@@ -1,6 +1,7 @@
 package Main.Objects.Characters.Player;
 
 import Main.Objects.Characters.NPC.NonPlayerCharacter;
+import Main.Singletones.GameExecutor;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -11,10 +12,14 @@ public class Quest implements Serializable {
     private String name;
     private NonPlayerCharacter owner;
     private int ID, link = -1;
-    private boolean complete, available;
+    private boolean complete, available, active;
     private List<Action> before = new LinkedList<>();
     private List<Action> during = new LinkedList<>();
     private List<Action> after = new LinkedList<>();
+
+    public Quest(int ID) {
+        this.ID = ID;
+    }
 
     public int getID() {
         return ID;
@@ -75,5 +80,26 @@ public class Quest implements Serializable {
 
     public void setOwner(NonPlayerCharacter owner) {
         this.owner = owner;
+    }
+
+    public void initiate() {
+        if(!isActive()) {
+            Player player = GameExecutor.getGame().getCurrentPlayer();
+            Journal journal = player.getJournal();
+            journal.proceed(this.ID);
+            for (Action a : before) {
+                a.execute();
+            }
+            setActive(true);
+            setAvailable(false);
+        }
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

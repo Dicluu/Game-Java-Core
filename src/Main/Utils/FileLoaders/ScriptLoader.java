@@ -14,7 +14,7 @@ public class ScriptLoader {
 
     @NeedImprovement(comment = "make link args as array for improve branching quest lines")
     public static Quest loadQuest(int ID) {
-        Quest q = new Quest();
+        Quest q = new Quest(ID);
         String str = "", tmp;
         try {
             File file = new File("src/Main/Resource/Scripts/" + ID);

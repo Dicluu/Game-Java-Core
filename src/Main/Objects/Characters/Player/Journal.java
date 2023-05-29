@@ -14,6 +14,10 @@ public class Journal implements Serializable {
     HashMap<Integer, Quest> possible = new HashMap();
     HashMap<Integer, Quest> active = new HashMap<>();
 
+    public Journal() {
+        possible = scanPossible();
+    }
+
     public void showActive() {
         Messenger.ingameMessage("active quests: ");
         for (Quest q : active.values()) {

@@ -41,8 +41,10 @@ public class QuestLineManager implements Serializable {
         HashMap<Integer, Quest> available = new HashMap<>();
         int count = 0;
         for (QuestLine q: lines.values()) {
-                available.put(count,q.getAvailable());
+            if (q.getAvailable() != null) {
+                available.put(count, q.getAvailable());
                 count++;
+            }
         }
         return available;
     }

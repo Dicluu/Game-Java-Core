@@ -4,6 +4,7 @@ import Main.Maps.Cell;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Entity;
+import Main.Objects.Priority;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 import Main.Utils.FileLoaders.PersonLoader;
@@ -11,6 +12,8 @@ import Main.Utils.FileLoaders.PersonLoader;
 import java.util.HashMap;
 
 public class Player extends Character {
+
+
 
 
     static {
@@ -59,5 +62,10 @@ public class Player extends Character {
 
     public HashMap<Integer, Speech> getSpeeches() {
         return speeches;
+    }
+
+    @Override
+    public int getPriority() {
+        return Priority.MAX.toInt()+1;
     }
 }
