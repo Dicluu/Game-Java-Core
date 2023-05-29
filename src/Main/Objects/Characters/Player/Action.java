@@ -22,31 +22,33 @@ public class Action implements Serializable {
     private String rawMethod;
     private List<String> args;
     private Quest quest;
-    private final Class clazz = this.getClass();
-
-    public Action() {
-    }
 
     public Action(Quest quest, String... a) {
         this.quest = quest;
         args = Arrays.asList(a);
         rawMethod = args.get(0);
         try {
-            analyzeMethod(rawMethod);
-        }
-        catch (NoSuchMethodException e) {
+            method = analyzeMethod(rawMethod);
+        } catch (NoSuchMethodException e) {
             Messenger.systemMessage("NoSuchMethodException caught in Action() constructor", Action.class);
         }
-        }
+    }
 
-        public void execute() {
-            try {
+    public void execute() {
+        try {
+            if (method != null) {
                 method.invoke(this, args);
-            } catch (InvocationTargetException e) {
+            } else {
+                method = analyzeMethod(rawMethod);
+                method.invoke(this, args);
+            }
+        } catch (InvocationTargetException e) {
             Messenger.systemMessage("InvocationTargetException caught in execute()", Action.class);
         } catch (IllegalAccessException e) {
-                Messenger.systemMessage("IllegalAccessException caught in execute()", Action.class);
-            }
+            Messenger.systemMessage("IllegalAccessException caught in execute()", Action.class);
+        } catch (NoSuchMethodException e) {
+            Messenger.systemMessage("NoSuchMethodException caught in execute()", Action.class);
+        }
     }
 
     public void remove(List<String> args) {
@@ -135,7 +137,7 @@ public class Action implements Serializable {
         }
     }
 
-    public void analyzeMethod(String rawMethod) throws NoSuchMethodException {
+    public Method analyzeMethod(String rawMethod) throws NoSuchMethodException {
         switch (rawMethod) {
             case "remove":
                 method = Action.class.getMethod("remove", List.class);
@@ -150,5 +152,6 @@ public class Action implements Serializable {
                 method = Action.class.getMethod("give", List.class);
                 break;
         }
+        return method;
     }
 }
