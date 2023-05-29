@@ -18,7 +18,8 @@ import java.util.List;
 public class Action implements Serializable {
 
     private boolean done = false;
-    private Method method;
+    private transient Method method;
+    private String rawMethod;
     private List<String> args;
     private Quest quest;
     private final Class clazz = this.getClass();
@@ -29,21 +30,9 @@ public class Action implements Serializable {
     public Action(Quest quest, String... a) {
         this.quest = quest;
         args = Arrays.asList(a);
+        rawMethod = args.get(0);
         try {
-            switch (args.get(0)) {
-                case "remove":
-                    method = Action.class.getMethod("remove", List.class);
-                    break;
-                case "have":
-                    method = Action.class.getMethod("have", List.class);
-                    break;
-                case "say":
-                    method = Action.class.getMethod("say", List.class);
-                    break;
-                case "give":
-                    method = Action.class.getMethod("give", List.class);
-                    break;
-            }
+            analyzeMethod(rawMethod);
         }
         catch (NoSuchMethodException e) {
             Messenger.systemMessage("NoSuchMethodException caught in Action() constructor", Action.class);
@@ -143,6 +132,23 @@ public class Action implements Serializable {
             return;
         } else {
             done = true;
+        }
+    }
+
+    public void analyzeMethod(String rawMethod) throws NoSuchMethodException {
+        switch (rawMethod) {
+            case "remove":
+                method = Action.class.getMethod("remove", List.class);
+                break;
+            case "have":
+                method = Action.class.getMethod("have", List.class);
+                break;
+            case "say":
+                method = Action.class.getMethod("say", List.class);
+                break;
+            case "give":
+                method = Action.class.getMethod("give", List.class);
+                break;
         }
     }
 }
