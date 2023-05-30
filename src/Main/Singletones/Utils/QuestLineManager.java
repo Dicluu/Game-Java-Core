@@ -1,5 +1,6 @@
 package Main.Singletones.Utils;
 
+import Main.Objects.Characters.Player.Journal;
 import Main.Objects.Characters.Player.Quest;
 import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.FileLoaders.ScriptLoader;
@@ -61,6 +62,16 @@ public class QuestLineManager implements Serializable {
             }
         }
         return null;
+    }
+
+    public void touchQuests(Journal journal) {
+        for (Quest q : journal.getActive().values()) {
+            if (q.touch()) {
+                journal.complete(q.getID());
+            } else if (q.isComplete()) {
+                journal.rollback(q.getID());
+            }
+        }
     }
 
 

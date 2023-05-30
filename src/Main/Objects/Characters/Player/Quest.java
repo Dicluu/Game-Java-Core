@@ -83,7 +83,7 @@ public class Quest implements Serializable {
     }
 
     public void initiate() {
-        if(!isActive()) {
+        if(isAvailable()) {
             Player player = GameExecutor.getGame().getCurrentPlayer();
             Journal journal = player.getJournal();
             journal.proceed(this.ID);
@@ -93,6 +93,24 @@ public class Quest implements Serializable {
             setActive(true);
             setAvailable(false);
         }
+    }
+
+    public boolean touch() {
+        for (Action a : during) {
+            a.execute();
+            if (!a.isDone()) {
+                if (complete) {
+                    setActive(true);
+                    setComplete(false);
+                }
+                return false;
+            }
+        }
+        if (active) {
+            setActive(false);
+            setComplete(true);
+        }
+        return true;
     }
 
     public boolean isActive() {

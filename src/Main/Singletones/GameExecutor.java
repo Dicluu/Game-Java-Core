@@ -47,6 +47,8 @@ public class GameExecutor implements Serializable {
 
 
     @NeedRevision(comment = "review case \"load\" ")
+    @NeedRevision(comment = "review initiateQuest() because it's initiating already passed quests")
+    @NeedRevision(comment = "make speeches unavailable after initiating quest")
     @NeedImprovement(comment = "make a command 'inspect' that will provide description of a entity")
     public void render() throws InterruptedException, CloneNotSupportedException {
         timecounter = new TimeCounter();
@@ -57,6 +59,7 @@ public class GameExecutor implements Serializable {
         Scanner num = new Scanner(System.in);
         String answer;
         while(true) {
+            qm.touchQuests(GameExecutor.getGame().getCurrentPlayer().getJournal());
             answer = num.nextLine();
             switch(answer) {
                 case "w":
