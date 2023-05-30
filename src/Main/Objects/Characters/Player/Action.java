@@ -22,10 +22,6 @@ public class Action implements Serializable {
     private String rawMethod;
     private List<String> args;
     private Quest quest;
-    private final Class clazz = this.getClass();
-
-    public Action() {
-    }
 
     public Action(Quest quest, String... a) {
         this.quest = quest;
