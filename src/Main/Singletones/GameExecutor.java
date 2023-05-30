@@ -9,6 +9,7 @@ import Main.Objects.Characters.Player.Quest;
 import Main.Objects.Entity;
 import Main.Singletones.Utils.*;
 import Main.Utils.Annotations.NeedImprovement;
+import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.FileLoaders.ScriptLoader;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
@@ -45,6 +46,7 @@ public class GameExecutor implements Serializable {
     }
 
 
+    @NeedRevision(comment = "review case \"load\" ")
     @NeedImprovement(comment = "make a command 'inspect' that will provide description of a entity")
     public void render() throws InterruptedException, CloneNotSupportedException {
         timecounter = new TimeCounter();
@@ -144,7 +146,7 @@ public class GameExecutor implements Serializable {
                     Map.setAllMaps(instanceGame.maps);
                     Entity.setAllEntities(instanceGame.entities);
                     Character.setAllCharacters(instanceGame.characters);
-                    instanceGame.qm = qm;
+                    qm = instanceGame.qm;
                     Messenger.ingameMessage("last auto-save loaded");
                     CommandManager.showMap();
                     instanceGame.timecounter.restart();
