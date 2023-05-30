@@ -19,10 +19,28 @@ public class Journal implements Serializable {
     }
 
     public void showActive() {
-        Messenger.ingameMessage("active quests: ");
+        System.out.print(("active quests: "));
         for (Quest q : active.values()) {
-            Messenger.ingameMessage(q.getID() + ") " + q.getName());
+            System.out.print((q.getID() + ") " + q.getName() + "; "));
         }
+        System.out.println();
+    }
+
+    public void showPassed() {
+        System.out.print(("complete quests: "));
+        for (Quest q : passed.values()) {
+            System.out.print((q.getID() + ") " + q.getName() + "; "));
+        }
+        System.out.println();
+    }
+
+    public void showPossible() {
+        possible = scanPossible();
+        System.out.print(("possible quests: "));
+        for (Quest q : possible.values()) {
+            System.out.print((q.getID() + ") " + q.getName() + "; "));
+        }
+
     }
 
     public void complete(int id) {
@@ -35,6 +53,11 @@ public class Journal implements Serializable {
         possible.remove(id);
     }
 
+    public void rollback(int id) {
+        active.put(id, passed.get(id));
+        passed.remove(id);
+    }
+
     private HashMap<Integer, Quest> scanPossible() {
         return GameExecutor.getGame().getQuestLineManager().getAvailable();
     }
@@ -43,11 +66,9 @@ public class Journal implements Serializable {
         return passed;
     }
 
-    public void showPossible() {
-        possible = scanPossible();
-        Messenger.ingameMessage("possible quests: ");
-        for (Quest q : possible.values()) {
-            Messenger.ingameMessage(q.getID() + ") " + q.getName());
-        }
+
+
+    public HashMap<Integer, Quest> getActive() {
+        return active;
     }
 }

@@ -304,15 +304,9 @@ public class CommandManager {
     public static void showJournal() {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Journal cj = cp.getJournal();
-        HashMap<Integer, Quest> p = cj.getPassed();
-        Messenger.ingameMessage("passed quests: ");
-        for (Quest q : p.values()) {
-            for (int i = 0; i < 5; i++) {
-                System.out.print(q.getID() + ") " + q.getName() + ". ");
-            }
-            System.out.println(" ");
-        }
+        cj.showPassed();
         cj.showActive();
         cj.showPossible();
+        System.out.println();
     }
 }

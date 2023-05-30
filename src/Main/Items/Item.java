@@ -11,6 +11,7 @@ import Main.Utils.Messenger;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Item implements Cloneable, Serializable {
     private int ID, UID;
@@ -97,5 +98,18 @@ public abstract class Item implements Cloneable, Serializable {
 
     private void setUID(int UID) {
         this.UID = UID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return ID == item.ID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID);
     }
 }

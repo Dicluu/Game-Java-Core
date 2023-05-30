@@ -122,18 +122,20 @@ public class Action implements Serializable {
         int count = Integer.parseInt(args.get(2));
         int ID = Integer.parseInt(args.get(1));
         int c = 0;
+
         for (Item i : inv) {
-            if (i == Item.getItemById(ID)) {
-                c++;
+            try {
+                if (i.equals(Item.getItemById(ID))) {
+                    c++;
+                }
+                if (c == count) {
+                    done = true;
+                    return;
+                } else {
+                    done = false;
+                }
+            } catch (NullPointerException e) {
             }
-            if (c == count) {
-                break;
-            }
-        }
-        if (c != count) {
-            return;
-        } else {
-            done = true;
         }
     }
 
@@ -153,5 +155,9 @@ public class Action implements Serializable {
                 break;
         }
         return method;
+    }
+
+    public boolean isDone() {
+        return done;
     }
 }
