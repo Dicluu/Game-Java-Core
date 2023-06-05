@@ -3,7 +3,9 @@ package Main.Objects.Characters.Player;
 import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Singletones.GameExecutor;
+import Main.Singletones.Utils.QuestLineManager;
 import Main.Utils.FileLoaders.ScriptLoader;
+import Main.Utils.Messenger;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -16,13 +18,33 @@ public class Quest implements Serializable {
     private Speech delegate;
     private int delegateID;
     private int ID, link = -1, status = 0;
-    private boolean complete, available, active;
+    private boolean complete, available, active, finished;
     private List<Action> before = new LinkedList<>();
     private List<Action> during = new LinkedList<>();
     private List<Action> after = new LinkedList<>();
 
     public Quest(int ID) {
         this.ID = ID;
+    }
+
+    public void finish() {
+        if (!this.isFinished()) {
+            for (Action a : after) {
+                a.execute();
+            }
+            setComplete(false);
+            GameExecutor.getGame().getQuestLineManager().putInHistory(this);
+            Messenger.helpMessage("You finished quest " + this.getName());
+            this.setFinished(true);
+        }
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public Speech getDelegate() {
@@ -62,6 +84,9 @@ public class Quest implements Serializable {
     }
 
     public void setComplete(boolean complete) {
+        if (!isComplete()) {
+            Messenger.helpMessage("You can finish quest, talk with you hirer");
+        }
         if (complete) {
             status = 2;
         }

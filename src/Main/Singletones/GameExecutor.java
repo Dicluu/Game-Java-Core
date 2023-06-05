@@ -140,8 +140,8 @@ public class GameExecutor implements Serializable {
                 case "quest":
                     ScriptLoader.loadQuest(0);
                     break;
-                case "start quest":
-
+                case "history":
+                    CommandManager.showHistory();
                     break;
                 case "load":
                     TimeCounter.setActive(false);

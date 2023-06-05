@@ -29,7 +29,7 @@ public class Player extends Character {
     private String name;
     private static final int ID = 3;
     private static final int DEFAULT_CID = -3;
-    private static HashMap<Integer, Speech> speeches = PersonLoader.loadSpeeches(DEFAULT_CID);
+    private HashMap<Integer, Speech> speeches = PersonLoader.loadSpeeches(DEFAULT_CID);
     private Journal journal = new Journal();
 
 

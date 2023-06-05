@@ -3,3 +3,4 @@
 2:good:quest:0
 3:yes, I need some wood, interested?:true:4,5
 4:I need 2 wooden logs:false
+5:thank you, friend, take your payment:complete:0

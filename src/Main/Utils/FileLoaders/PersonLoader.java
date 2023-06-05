@@ -97,7 +97,7 @@ public class PersonLoader {
         String[] args = s.split(":");
         int id = Integer.parseInt(args[0]);
         String speech = args[1];
-        boolean answerable = false, quest = false, trade = false, dynamic = false;
+        boolean answerable = false, quest = false, trade = false, dynamic = false, complete = false;
         try {
             switch (args[2]) {
                 case "true":
@@ -111,6 +111,9 @@ public class PersonLoader {
                     break;
                 case "trade":
                     trade = true;
+                case "complete":
+                    complete = true;
+                    break;
             }
             if (args[4].equals("dynamic")) {
                 dynamic = true;
@@ -122,6 +125,10 @@ public class PersonLoader {
 
         if (quest) {
             return new Speech(speech, Integer.parseInt(args[3]), id);
+        }
+
+        if (complete) {
+            return new Speech(speech, true, Integer.parseInt(args[3]), id);
         }
 
         if (answerable) {

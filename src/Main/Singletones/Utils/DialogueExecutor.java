@@ -3,7 +3,6 @@ package Main.Singletones.Utils;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player.Player;
-import Main.Objects.Characters.Player.Quest;
 import Main.Utils.Messenger;
 
 import java.util.*;
@@ -72,6 +71,9 @@ public class DialogueExecutor {
         }
         if(speech.isQuest()) {
             QuestLineManager.getQuestById(speech.getQuestID()).initiate();
+        }
+        if (speech.isFinish()) {
+            QuestLineManager.getQuestById(speech.getQuestID()).finish();
         }
     }
 

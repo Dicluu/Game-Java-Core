@@ -36,19 +36,21 @@ public class Action implements Serializable {
     }
 
     public void execute() {
-        try {
-            if (method != null) {
-                method.invoke(this, args);
-            } else {
-                method = analyzeMethod(rawMethod);
-                method.invoke(this, args);
+        if (!done) {
+            try {
+                if (method != null) {
+                    method.invoke(this, args);
+                } else {
+                    method = analyzeMethod(rawMethod);
+                    method.invoke(this, args);
+                }
+            } catch (InvocationTargetException e) {
+                Messenger.systemMessage("InvocationTargetException caught in execute()", Action.class);
+            } catch (IllegalAccessException e) {
+                Messenger.systemMessage("IllegalAccessException caught in execute()", Action.class);
+            } catch (NoSuchMethodException e) {
+                Messenger.systemMessage("NoSuchMethodException caught in execute()", Action.class);
             }
-        } catch (InvocationTargetException e) {
-            Messenger.systemMessage("InvocationTargetException caught in execute()", Action.class);
-        } catch (IllegalAccessException e) {
-            Messenger.systemMessage("IllegalAccessException caught in execute()", Action.class);
-        } catch (NoSuchMethodException e) {
-            Messenger.systemMessage("NoSuchMethodException caught in execute()", Action.class);
         }
     }
 
@@ -83,6 +85,12 @@ public class Action implements Serializable {
     }
 
     public void give(List<String> args) {
+        if (args.get(1).equals("m")) {
+            GameExecutor.getGame().getCurrentPlayer().addMoney(Integer.parseInt(args.get(2)));
+            Messenger.helpMessage("you have been added " + args.get(2) + "$");
+            done = true;
+            return;
+        }
         int ID = Integer.parseInt(args.get(1));
         int value = Integer.parseInt(args.get(2));
         Item item = Item.getItemById(ID);

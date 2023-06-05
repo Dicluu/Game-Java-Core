@@ -8,15 +8,25 @@ import Main.Utils.FileLoaders.ScriptLoader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestLineManager implements Serializable {
 
     private HashMap<Integer, QuestLine> lines;
+    private List<Quest> history = new ArrayList<>();
     private static final Map<Integer, Quest> allQuests = ScriptLoader.LoadAllQuests();
 
     public QuestLineManager() {
     this.lines = initializeLines();
+    }
+
+    public List<Quest> getHistory() {
+        return history;
+    }
+
+    public void putInHistory(Quest q) {
+        history.add(q);
     }
 
     @NeedImprovement(comment = "add branching")

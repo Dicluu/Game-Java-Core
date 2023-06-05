@@ -311,4 +311,19 @@ public class CommandManager {
         cj.showPossible();
         System.out.println();
     }
+
+    public static void showHistory() {
+        System.out.println("You finished: ");
+        int count = 0;
+        List<Quest> history = GameExecutor.getGame().getQuestLineManager().getHistory();
+        for (Quest quest : history) {
+            System.out.print(quest.getName() + "; ");
+            count++;
+            if (count == 10) {
+                count = 0;
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
 }
