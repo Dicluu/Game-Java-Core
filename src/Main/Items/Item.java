@@ -64,11 +64,17 @@ public abstract class Item implements Cloneable, Serializable {
         }
     }
 
-    public static Item newInstance(int id) throws CloneNotSupportedException {
-        Item item = (Item) getItemById(id).clone();
-        item.setUID(freeID++);
-        allItems.add(item);
-        return item;
+    public static Item newInstance(int id)  {
+        try {
+            Item item = (Item) getItemById(id).clone();
+            item.setUID(freeID++);
+            allItems.add(item);
+            return item;
+        }
+        catch (CloneNotSupportedException e) {
+
+        }
+        return null;
     }
 
     private static void addEnumsInstances() {

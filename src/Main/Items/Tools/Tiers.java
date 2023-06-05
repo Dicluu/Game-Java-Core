@@ -12,6 +12,7 @@ public enum Tiers {
     private float efficiency, durability, damage;
     private Materials material;
     private int ID;
+    private String name;
 
     Tiers(int ID, float efficiency, float durability, float damage, Materials material) {
         this.efficiency = efficiency;
@@ -19,6 +20,12 @@ public enum Tiers {
         this.damage = damage;
         this.material = material;
         this.ID = ID;
+        String name = name().toLowerCase();
+        this.name = name.substring(0,1).toUpperCase() + name.substring(1);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public float getEfficiency() {

@@ -200,8 +200,6 @@ public class AdminCommandManager {
             }
         } catch (InputMismatchException e) {
             Messenger.ingameMessage("You wrote wrong id of item");
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
         }
     }
 

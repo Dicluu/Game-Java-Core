@@ -85,38 +85,38 @@ public class Action implements Serializable {
     }
 
     public void give(List<String> args) {
-        if (args.get(1).equals("m")) {
-            GameExecutor.getGame().getCurrentPlayer().addMoney(Integer.parseInt(args.get(2)));
-            Messenger.helpMessage("you have been added " + args.get(2) + "$");
-            done = true;
-            return;
-        }
-        int ID = Integer.parseInt(args.get(1));
-        int value = Integer.parseInt(args.get(2));
-        Item item = Item.getItemById(ID);
-        Player cp = GameExecutor.getGame().getCurrentPlayer();
-        Item[] inv = cp.getInventory();
-        int count = 0;
-        if (item instanceof Tool) {
-            int TierID = Integer.parseInt(args.get(3));
-            ((Tool) item).setTier(Tiers.getById(TierID));
-        }
-        for (int i = 0; i < inv.length; i++) {
-            if (inv[i] == null) {
-                count++;
+            if (args.get(1).equals("m")) {
+                GameExecutor.getGame().getCurrentPlayer().addMoney(Integer.parseInt(args.get(2)));
+                Messenger.helpMessage("you have been added " + args.get(2) + "$");
+                done = true;
+                return;
+            }
+            int ID = Integer.parseInt(args.get(1));
+            int value = Integer.parseInt(args.get(2));
+            Item item = Item.newInstance(ID);
+            Player cp = GameExecutor.getGame().getCurrentPlayer();
+            Item[] inv = cp.getInventory();
+            int count = 0;
+            if (item instanceof Tool) {
+                int TierID = Integer.parseInt(args.get(3));
+                ((Tool) item).setTier(Tiers.getById(TierID));
+            }
+            for (int i = 0; i < inv.length; i++) {
+                if (inv[i] == null) {
+                    count++;
+                }
+                if (count == value) {
+                    break;
+                }
             }
             if (count == value) {
-                break;
+                for (int i = 0; i < value; i++) {
+                    cp.putItem(item);
+                }
+                done = true;
+            } else {
+                Messenger.helpMessage("Your inventory is full, you need free some space to get this quest");
             }
-        }
-        if (count == value) {
-            for (int i = 0; i < value; i++) {
-                cp.putItem(item);
-            }
-            done = true;
-        } else {
-            Messenger.helpMessage("Your inventory is full, you need free some space to get this quest");
-        }
     }
 
     public void say(List<String> args) {

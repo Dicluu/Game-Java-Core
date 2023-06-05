@@ -64,8 +64,8 @@ public class PersonLoader {
             Messenger.systemMessage("FileNotFoundException loadInventory()", PersonLoader.class);
             return new Item[10];
         }
-        catch (IOException | CloneNotSupportedException e) {
-            Messenger.systemMessage("Exception caught in loadInventory()", PersonLoader.class);
+        catch (IOException e) {
+            Messenger.systemMessage("IOException caught in loadInventory()", PersonLoader.class);
         }
         return null;
     }

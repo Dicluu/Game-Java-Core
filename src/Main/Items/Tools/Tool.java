@@ -10,8 +10,8 @@ public class Tool extends Item {
 
     public Tool(Tools tool) {
         super(tool.getId(),tool.getName());
-        this.name = tool.getName();
         this.tier = Tiers.DIAMOND;
+        this.name = tool.getName();
         this.tool = tool;
     }
 
@@ -19,12 +19,12 @@ public class Tool extends Item {
         super(tool.getId(), tool.getName());
         this.tool = tool;
         this.tier = tier;
-        this.name = tier.name() + " " + tool.name();
+        this.name = tool.getName();
     }
 
     @Override
     public String getName() {
-        return name;
+        return tier.getName() + " " + tool.getName();
     }
 
     public void setTier(Tiers tier) {
