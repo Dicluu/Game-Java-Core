@@ -14,6 +14,7 @@ import Main.Objects.Unique.Town;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.FileLoaders.MapLoader;
+import Main.Utils.FileLoaders.ScriptLoader;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 

@@ -1,6 +1,6 @@
 0:yes:false
 1:no:false
 2:yes:true:1
-3:is there any job here?:true:3
+3:is there any job here?:true:3:dynamic
 4:yes:true:2
 5:no, thanks:false

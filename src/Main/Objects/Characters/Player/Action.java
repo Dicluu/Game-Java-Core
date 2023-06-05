@@ -7,6 +7,7 @@ import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Entity;
 import Main.Singletones.GameExecutor;
+import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.Messenger;
 
 import java.io.Serializable;
@@ -115,7 +116,7 @@ public class Action implements Serializable {
         Messenger.ingameMessage(c.getName() + ": " + args.get(1));
         done = true;
     }
-
+    @NeedImprovement(comment = "make able execute for tools")
     public void have(List<String> args) {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Item[] inv = cp.getInventory();

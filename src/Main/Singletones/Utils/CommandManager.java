@@ -13,6 +13,7 @@ import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
 import Main.Objects.Unique.Enterable;
 import Main.Singletones.GameExecutor;
+import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
 import Main.Utils.Timers.Timer;
@@ -301,6 +302,7 @@ public class CommandManager {
         }
     }
 
+    @NeedRevision(comment = "maybe should use StringBuilder")
     public static void showJournal() {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Journal cj = cp.getJournal();

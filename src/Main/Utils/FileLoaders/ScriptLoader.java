@@ -1,6 +1,8 @@
 package Main.Utils.FileLoaders;
 
+import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player.Quest;
+import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.Messenger;
 
@@ -17,13 +19,20 @@ public class ScriptLoader {
         Quest q = new Quest(ID);
         String str = "", tmp;
         try {
-            File file = new File("src/Main/Resource/Scripts/" + ID);
+            File file = new File("src/Main/Resource/Quests/" + ID + "/script");
             BufferedReader brs = new BufferedReader(new FileReader(file));
             BufferedReader br = new BufferedReader(new FileReader(file));
             while (br.ready()) {
                 while (!br.readLine().equals("Scene")) {
-                    str = brs.readLine();
-                    q.setName(str);
+                    String[] args = brs.readLine().split(":");
+                    switch (args[0]) {
+                        case "Name":
+                            q.setName(args[1]);
+                            break;
+                        case "Delegate":
+                            q.setDelegateID(Integer.parseInt(args[1]));
+                            break;
+                    }
                 }
                 br.readLine();
                 brs.readLine();
@@ -68,6 +77,22 @@ public class ScriptLoader {
             count++;
         } while (loadQuest(count) != null);
         return quests;
+    }
+
+    public static Speech loadQuestSpeech(int QuestID, int speechID) {
+        try {
+            File file = new File("src/Main/Resource/Quests/" + QuestID + "/speeches");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            while (br.ready()) {
+                String s = br.readLine();
+                if (s.split(":")[0].equals(String.valueOf(speechID))) {
+                    return PersonLoader.loadSpeech(s);
+                }
+            }
+        } catch (Exception e) {
+            Messenger.systemMessage("Exception loadQuest()", ScriptLoader.class);
+        }
+        return null;
     }
 
 

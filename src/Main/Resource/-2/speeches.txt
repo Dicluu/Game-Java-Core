@@ -2,3 +2,4 @@
 1:only the best weapons and equipment:false
 2:good:quest:0
 3:yes, I need some wood, interested?:true:4,5
+4:I need 2 wooden logs:false
