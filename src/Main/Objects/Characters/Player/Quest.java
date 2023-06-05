@@ -35,6 +35,7 @@ public class Quest implements Serializable {
             setComplete(false);
             GameExecutor.getGame().getQuestLineManager().putInHistory(this);
             Messenger.helpMessage("You finished quest " + this.getName());
+            GameExecutor.getGame().getCurrentPlayer().getSpeeches().remove(delegateID);
             this.setFinished(true);
         }
     }

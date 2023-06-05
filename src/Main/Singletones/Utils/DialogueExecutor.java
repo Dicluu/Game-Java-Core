@@ -34,8 +34,13 @@ public class DialogueExecutor {
             List<Speech> ws = new ArrayList<>();
             for (int i = 0; i < ps.size(); i++) {
                 for (int j = 0; j < speech.getAnswers().size(); j++) {
-                    if (ps.get(i).getId() == speech.getAnswers().get(j)) {
-                        ws.add(ps.get(i));
+                    try {
+                        if (ps.get(i).getId() == speech.getAnswers().get(j)) {
+                            ws.add(ps.get(i));
+                        }
+                    }
+                    catch (NullPointerException e) {
+
                     }
                 }
             }
