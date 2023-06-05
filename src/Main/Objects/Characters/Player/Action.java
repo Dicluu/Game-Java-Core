@@ -59,12 +59,21 @@ public class Action implements Serializable {
         int count = Integer.parseInt(args.get(2));
         int ID = Integer.parseInt(args.get(1));
         Player cp = GameExecutor.getGame().getCurrentPlayer();
-        for (Item i : cp.getInventory()) {
-            if (i == Item.getItemById(ID)) {
-                c++;
-            }
-            if (c == count) {
-                break;
+            for (Item i : cp.getInventory()) {
+                try {
+                    if (Item.getItemById(i.getId()) instanceof Tool) {
+                        if (((Tool) i).getTier() == Tiers.getById(Integer.parseInt(args.get(3)))) {
+                            c++;
+                        }
+                    } else if (Item.getItemById(i.getId()) == Item.getItemById(ID)) {
+                        c++;
+                    }
+                    if (c == count) {
+                        break;
+                    }
+                }
+                catch (NullPointerException e) {
+
             }
         }
         if (c != count) {
@@ -73,13 +82,18 @@ public class Action implements Serializable {
         }
         Item[] inv = cp.getInventory();
         for (int i = 0; i < inv.length; i++) {
-            if (Item.getItemById(ID) == inv[i]) {
-                cp.deleteItemFromInventory(i);
-                c++;
-                if (c == count) {
-                    done = true;
-                    break;
+            try {
+                if (Item.getItemById(ID) == Item.getItemById(inv[i].getId())) {
+                    cp.deleteItemFromInventory(i);
+                    c++;
+                    if (c == count) {
+                        done = true;
+                        break;
+                    }
                 }
+            }
+            catch (NullPointerException e) {
+
             }
         }
     }

@@ -8,5 +8,7 @@ give:5:1:2
 During
 have:1:2
 After
-give:m:10
+remove:5:1:2
+remove:1:2
+give:m:15
 End
