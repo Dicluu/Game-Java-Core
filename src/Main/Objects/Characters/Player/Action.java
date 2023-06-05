@@ -23,9 +23,11 @@ public class Action implements Serializable {
     private String rawMethod;
     private List<String> args;
     private Quest quest;
+    private boolean isCondition;
 
-    public Action(Quest quest, String... a) {
+    public Action(Quest quest, boolean isCondition, String... a) {
         this.quest = quest;
+        this.isCondition = isCondition;
         args = Arrays.asList(a);
         rawMethod = args.get(0);
         try {
@@ -36,13 +38,14 @@ public class Action implements Serializable {
     }
 
     public void execute() {
-        if (!done) {
             try {
-                if (method != null) {
-                    method.invoke(this, args);
-                } else {
-                    method = analyzeMethod(rawMethod);
-                    method.invoke(this, args);
+                if (!isDone() || isCondition()) {
+                    if (method != null) {
+                        method.invoke(this, args);
+                    } else {
+                        method = analyzeMethod(rawMethod);
+                        method.invoke(this, args);
+                    }
                 }
             } catch (InvocationTargetException e) {
                 Messenger.systemMessage("InvocationTargetException caught in execute()", Action.class);
@@ -52,7 +55,6 @@ public class Action implements Serializable {
                 Messenger.systemMessage("NoSuchMethodException caught in execute()", Action.class);
             }
         }
-    }
 
     public void remove(List<String> args) {
         int c = 0;
@@ -182,5 +184,9 @@ public class Action implements Serializable {
 
     public boolean isDone() {
         return done;
+    }
+
+    public boolean isCondition() {
+        return isCondition;
     }
 }

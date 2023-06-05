@@ -123,6 +123,10 @@ public class PersonLoader {
 
         }
 
+        if (trade) {
+            return new Speech(speech, true, id);
+        }
+
         if (quest) {
             return new Speech(speech, Integer.parseInt(args[3]), id);
         }

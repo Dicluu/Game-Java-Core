@@ -26,6 +26,7 @@ public class TradeExecutor {
         Messenger.ingameMessage("What you can suggest?");
         while (active) {
             Messenger.helpMessage("You are in trade menu, use commands 'sell' to sell and 'buy' to buy something");
+            Messenger.helpMessage("To get more information use command 'help'");
            String arg = str.nextLine();
             switch (arg) {
                 case "buy":

@@ -28,7 +28,6 @@ public class Quest implements Serializable {
     }
 
     public void finish() {
-        if (!this.isFinished()) {
             for (Action a : after) {
                 a.execute();
             }
@@ -36,16 +35,6 @@ public class Quest implements Serializable {
             GameExecutor.getGame().getQuestLineManager().putInHistory(this);
             Messenger.helpMessage("You finished quest " + this.getName());
             GameExecutor.getGame().getCurrentPlayer().getSpeeches().remove(delegateID);
-            this.setFinished(true);
-        }
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
     }
 
     public Speech getDelegate() {
@@ -96,7 +85,7 @@ public class Quest implements Serializable {
 
     public void putActionBefore(String... args) {
         try {
-            before.add(new Action(this, args));
+            before.add(new Action(this, false, args));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -104,11 +93,11 @@ public class Quest implements Serializable {
     }
 
     public void putActionDuring(String... args) {
-        during.add(new Action(this, args));
+        during.add(new Action(this, true, args));
     }
 
     public void putActionAfter(String... args) {
-        after.add(new Action(this, args));
+        after.add(new Action(this, false, args));
     }
 
     public void setLink(int id) {

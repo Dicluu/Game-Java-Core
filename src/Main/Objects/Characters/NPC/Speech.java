@@ -7,7 +7,7 @@ import java.util.List;
 public class Speech implements Serializable {
 
     private String speech;
-    private boolean isAnswerable, isQuest, isDynamic, isFinish;
+    private boolean isAnswerable, isQuest, isDynamic, isFinish, isTrade;
     private List<Integer> answers = new ArrayList<>();
     private int id, questID;
 
@@ -43,6 +43,12 @@ public class Speech implements Serializable {
         this.id = id;
     }
 
+    public Speech(String speech, boolean trade, int id) {
+        this.speech = speech;
+        this.isTrade = trade;
+        this.id = id;
+    }
+
     public Speech(String speech, boolean isFinish, int questID, int id) {
         this.speech = speech;
         this.questID = questID;
@@ -52,6 +58,14 @@ public class Speech implements Serializable {
 
     public boolean isDynamic() {
         return isDynamic;
+    }
+
+    public boolean isTrade() {
+        return isTrade;
+    }
+
+    public void setTrade(boolean trade) {
+        isTrade = trade;
     }
 
     public int getId() {

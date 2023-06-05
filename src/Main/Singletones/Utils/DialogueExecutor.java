@@ -3,6 +3,7 @@ package Main.Singletones.Utils;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player.Player;
+import Main.Singletones.GameExecutor;
 import Main.Utils.Messenger;
 
 import java.util.*;
@@ -19,13 +20,13 @@ public class DialogueExecutor {
         DialogueExecutor.companion = companion;
         DialogueExecutor.speech = speech;
         if (isDialogueExist(companion)) {
-            render();
+            render(speech);
         } else {
             randomizeSpeech();
         }
     }
 
-    private static void render() {
+    private static void render(Speech speech) {
         Messenger.ingameMessage(companion.getName() + ": " + speech.getSpeech());
         help();
         if (speech.isAnswerable()) {
@@ -67,7 +68,8 @@ public class DialogueExecutor {
                 Speech returned = player.getSpeeches().get(speech.getAnswers().get(in - 1));
                 Messenger.ingameMessage("You: " + returned.getSpeech());
                 if (returned.isAnswerable()) {
-                    DialogueExecutor.start(player, companion, cs.get(returned.getAnswers().get(0)));
+                    //DialogueExecutor.start(player, companion, cs.get(returned.getAnswers().get(0)));
+                    DialogueExecutor.render(cs.get(returned.getAnswers().get(0)));
                 }
             } catch (InputMismatchException e) {
                 helpFlag = true;
@@ -79,6 +81,9 @@ public class DialogueExecutor {
         }
         if (speech.isFinish()) {
             QuestLineManager.getQuestById(speech.getQuestID()).finish();
+        }
+        if (speech.isTrade()) {
+            GameExecutor.initiateTrade(companion);
         }
     }
 
