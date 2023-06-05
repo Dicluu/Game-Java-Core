@@ -39,7 +39,7 @@ public class Action implements Serializable {
 
     public void execute() {
             try {
-                if (!isDone() || isCondition()) {
+                if ((!isDone()) || (isCondition())) {
                     if (method != null) {
                         method.invoke(this, args);
                     } else {

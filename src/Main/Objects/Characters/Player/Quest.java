@@ -28,13 +28,13 @@ public class Quest implements Serializable {
     }
 
     public void finish() {
-            for (Action a : after) {
-                a.execute();
-            }
-            setComplete(false);
-            GameExecutor.getGame().getQuestLineManager().putInHistory(this);
-            Messenger.helpMessage("You finished quest " + this.getName());
-            GameExecutor.getGame().getCurrentPlayer().getSpeeches().remove(delegateID);
+        for (Action a : after) {
+            a.execute();
+        }
+        setComplete(false);
+        GameExecutor.getGame().getQuestLineManager().putInHistory(this);
+        Messenger.helpMessage("You finished quest " + this.getName());
+        GameExecutor.getGame().getCurrentPlayer().getSpeeches().remove(delegateID);
     }
 
     public Speech getDelegate() {
@@ -74,7 +74,7 @@ public class Quest implements Serializable {
     }
 
     public void setComplete(boolean complete) {
-        if (!isComplete()) {
+        if ((!isComplete()) && (complete)) {
             Messenger.helpMessage("You can finish quest, talk with you hirer");
         }
         if (complete) {
@@ -86,8 +86,7 @@ public class Quest implements Serializable {
     public void putActionBefore(String... args) {
         try {
             before.add(new Action(this, false, args));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -125,7 +124,7 @@ public class Quest implements Serializable {
     }
 
     public void initiate() {
-        if(isAvailable()) {
+        if (isAvailable()) {
             Player player = GameExecutor.getGame().getCurrentPlayer();
             Journal journal = player.getJournal();
             setDelegate(player.getSpeeches().get(delegateID));
@@ -142,10 +141,8 @@ public class Quest implements Serializable {
         for (Action a : during) {
             a.execute();
             if (!a.isDone()) {
-                if (complete) {
-                    setActive(true);
-                    setComplete(false);
-                }
+                setActive(true);
+                setComplete(false);
                 setDelegate(status);
                 return false;
             }
@@ -153,9 +150,10 @@ public class Quest implements Serializable {
         if (active) {
             setActive(false);
             setComplete(true);
+            setDelegate(status);
+            return true;
         }
-        setDelegate(status);
-        return true;
+        return false;
     }
 
     public boolean isActive() {

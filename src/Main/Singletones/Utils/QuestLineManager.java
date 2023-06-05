@@ -78,11 +78,12 @@ public class QuestLineManager implements Serializable {
         for (Quest q : journal.getActive().values()) {
             if (q.touch()) {
                 journal.complete(q.getID());
-            } else if (q.isComplete()) {
+            }
+        }
+        for (Quest q : journal.getPassed().values()) {
+            if (!q.touch()) {
                 journal.rollback(q.getID());
             }
         }
     }
-
-
 }
