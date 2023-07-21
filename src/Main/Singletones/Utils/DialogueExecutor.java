@@ -39,44 +39,52 @@ public class DialogueExecutor {
                         if (ps.get(i).getId() == speech.getAnswers().get(j)) {
                             ws.add(ps.get(i));
                         }
-                    }
-                    catch (NullPointerException e) {
+                    } catch (NullPointerException e) {
 
                     }
                 }
             }
             for (int i = 0; i < ws.size(); i++) {
-                Messenger.ingameMessage(i+1 + ") " + ws.get(i).getSpeech());
+                Messenger.ingameMessage(i + 1 + ") " + ws.get(i).getSpeech());
             }
-            Scanner num = new Scanner(System.in);
             try {
+                Scanner num = new Scanner(System.in);
                 int in = num.nextInt();
                 int range = speech.getAnswers().size();
                 while (true) {
-                    if ((in <= 0) || (in > range)) {
-                        if (in == 0) {
-                            Messenger.helpMessage("You exit the dialogue");
-                            return;
+                    try {
+                        if ((in <= 0) || (in > range)) {
+                            if (in == 0) {
+                                Messenger.helpMessage("You exit the dialogue");
+                                return;
+                            }
+                            Messenger.ingameMessage("You wrote wrong number of speech");
+                            num = new Scanner(System.in);
+                            in = num.nextInt();
+                            assert (player.getSpeeches().get(speech.getAnswers().get(in - 1)) != null);
+                        } else {
+                            break;
                         }
-                        Messenger.ingameMessage("You wrote wrong number of speech");
-                        in = num.nextInt();
-                    } else {
-                        break;
+                    } catch (AssertionError e) {
+                        Messenger.ingameMessage("You wrote number of non-existent speech");
+                    } catch (InputMismatchException e) {
+                        helpFlag = true;
+                        Messenger.ingameMessage("You wrote not a number of speech");
                     }
                 }
-
                 Speech returned = player.getSpeeches().get(speech.getAnswers().get(in - 1));
                 Messenger.ingameMessage("You: " + returned.getSpeech());
                 if (returned.isAnswerable()) {
                     //DialogueExecutor.start(player, companion, cs.get(returned.getAnswers().get(0)));
                     DialogueExecutor.render(cs.get(returned.getAnswers().get(0)));
                 }
-            } catch (InputMismatchException e) {
+            }
+            catch (InputMismatchException e) {
                 helpFlag = true;
-                Messenger.systemMessage("Exception render()", DialogueExecutor.class);
+                Messenger.ingameMessage("You wrote not a number of speech");
             }
         }
-        if(speech.isQuest()) {
+        if (speech.isQuest()) {
             QuestLineManager.getQuestById(speech.getQuestID()).initiate();
         }
         if (speech.isFinish()) {
