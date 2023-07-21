@@ -10,7 +10,7 @@ public class Dealer extends NonPlayerCharacter {
 
 
     private static final int ID = 4;
-    public static final int DEFAULT_CID = -2;
+    public static final int DEFAULT_CID = -4;
     private final String name = PersonLoader.loadName(-2);
     private static HashMap<Integer, Speech> speeches = PersonLoader.loadSpeeches(-2);
 
