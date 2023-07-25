@@ -151,9 +151,8 @@ public class Quest implements Serializable {
             setActive(false);
             setComplete(true);
             setDelegate(status);
-            return true;
         }
-        return false;
+        return true;
     }
 
     public boolean isActive() {

@@ -66,8 +66,6 @@ public class Journal implements Serializable {
         return passed;
     }
 
-
-
     public HashMap<Integer, Quest> getActive() {
         return active;
     }
