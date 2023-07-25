@@ -140,7 +140,6 @@ public class Action implements Serializable {
         Messenger.ingameMessage(c.getName() + ": " + args.get(1));
         done = true;
     }
-    @NeedImprovement(comment = "make able execute for tools")
     public void have(List<String> args) {
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Item[] inv = cp.getInventory();
@@ -150,8 +149,14 @@ public class Action implements Serializable {
 
         for (Item i : inv) {
             try {
-                if (i.equals(Item.getItemById(ID))) {
-                    c++;
+                if (i instanceof Tool) {
+                    if (((Tool) i).getTier() == Tiers.getById(Integer.parseInt(args.get(3)))) {
+                        c++;
+                    }
+                } else {
+                    if (i.equals(Item.getItemById(ID))) {
+                        c++;
+                    }
                 }
                 if (c == count) {
                     done = true;
