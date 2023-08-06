@@ -1,6 +1,7 @@
 package Main.Items.Materials;
 
 public enum Materials {
+    /*
     WOOD(1, 5, "Wood", 0.5f),
     STONE(2, 6, "Stone", 0.5f),
     IRON(3, 6, "Iron", 0.5f),
@@ -32,4 +33,6 @@ public enum Materials {
     public float getRARE() {
         return RARE;
     }
+
+     */
 }

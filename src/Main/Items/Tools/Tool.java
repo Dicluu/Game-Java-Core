@@ -4,10 +4,11 @@ import Main.Items.Item;
 
 public class Tool extends Item {
 
-    private final Tools tool;
+    private Tools tool;
     private Tiers tier;
     private String name;
-
+    private int price;
+/*
     public Tool(Tools tool) {
         super(tool.getId(),tool.getName());
         this.tier = Tiers.DIAMOND;
@@ -22,9 +23,19 @@ public class Tool extends Item {
         this.name = tool.getName();
     }
 
+ */
+
+    public Tool(int id, String name, int price) {
+        super(id, name, price);
+        this.name = name;
+        this.tier = Tiers.DIAMOND;
+        this.price = price;
+    }
+
     @Override
     public String getName() {
-        return tier.getName() + " " + tool.getName();
+        //return tier.getName() + " " + tool.getName();
+        return tier.getName() + " " + this.name;
     }
 
     public void setTier(Tiers tier) {

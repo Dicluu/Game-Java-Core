@@ -5,7 +5,7 @@ import Main.Items.Materials.Material;
 
 public enum Materials {
 
-    Tree(1, new Material(Main.Items.Materials.Materials.WOOD), 5,"Tree",  5000L, 10f, "1".charAt(0));
+    Tree(1, Item.getItemByName("Wood"), 5,"Tree",  5000L, 10f, "1".charAt(0));
 
     private final int id;
     private final Item item;
