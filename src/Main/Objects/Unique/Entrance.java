@@ -16,16 +16,16 @@ public class Entrance extends UniqueEntity implements Enterable {
         }
     }
 
-    private final int ID = 2;
+    private static final int ID = 2;
     private int referMapId;
     private Cell node = null;
     public Entrance(int x, int y, int referMapId) {
-        super(x, y);
+        super(x, y, ID);
         this.referMapId = referMapId;
     }
 
     public Entrance(int x, int y, int referMapId, int xn, int yn) {
-        super(x, y);
+        super(x, y, ID);
         this.referMapId = referMapId;
         this.node = Map.getMapById(referMapId).getCell(xn, yn);
     }

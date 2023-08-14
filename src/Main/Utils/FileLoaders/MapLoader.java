@@ -15,10 +15,14 @@ import java.io.FileReader;
 
 public class MapLoader {
 
-    public static Map loadMap(int ID) {
+    public static Map loadMapById(int ID) {
+        return loadMap("src/Main/Resource/Maps/" + ID, ID);
+    }
+
+    private static Map loadMap(String path, int ID) {
         try {
             Map map = null;
-            File file = new File("src/Main/Resource/Maps/" + ID);
+            File file = new File(path);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String length = br.readLine();
             String[] args = length.split(":");
@@ -30,7 +34,7 @@ public class MapLoader {
                     map = new Location(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
                     break;
             }
-            map.setUID(ID);
+            map.setCID(ID);
             while (br.ready()) {
                 String arg = br.readLine();
                 String[] es = arg.split(":");
@@ -42,7 +46,7 @@ public class MapLoader {
                         e = setEntrance((Enterable)e, Integer.parseInt(es[3]));
                         break;
                     case 5:
-                        e = setBuilding((Building) e, es[3], map.getId());
+                        e = setBuilding((Building) e, es[3], map.getId(), Integer.parseInt(es[4]));
                 }
                 if (e instanceof Character) {
                     e = setCharacter((Character) e, es[3]);
@@ -62,8 +66,8 @@ public class MapLoader {
         return (Entity) e;
     }
 
-    private static Entity setBuilding(Building b, String name, int ID) {
-        return Building.loadBuildingFromFile(b, name, ID);
+    private static Entity setBuilding(Building b, String name, int ID, int interiorID) {
+        return Building.loadBuildingFromFile(b, name, ID, interiorID);
     }
 
     private static Entity setCharacter(Character c, String name) {

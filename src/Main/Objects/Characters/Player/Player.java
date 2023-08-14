@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class Player extends Character {
 
 
+    private int intelligence = 7, strength = 9, agility = 5;
 
 
     static {
@@ -38,7 +39,7 @@ public class Player extends Character {
         this.name = name;
     }
     public Player() {
-        super("Player", DEFAULT_CID);
+        super("Player", DEFAULT_CID, ID);
         Messenger.systemMessage("instance initiated", Player.class);
     }
 
@@ -67,5 +68,29 @@ public class Player extends Character {
     @Override
     public int getPriority() {
         return Priority.MAX.toInt()+1;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
     }
 }

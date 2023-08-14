@@ -5,6 +5,7 @@ import Main.Objects.Tile.Tile;
 import Main.Objects.Unique.Entrance;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedRevision;
+import Main.Utils.FileLoaders.MapLoader;
 import Main.Utils.Messenger;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.*;
 
 public abstract class Map implements Serializable {
 
-    private int x,y,id;
+    private int x,y,id, cid;
     private Cell[][] map;
     private Tile tile;
     private static int freeId;
@@ -126,17 +127,13 @@ public abstract class Map implements Serializable {
      * @param y
      * @return
      */
-    public static Map generateLocations(String name, int x, int y) {
-        switch (name) {
-            case "building":
+    public static Map generateLocation(int ID, int x, int y) {
                 GameExecutor ge = GameExecutor.getGame();
                 Map cm = ge.getCurrentMap();
-                Location l = new Location(5,5,Tile.ROCK);
+                Location l = (Location) MapLoader.loadMapById(ID);
                 l.setObject(new Entrance(0, 2, cm.getId(), x, y));
                 return l;
         }
-        return null;
-    }
 
     /**
      * generating default building from file
@@ -146,14 +143,18 @@ public abstract class Map implements Serializable {
      * @param mapID
      * @return
      */
-    public static Map generateDefaultBuildingFromFile(String name, int x, int y, int mapID) {
-        Location l = new Location(5,5,Tile.ROCK);
+    public static Map generateBuildingFromFile(String name, int x, int y, int mapID, int interiorID) {
+        Location l = (Location) MapLoader.loadMapById(interiorID);
         l.setObject(new Entrance(0, 2, mapID, x, y));
         return l;
     }
 
-    public void setUID(int id) {
-        this.id = id;
-        allMaps.put(id, this);
+    public void setCID(int id) {
+        this.cid = id;
+        if (cid < 0) {
+            allMaps.remove(id);
+            this.id = cid;
+            allMaps.put(id, this);
+        }
     }
 }

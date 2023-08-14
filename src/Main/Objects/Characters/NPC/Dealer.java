@@ -28,7 +28,7 @@ public class Dealer extends NonPlayerCharacter {
      * ONLY FOR INITIALIZING
      */
     public Dealer() {
-        super("Dealer", DEFAULT_CID);
+        super("Dealer", DEFAULT_CID, ID);
         Messenger.systemMessage("instance initiated", Dealer.class);
     }
 

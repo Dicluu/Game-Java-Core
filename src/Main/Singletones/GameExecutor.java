@@ -125,6 +125,9 @@ public class GameExecutor implements Serializable {
                 case "talk":
                     CommandManager.talk();
                     break;
+                case "inspect":
+                    CommandManager.inspect();
+                    break;
                 case "trade":
                     AdminCommandManager.trade(); // only for testing
                     break;

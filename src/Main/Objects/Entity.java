@@ -5,14 +5,17 @@ import Main.Objects.Characters.Character;
 import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
 import Main.Utils.Annotations.NeedImprovement;
+import Main.Utils.FileLoaders.EntityLoader;
 import Main.Utils.Messenger;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 @NeedImprovement(comment = "make a variable 'description' and add methods to show description")
 public abstract class Entity implements Cloneable, Serializable {
     private int x, y;
     private static int freeID;
+    private int ID;
     private static HashMap<Integer, Entity> allEntities = new HashMap<>();
     private int objectID;
     private static HashMap<Integer, Entity>  instances = new HashMap<>();
@@ -21,9 +24,10 @@ public abstract class Entity implements Cloneable, Serializable {
         addEnumsInstances();
     }
 
-    public Entity(int x, int y) {
+    public Entity(int x, int y, int ID) {
         this.x = x;
         this.y = y;
+        this.ID = ID;
         this.objectID = freeID;
         freeID++;
         allEntities.put(objectID, this);
@@ -47,6 +51,10 @@ public abstract class Entity implements Cloneable, Serializable {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public abstract char getSymbol();
@@ -85,12 +93,14 @@ public abstract class Entity implements Cloneable, Serializable {
          */
     private static void addEnumsInstances() {
         for (Materials material : Materials.values()) {
-            instances.put(material.getId(), new Material(0, 0, material));
+            instances.put(material.getId(), new Material(0, 0, material, material.getId()));
         }
     }
 
     public static void addInstance(int id, Class<? extends Entity> clazz) throws InstantiationException, IllegalAccessException {
-        instances.put(id, clazz.newInstance());
+        Entity e = clazz.newInstance();
+        e.ID = id;
+        instances.put(id, e);
     }
 
     public void setObjectID(int objectID) {
@@ -138,5 +148,15 @@ public abstract class Entity implements Cloneable, Serializable {
 
     public static void setAllEntities(HashMap<Integer, Entity> entities) {
         allEntities = entities;
+    }
+
+    public String getDescription() {
+        try {
+            return EntityLoader.loadDescription(this.ID);
+        }
+        catch (IOException e) {
+            Messenger.systemMessage("IOException getDescription()", Entity.class);
+            return "You don't even know what to say";
+        }
     }
 }

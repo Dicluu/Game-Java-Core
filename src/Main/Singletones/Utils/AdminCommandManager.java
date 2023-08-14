@@ -140,14 +140,12 @@ public class AdminCommandManager {
         Cell cc = GameExecutor.getGame().getCurrentMap().getCell(x,y);
         Messenger.ingameMessage("Name a building");
         String name = str.nextLine();
-        Messenger.ingameMessage("Write id map what entrance have to refer or -1 to set default map");
+        Messenger.ingameMessage("Write id map what entrance have to refer or 1 to set default map");
         try {
             int id = num.nextInt();
             if (Map.getMapById(id) != null) {
-                cc.addObject(new Entrance(x, y, id));
+                cc.addObject(new Building(x, y, id));
                 Messenger.ingameMessage("You set building on x = " + x + " and y = " + y);
-            } else if (id == -1) {
-                cc.addObject(new Building(x, y, name));
             } else {
                 Messenger.ingameMessage("You wrote wrong id of map");
                 return;
@@ -156,6 +154,10 @@ public class AdminCommandManager {
         catch (NumberFormatException e) {
             Messenger.ingameMessage("You wrote incorrect number");
             Messenger.systemMessage("NumberFormatException in setBuilding()", AdminCommandManager.class);
+        }
+        catch (ClassCastException e) {
+            Messenger.ingameMessage("You wrote ID of Unique map, not a location, try different");
+            Messenger.systemMessage("ClassCastException in setBuilding()", AdminCommandManager.class);
         }
     }
 

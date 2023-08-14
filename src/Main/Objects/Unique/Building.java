@@ -2,6 +2,7 @@ package Main.Objects.Unique;
 
 
 import Main.Maps.Cell;
+import Main.Maps.Location;
 import Main.Maps.Map;
 import Main.Objects.Entity;
 import Main.Utils.Messenger;
@@ -22,7 +23,7 @@ public class Building extends UniqueEntity implements Enterable {
      * @param referId must to referring to unique maps (must be less than zero)
      */
     public Building(int x, int y, String name, int referId) {
-        super(x, y);
+        super(x, y, ID);
         this.name = name;
         if (referId <= 0) {
             this.referId = referId;
@@ -38,10 +39,10 @@ public class Building extends UniqueEntity implements Enterable {
      * @param y
      * @param name
      */
-    public Building(int x, int y, String name) {
-        super(x, y);
+    public Building(int x, int y, int ID) {
+        super(x, y, ID);
         this.name = name;
-        referId = Map.generateLocations("building",x,y).getId();
+        referId = Map.generateLocation(ID,x,y).getId();
         this.node = Map.getMapById(referId).getCell(0, 2);
     }
 
@@ -49,12 +50,11 @@ public class Building extends UniqueEntity implements Enterable {
      * static pseudo-constructor for load building from file
      * @param b
      * @param name
-     * @param mapID
      * @return
      */
-    public static Building loadBuildingFromFile(Building b, String name, int mapID) {
+    public static Building loadBuildingFromFile(Building b, String name, int mapID, int interiorID) {
         b.setName(name);
-        int referId = Map.generateDefaultBuildingFromFile("building", b.getX(), b.getY(), mapID).getId();
+        int referId = Map.generateBuildingFromFile("building", b.getX(), b.getY(), mapID, interiorID).getId();
         b.setReferMapId(referId);
         Cell node = Map.getMapById(referId).getCell(0, 2);
         b.setNode(node);

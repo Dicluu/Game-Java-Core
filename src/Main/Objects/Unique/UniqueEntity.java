@@ -7,8 +7,8 @@ public abstract class UniqueEntity extends Entity {
 
     private final static int priority = Priority.MEDIUM.toInt();
 
-    public UniqueEntity(int x, int y) {
-        super(x, y);
+    public UniqueEntity(int x, int y, int ID) {
+        super(x, y, ID);
     }
     public UniqueEntity() {super();}
 

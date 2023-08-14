@@ -29,8 +29,10 @@ public abstract class Character extends Entity implements Talkable, Serializable
     private HashMap<Integer, Speech> speeches = new HashMap<>();
     private Speech introduce;
 
+    private int intelligence, strength, agility;
+
     public Character(String name, int x, int y, int id, Item[] inventory) {
-        super(x, y);
+        super(x, y, id);
         this.name = name;
         this.x = x;
         this.y = y;
@@ -42,7 +44,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
 
     public Character(int x, int y, int ID) {
 
-        super(x, y);
+        super(x, y, ID);
         this.ID = ID;
         try {
             this.name = PersonLoader.loadName(ID);
@@ -55,7 +57,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
     }
 
     public Character(String name, int x, int y, int id, int cid) {
-        super(x, y);
+        super(x, y, id);
         this.name = name;
         this.x = x;
         this.y = y;
@@ -70,7 +72,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
 
 
     public Character(String name, int x, int y, int id, float wallet, int CID) {
-        super(x, y);
+        super(x, y, id);
         this.name = name;
         this.x = x;
         this.y = y;
@@ -86,10 +88,10 @@ public abstract class Character extends Entity implements Talkable, Serializable
      * Constructor for initializing instances
      * @param name
      */
-    public Character(String name, int CID) {
+    public Character(String name, int CID, int ID) {
         super();
         this.name = name;
-        this.ID = -1;
+        this.ID = ID;
         this.UID = freeID++;
         this.speeches = PersonLoader.loadSpeeches(CID);
         this.introduce = speeches.get(0);

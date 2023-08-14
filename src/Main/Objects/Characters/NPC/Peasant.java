@@ -25,7 +25,7 @@ public class Peasant extends NonPlayerCharacter {
 
 
     public Peasant() {
-        super("peasant", DEFAULT_CID);
+        super("peasant", DEFAULT_CID, ID);
         Messenger.systemMessage("instance initiated", Peasant.class);
     }
 

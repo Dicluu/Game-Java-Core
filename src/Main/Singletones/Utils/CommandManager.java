@@ -180,7 +180,7 @@ public class CommandManager {
                 cp.setY(node.getY());
                 GameExecutor.getGame().getCurrentMap().setObject(cp);
                 Messenger.ingameMessage("You moved to new place");
-                Messenger.systemMessage("Map changed to id: " + entrance.getReferMapId());
+                Messenger.systemMessage("Map changed to id: " + GameExecutor.getGame().getCurrentMap().getId());
                 showMap();
             }
         }
@@ -325,5 +325,50 @@ public class CommandManager {
             }
         }
         System.out.println();
+    }
+
+    public static void inspect() {
+        Player player = GameExecutor.getGame().getCurrentPlayer();
+        Cell cc = player.getCurrentCell();
+        //Object[] objects = cc.getObjects().toArray();
+        Object[] objects = cc.getObjects().stream().filter(o -> o.getID() != player.getID()).toArray();
+        if (objects.length == 0) {
+            Messenger.ingameMessage("Here is nothing to inspect");
+        }
+        if (objects.length == 1) {
+            Messenger.ingameMessage(((Entity)objects[0]).getDescription());
+        }
+        if (objects.length > 1) {
+            Entity choice = askMultipleOption();
+            if (choice != null) {
+                Messenger.ingameMessage(choice.getDescription());
+            }
+            else {
+                return;
+            }
+        }
+    }
+
+    private static Entity askMultipleOption() {
+        Player player = GameExecutor.getGame().getCurrentPlayer();
+        Cell cc = player.getCurrentCell();
+        Object[] objects = cc.getObjects().stream().filter(o -> o.getID() != player.getID()).toArray();
+        for (int i = 0; i < objects.length; i++) {
+            System.out.println(i + ") " + ((Entity)objects[i]).getName());
+        }
+        Messenger.ingameMessage("Which object you would to choose?");
+        Scanner num = new Scanner(System.in);
+        try {
+            int ans = num.nextInt();
+            return (Entity) objects[ans];
+        }
+        catch (InputMismatchException e) {
+            Messenger.systemMessage("InputMismatchException in askMultipleOption()", CommandManager.class);
+            return null;
+        }
+        catch (IndexOutOfBoundsException e) {
+            Messenger.systemMessage("IndexOutOfBoundsException in askMultipleOption()", CommandManager.class);
+            return null;
+        }
     }
 }

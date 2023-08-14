@@ -11,7 +11,7 @@ public abstract class NonPlayerCharacter extends Character {
     private Quest quest;
 
     //only for initializing
-    public NonPlayerCharacter(String name, int CID) {super(name, CID);}
+    public NonPlayerCharacter(String name, int CID, int ID) {super(name, CID, ID);}
 
 
     public NonPlayerCharacter(String name, int x, int y, int id, int cid) {

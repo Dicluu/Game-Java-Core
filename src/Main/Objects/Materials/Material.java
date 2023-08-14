@@ -10,8 +10,8 @@ public class Material extends Entity {
     private final Materials material;
     private final String name;
 
-    public Material(int x, int y, Materials material) {
-        super(x, y);
+    public Material(int x, int y, Materials material, int ID) {
+        super(x, y, ID);
         this.material = material;
         this.name = material.getName();
     }

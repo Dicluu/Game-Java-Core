@@ -37,8 +37,8 @@ public class Main {
         Messenger.setSystem(true);
         Messenger.setHelp(true);
         initiateEntities();
-        Map map1 = MapLoader.loadMap(0);
-        Map map2 = MapLoader.loadMap(-1);
+        Map map1 = MapLoader.loadMapById(0);
+        Map map2 = MapLoader.loadMapById(-1);
         Entity.showInstancesSystem();
         Item.showInstancesSystem();
         //TEMPORARY ON TESTING
