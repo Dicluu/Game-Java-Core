@@ -5,6 +5,7 @@ import Main.Maps.Instances.Interiors;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Entity;
+import Main.Objects.Tile.Tile;
 import Main.Objects.Unique.Building;
 import Main.Objects.Unique.Enterable;
 import Main.Utils.Messenger;
@@ -59,6 +60,14 @@ public class MapLoader {
                    if (es[0].equals("description")) {
                        description = es[1];
                    }
+                   if (es[0].equals("tile")) {
+                       int xf = Integer.parseInt(es[1]);
+                       int xt = Integer.parseInt(es[2]);
+                       int yf = Integer.parseInt(es[3]);
+                       int yt = Integer.parseInt(es[4]);
+                       Tile tile = Tile.findById(Integer.parseInt(es[5]));
+                       setTile(map, xf, xt, yf, yt, tile);
+                   }
                 }
             }
             map.tune(ID, description);
@@ -81,5 +90,13 @@ public class MapLoader {
     private static Entity setCharacter(Character c, String name) {
         c.setName(name);
         return c;
+    }
+
+    private static void setTile(Map map, int xf, int xt, int yf, int yt, Tile tile) {
+        for (int i = xf; i <= xt; i++) {
+            for (int j = yf; j <= yt; j++) {
+                map.getCell(i,j).setTile(tile);
+            }
+        }
     }
 }

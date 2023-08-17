@@ -59,4 +59,12 @@ public class Cell implements Serializable {
     public int getY() {
         return y;
     }
+
+    public Tile getTile() {
+        return tile;
+    }
+
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
 }

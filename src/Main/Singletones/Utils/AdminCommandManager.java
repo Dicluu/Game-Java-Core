@@ -73,6 +73,7 @@ public class AdminCommandManager {
         for (Entity object : cp.getCurrentCell().getObjects()) {
             System.out.println(object.getId() + " " + object);
         }
+        Messenger.systemMessage("Tile of cell: " + cp.getCurrentCell().getTile());
     }
 
     public static void showCharacters() {
