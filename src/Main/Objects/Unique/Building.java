@@ -4,11 +4,12 @@ package Main.Objects.Unique;
 import Main.Maps.Cell;
 import Main.Maps.Map;
 import Main.Objects.Entity;
+import Main.Utils.FileLoaders.MapLoader;
 import Main.Utils.Messenger;
 
 public class Building extends UniqueEntity implements Enterable {
 
-    private final char symbol = "b".charAt(0);
+    private char symbol = "b".charAt(0);
     private final static int ID = 5;
     private String name = "Building";
     private int referId;
@@ -19,17 +20,18 @@ public class Building extends UniqueEntity implements Enterable {
      * @param x
      * @param y
      * @param name
-     * @param referId must to referring to unique maps (must be less than zero)
+     * @param mapToID must to referring to unique maps (must be less than zero)
      */
-    public Building(int x, int y, String name, int referId) {
+    public Building(int x, int y, int mapToID, int mapFromID, String name) {
         super(x, y, ID);
-        this.name = name;
-        if (referId <= 0) {
-            this.referId = referId;
-            this.node = Map.getMapById(referId).getCell(2, 0);
-        } else {
-            Messenger.ingameMessage("This Building referring to not unique map");
-        }
+        Map map = MapLoader.loadMapById(mapToID);
+        this.name = map.getName();
+        this.symbol = map.getDelegateSymbol();
+        referId = map.getId();
+        this.node = Map.getMapById(referId).getCell(0, 2);
+        Entrance exit = new Entrance(0,2, mapFromID);
+        exit.setNode(x,y);
+        node.addObject(exit);
     }
 
     /**

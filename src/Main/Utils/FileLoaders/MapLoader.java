@@ -54,7 +54,8 @@ public class MapLoader {
                             e = setEntrance((Enterable) e, Integer.parseInt(es[3]));
                             break;
                         case 5:
-                            e = setBuilding((Building) e, es[3], map.getId(), Integer.parseInt(es[4]));
+                            //e = setBuilding((Building) e, es[3], map.getId(), Integer.parseInt(es[4]));
+                            e = new Building(Integer.parseInt(es[1]), Integer.parseInt(es[2]), Integer.parseInt(es[4]), map.getId(), map.getName());
                             break;
                         case 6:
                             e = new Main.Objects.Unique.Town(Integer.parseInt(es[1]), Integer.parseInt(es[2]), Integer.parseInt(es[3]), map.getId());
