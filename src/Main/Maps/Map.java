@@ -1,5 +1,6 @@
 package Main.Maps;
 
+import Main.Maps.Instances.Interiors;
 import Main.Objects.Entity;
 import Main.Objects.Tile.Tile;
 import Main.Objects.Unique.Entrance;
@@ -19,12 +20,14 @@ public abstract class Map implements Serializable {
     private static int freeId;
     private static HashMap<Integer, Map> allMaps = new HashMap();
     private String description;
+    private int scale;
 
 
-    public Map(int x, int y, Tile tile) {
+    public Map(int x, int y, Tile tile, int scale) {
         this.x = x;
         this.y = y;
         this.tile = tile;
+        this.scale = scale;
         this.map = new Cell[y][x];
         this.id = freeId;
         generateBlank();
@@ -101,6 +104,14 @@ public abstract class Map implements Serializable {
         return id;
     }
 
+    public int getScale() {
+        return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
     @NeedRevision(comment = "review auto increment system")
     public static Map getMapById(int id) {
         try {
@@ -131,7 +142,7 @@ public abstract class Map implements Serializable {
     public static Map generateLocation(int ID, int x, int y) {
                 GameExecutor ge = GameExecutor.getGame();
                 Map cm = ge.getCurrentMap();
-                Location l = (Location) MapLoader.loadMapById(ID);
+                Interiors l = (Interiors) MapLoader.loadMapById(ID);
                 l.setObject(new Entrance(0, 2, cm.getId(), x, y));
                 return l;
         }
@@ -145,7 +156,7 @@ public abstract class Map implements Serializable {
      * @return
      */
     public static Map generateBuildingFromFile(String name, int x, int y, int mapID, int interiorID) {
-        Location l = (Location) MapLoader.loadMapById(interiorID);
+        Interiors l = (Interiors) MapLoader.loadMapById(interiorID);
         l.setObject(new Entrance(0, 2, mapID, x, y));
         return l;
     }

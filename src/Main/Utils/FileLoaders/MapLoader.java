@@ -1,7 +1,7 @@
 package Main.Utils.FileLoaders;
 
 import Main.Maps.Instances.Forest;
-import Main.Maps.Location;
+import Main.Maps.Instances.Interiors;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
 import Main.Objects.Entity;
@@ -32,7 +32,7 @@ public class MapLoader {
                     map = new Forest(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
                     break;
                 case 1:
-                    map = new Location(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                    map = new Interiors(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
                     break;
             }
 

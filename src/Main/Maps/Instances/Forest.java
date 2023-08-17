@@ -9,7 +9,7 @@ import java.util.Set;
 public class Forest extends Map {
 
     public Forest(int x, int y) {
-        super(x, y, Tile.GRASS);
+        super(x, y, Tile.GRASS, 100);
     }
     public Forest(int x, int y, Set<Entity> entities) {
         super(x, y, Tile.GRASS, entities);

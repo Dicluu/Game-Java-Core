@@ -2,7 +2,6 @@ package Main.Objects.Unique;
 
 
 import Main.Maps.Cell;
-import Main.Maps.Location;
 import Main.Maps.Map;
 import Main.Objects.Entity;
 import Main.Utils.Messenger;
