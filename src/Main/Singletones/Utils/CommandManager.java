@@ -371,4 +371,9 @@ public class CommandManager {
             return null;
         }
     }
+
+    public static void around() {
+        Map currentMap = GameExecutor.getGame().getCurrentMap();
+        Messenger.ingameMessage(currentMap.getDescription());
+    }
 }

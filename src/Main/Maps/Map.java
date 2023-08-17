@@ -18,6 +18,7 @@ public abstract class Map implements Serializable {
     private Tile tile;
     private static int freeId;
     private static HashMap<Integer, Map> allMaps = new HashMap();
+    private String description;
 
 
     public Map(int x, int y, Tile tile) {
@@ -149,12 +150,17 @@ public abstract class Map implements Serializable {
         return l;
     }
 
-    public void setCID(int id) {
+    public void tune(int id, String description) {
         this.cid = id;
+        this.description = description;
         if (cid < 0) {
             allMaps.remove(id);
             this.id = cid;
             allMaps.put(id, this);
         }
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

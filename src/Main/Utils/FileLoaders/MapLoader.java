@@ -25,6 +25,7 @@ public class MapLoader {
             File file = new File(path);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String length = br.readLine();
+            String description = " ";
             String[] args = length.split(":");
             switch (Integer.parseInt(args[0])) {
                 case 0:
@@ -34,16 +35,18 @@ public class MapLoader {
                     map = new Location(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
                     break;
             }
-            map.setCID(ID);
+
             while (br.ready()) {
                 String arg = br.readLine();
                 String[] es = arg.split(":");
-                Entity e = Entity.newInstance(Integer.parseInt(es[0]));
-                e.setX(Integer.parseInt(es[1]));
-                e.setY(Integer.parseInt(es[2]));
+                try {
+                    Entity e = Entity.newInstance(Integer.parseInt(es[0]));
+                    e.setX(Integer.parseInt(es[1]));
+                    e.setY(Integer.parseInt(es[2]));
+
                 switch (e.getId()) {
                     case 2:
-                        e = setEntrance((Enterable)e, Integer.parseInt(es[3]));
+                        e = setEntrance((Enterable) e, Integer.parseInt(es[3]));
                         break;
                     case 5:
                         e = setBuilding((Building) e, es[3], map.getId(), Integer.parseInt(es[4]));
@@ -52,10 +55,15 @@ public class MapLoader {
                     e = setCharacter((Character) e, es[3]);
                 }
                 map.setObject(e);
+                } catch (NumberFormatException exc) {
+                   if (es[0].equals("description")) {
+                       description = es[1];
+                   }
+                }
             }
+            map.tune(ID, description);
             return map;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Messenger.systemMessage("Exception loadMap()", MapLoader.class);
         }
         return null;

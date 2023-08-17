@@ -40,7 +40,6 @@ public class GameExecutor implements Serializable {
     public static GameExecutor getGame() {
         if (instanceGame == null) {
             instanceGame = new GameExecutor();
-
         }
         return instanceGame;
     }
@@ -127,6 +126,9 @@ public class GameExecutor implements Serializable {
                     break;
                 case "inspect":
                     CommandManager.inspect();
+                    break;
+                case "around":
+                    CommandManager.around();
                     break;
                 case "trade":
                     AdminCommandManager.trade(); // only for testing
