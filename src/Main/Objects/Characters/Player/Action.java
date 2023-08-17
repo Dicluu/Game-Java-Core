@@ -150,8 +150,10 @@ public class Action implements Serializable {
         for (Item i : inv) {
             try {
                 if (i instanceof Tool) {
-                    if (((Tool) i).getTier() == Tiers.getById(Integer.parseInt(args.get(3)))) {
-                        c++;
+                    if (args.size() > 3) {
+                        if (((Tool) i).getTier() == Tiers.getById(Integer.parseInt(args.get(3)))) {
+                            c++;
+                        }
                     }
                 } else {
                     if (i.equals(Item.getItemById(ID))) {
