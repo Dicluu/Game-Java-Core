@@ -54,6 +54,10 @@ public class Entrance extends UniqueEntity implements Enterable {
         return "Entrance";
     }
 
+    public void setNode(int x, int y) {
+        this.node = Map.getMapById(referMapId).getCell(x,y);
+    }
+
     @Override
     public Cell getNode() {
         if (node != null) {

@@ -5,17 +5,17 @@ import Main.Maps.Map;
 import Main.Objects.Entity;
 import Main.Utils.FileLoaders.MapLoader;
 
-public class Town extends UniqueEntity implements Enterable {
+public class Location extends UniqueEntity implements Enterable {
 
-    private char symbol = 'T';
-    private final static int ID = 6;
-    private String name = "Town";
+    private char symbol = 'l';
+    private final static int ID = 8;
+    private String name = "Location";
     private int referId;
     private Cell node = null;
 
     static {
         try {
-            Entity.addInstance(ID, Town.class);
+            Entity.addInstance(ID, Location.class);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -23,7 +23,7 @@ public class Town extends UniqueEntity implements Enterable {
         }
     }
 
-    public Town(int x, int y, int mapToID, int mapFromID) {
+    public Location(int x, int y, int mapToID, int mapFromID) {
         super(x, y, ID);
         Map map = MapLoader.loadMapById(mapToID);
         this.name = map.getName();
@@ -35,6 +35,17 @@ public class Town extends UniqueEntity implements Enterable {
         node.addObject(exit);
     }
 
+    /**
+     * ONLY FOR INITIALIZATION
+     */
+    public Location() {
+
+    }
+
+    @Override
+    public int getReferMapId() {
+        return referId;
+    }
 
     @Override
     public char getSymbol() {
@@ -49,18 +60,6 @@ public class Town extends UniqueEntity implements Enterable {
     @Override
     public String getName() {
         return name;
-    }
-
-    /**
-     * ONLY FOR INITIALIZING
-     */
-    public Town() {
-
-    }
-
-    @Override
-    public int getReferMapId() {
-        return referId;
     }
 
     @Override

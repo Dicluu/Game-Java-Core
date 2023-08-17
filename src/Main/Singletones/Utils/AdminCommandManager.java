@@ -71,6 +71,7 @@ public class AdminCommandManager {
         Map cm = GameExecutor.getGame().getCurrentMap();
         Messenger.systemMessage("Cell objects: ");
         for (Entity object : cp.getCurrentCell().getObjects()) {
+            System.out.println(object);
             System.out.println(object.getId() + " " + object);
         }
         Messenger.systemMessage("Tile of cell: " + cp.getCurrentCell().getTile());

@@ -10,6 +10,7 @@ import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
 import Main.Objects.Unique.Building;
 import Main.Objects.Unique.Entrance;
+import Main.Objects.Unique.Location;
 import Main.Objects.Unique.Town;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedImprovement;
@@ -18,6 +19,8 @@ import Main.Utils.FileLoaders.MapLoader;
 import Main.Utils.FileLoaders.ScriptLoader;
 import Main.Utils.Messenger;
 import Main.Utils.Timers.TimeCounter;
+
+import java.util.Locale;
 
 public class Main {
 
@@ -29,6 +32,7 @@ public class Main {
         new Building();
         new Town();
         new Peasant();
+        new Location();
     }
 
     @NeedImprovement(comment = "make a class that will scan directories and getting all " +

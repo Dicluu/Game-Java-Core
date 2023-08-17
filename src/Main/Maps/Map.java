@@ -21,6 +21,8 @@ public abstract class Map implements Serializable {
     private static HashMap<Integer, Map> allMaps = new HashMap();
     private String description;
     private int scale;
+    private String name;
+    private char delegateSymbol;
 
 
     public Map(int x, int y, Tile tile, int scale) {
@@ -104,6 +106,14 @@ public abstract class Map implements Serializable {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public char getDelegateSymbol() {
+        return delegateSymbol;
+    }
+
     public int getScale() {
         return scale;
     }
@@ -161,13 +171,20 @@ public abstract class Map implements Serializable {
         return l;
     }
 
-    public void tune(int id, String description) {
+    public void tune(int id, String... args) {
         this.cid = id;
-        this.description = description;
         if (cid < 0) {
             allMaps.remove(id);
             this.id = cid;
             allMaps.put(id, this);
+        }
+        try {
+            this.description = args[0];
+            this.name = args[1];
+            this.delegateSymbol = args[2].charAt(0);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+
         }
     }
 
