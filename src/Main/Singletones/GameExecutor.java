@@ -3,6 +3,7 @@ package Main.Singletones;
 import Main.Items.Item;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
+import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Characters.Player.Quest;
@@ -172,7 +173,7 @@ public class GameExecutor implements Serializable {
         }
     }
 
-    public static void initiateDialogue(Character companion, Speech speech) {
+    public static void initiateDialogue(NonPlayerCharacter companion, Speech speech) {
         DialogueExecutor.start(GameExecutor.getGame().getCurrentPlayer(), companion, speech);
     }
 

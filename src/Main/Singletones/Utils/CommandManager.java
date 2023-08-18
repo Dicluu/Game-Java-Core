@@ -5,6 +5,7 @@ import Main.Items.Tools.Tool;
 import Main.Maps.Map;
 import Main.Maps.Cell;
 import Main.Objects.Characters.Character;
+import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.Player.Journal;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Characters.Player.Quest;
@@ -12,6 +13,9 @@ import Main.Objects.Characters.Talkable;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
 import Main.Objects.Unique.Enterable;
+import Main.Objects.Unique.Gates;
+import Main.Objects.Unique.Irresistible;
+import Main.Objects.Unique.Lockable;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
@@ -30,6 +34,7 @@ public class CommandManager {
     public static void move(String direction) {
         Player currentPlayer = GameExecutor.getGame().getCurrentPlayer();
         Map currentMap = GameExecutor.getGame().getCurrentMap();
+        preRenderObjects(direction);
         switch (direction) {
             case "up":
                 currentPlayer.setY(currentPlayer.getY() - 1);
@@ -60,7 +65,7 @@ public class CommandManager {
                 }
                 break;
         }
-        renderObjects();
+        renderObjects(direction);
         updateMapAfterMove(currentPlayer);
     }
 
@@ -73,7 +78,7 @@ public class CommandManager {
     /**
      * renders objects of cell where player located
      */
-    public static void renderObjects() {
+    private static void renderObjects(String direction) {
         Map cm = GameExecutor.getGame().getCurrentMap();
         Player cp = GameExecutor.getGame().getCurrentPlayer();
         Set<Entity> objects = cm.getObjects(cp.getX(), cp.getY());
@@ -85,12 +90,46 @@ public class CommandManager {
             if (object instanceof Enterable) {
                 isEntrance = true;
             }
+            if (object instanceof Irresistible) {
+                back(direction);
+                Messenger.ingameMessage("You can't overcome this object");
+            }
         }
         if (isMaterial) {
             Messenger.ingameMessage("Here is some materials you can get by command 'get'");
         }
         if (isEntrance) {
             Messenger.ingameMessage("Here is entrance you can come in by command 'come'");
+        }
+    }
+
+    private static void preRenderObjects(String direction) {
+        Player player = GameExecutor.getGame().getCurrentPlayer();
+        Cell cc = player.getCurrentCell();
+        Set<Entity> objects = cc.getObjects();
+        for (Entity e : objects) {
+            if ((e instanceof Gates) && (((Gates) e).isLocked()) && (direction.equals(((Gates) e).getLockedDirection()))) {
+                back(direction);
+                Messenger.ingameMessage("Gates are locked");
+            }
+        }
+    }
+
+    private static void back(String direction) {
+        Player currentPlayer = GameExecutor.getGame().getCurrentPlayer();
+        switch (direction) {
+            case "up":
+                currentPlayer.setY(currentPlayer.getY() + 1);
+                break;
+            case "down":
+                currentPlayer.setY(currentPlayer.getY() - 1);
+                break;
+            case "left":
+                currentPlayer.setX(currentPlayer.getX() + 1);
+                break;
+            case "right":
+                currentPlayer.setX(currentPlayer.getX() - 1);
+                break;
         }
     }
 
@@ -280,7 +319,7 @@ public class CommandManager {
             Messenger.ingameMessage("Here is no one to talk");
         }
         if (c.size() == 1) {
-            c.get(0).talk(c.get(0));
+            c.get(0).talk((NonPlayerCharacter) c.get(0));
         }
         if (c.size() > 1) {
             Messenger.ingameMessage("Here is more than 1 character, choose which one you want to talk");
@@ -291,7 +330,7 @@ public class CommandManager {
             try {
                 int in = num.nextInt();
                 Character ccr = c.get(in - 1);
-                ccr.talk(ccr);
+                ccr.talk((NonPlayerCharacter) ccr);
             } catch (InputMismatchException ime) {
                 Messenger.ingameMessage("ID must be a number");
                 Messenger.systemMessage("InputMismatchException caught in talk()", CommandManager.class);
@@ -336,14 +375,13 @@ public class CommandManager {
             Messenger.ingameMessage("Here is nothing to inspect");
         }
         if (objects.length == 1) {
-            Messenger.ingameMessage(((Entity)objects[0]).getDescription());
+            Messenger.ingameMessage(((Entity) objects[0]).getDescription());
         }
         if (objects.length > 1) {
             Entity choice = askMultipleOption();
             if (choice != null) {
                 Messenger.ingameMessage(choice.getDescription());
-            }
-            else {
+            } else {
                 return;
             }
         }
@@ -354,19 +392,17 @@ public class CommandManager {
         Cell cc = player.getCurrentCell();
         Object[] objects = cc.getObjects().stream().filter(o -> o.getID() != player.getID()).toArray();
         for (int i = 0; i < objects.length; i++) {
-            System.out.println(i + ") " + ((Entity)objects[i]).getName());
+            System.out.println(i + ") " + ((Entity) objects[i]).getName());
         }
         Messenger.ingameMessage("Which object you would to choose?");
         Scanner num = new Scanner(System.in);
         try {
             int ans = num.nextInt();
             return (Entity) objects[ans];
-        }
-        catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
             Messenger.systemMessage("InputMismatchException in askMultipleOption()", CommandManager.class);
             return null;
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             Messenger.systemMessage("IndexOutOfBoundsException in askMultipleOption()", CommandManager.class);
             return null;
         }

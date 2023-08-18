@@ -1,6 +1,7 @@
 package Main.Singletones.Utils;
 
 import Main.Objects.Characters.Character;
+import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Characters.Player.Player;
 import Main.Singletones.GameExecutor;
@@ -15,7 +16,7 @@ public class DialogueExecutor {
     private static Speech speech;
     private static boolean helpFlag = true;
 
-    public static void start(Player player, Character companion, Speech speech) {
+    public static void start(Player player, NonPlayerCharacter companion, Speech speech) {
         DialogueExecutor.player = player;
         DialogueExecutor.companion = companion;
         DialogueExecutor.speech = speech;
@@ -95,7 +96,7 @@ public class DialogueExecutor {
         }
     }
 
-    private static boolean isDialogueExist(Character c) {
+    private static boolean isDialogueExist(NonPlayerCharacter c) {
         HashMap<Integer, Speech> speeches = c.getSpeeches();
         for (Speech s : speeches.values()) {
             if (s.isAnswerable()) {
@@ -106,7 +107,7 @@ public class DialogueExecutor {
     }
 
     private static void randomizeSpeech() {
-        HashMap<Integer, Speech> speeches = companion.getSpeeches();
+        HashMap<Integer, Speech> speeches = ((NonPlayerCharacter) companion).getSpeechesInRow();
         int r = (int) (Math.random() * (speeches.size()));
         Messenger.ingameMessage(companion.getName() + ": " + speeches.get(r).getSpeech());
     }

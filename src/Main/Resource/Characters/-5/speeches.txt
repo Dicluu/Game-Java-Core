@@ -1,0 +1,4 @@
+0:Hey, you, who are you?:true:6,7:group:1
+1:Hm, you don't look like a Gal. Come in.:functional:1:open:-2
+2:Is it all your goods? You're ugly, but you don't look like a Gal, come in.:functional:1:open:-2
+3:Come in.:false:after:1

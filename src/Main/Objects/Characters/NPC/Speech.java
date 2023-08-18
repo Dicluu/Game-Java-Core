@@ -1,5 +1,7 @@
 package Main.Objects.Characters.NPC;
 
+import Main.Objects.Characters.Player.Action;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +9,13 @@ import java.util.List;
 public class Speech implements Serializable {
 
     private String speech;
-    private boolean isAnswerable, isQuest, isDynamic, isFinish, isTrade;
+    private boolean isAnswerable, isQuest, isDynamic, isFinish, isTrade, isBlocked, isFunctional;
     private List<Integer> answers = new ArrayList<>();
-    private int id, questID;
+    private int id, questID, groupID, parentID;
 
+    private Action action;
+
+    /*
     public Speech(String speech, boolean isAnswerable, List<Integer> answers, int id) {
         this.speech = speech;
         this.isAnswerable = isAnswerable;
@@ -28,13 +33,14 @@ public class Speech implements Serializable {
         this.isDynamic = isDynamic;
     }
 
+     */
+
     public Speech(String speech, int id) {
         this.speech = speech;
-        this.isAnswerable = false;
         this.id = id;
-        this.isQuest = false;
     }
 
+    /*
     public Speech(String speech, int questID, int id) {
         this.speech = speech;
         this.isAnswerable = false;
@@ -56,6 +62,8 @@ public class Speech implements Serializable {
         this.isFinish = isFinish;
     }
 
+     */
+
     public boolean isDynamic() {
         return isDynamic;
     }
@@ -72,7 +80,51 @@ public class Speech implements Serializable {
         return id;
     }
 
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public boolean isFunctional() {
+        return isFunctional;
+    }
+
+    public void setFunctional(boolean functional) {
+        isFunctional = functional;
+    }
+
+    public int getParentID() {
+        return parentID;
+    }
+
+    public void setParentID(int parentID) {
+        this.parentID = parentID;
+    }
+
+    public int getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(int groupID) {
+        this.groupID = groupID;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
     public String getSpeech() {
+        if (isFunctional) {
+            action.execute();
+        }
         return speech;
     }
 
@@ -96,14 +148,18 @@ public class Speech implements Serializable {
         return isFinish;
     }
 
-    private void setFinish(boolean isComplete) {
+    public void setDynamic(boolean dynamic) {
+        isDynamic = dynamic;
+    }
+
+    public void setFinish(boolean isComplete) {
         if (isComplete) {
             setAnswerable(false);
         }
         this.isFinish = isComplete;
     }
 
-    private void setQuest(boolean quest) {
+    public void setQuest(boolean quest) {
         isQuest = quest;
     }
 
@@ -111,7 +167,7 @@ public class Speech implements Serializable {
         return answers;
     }
 
-    private void setAnswers(List<Integer> answers) {
+    public void setAnswers(List<Integer> answers) {
         this.answers = answers;
     }
 
@@ -119,7 +175,7 @@ public class Speech implements Serializable {
         return questID;
     }
 
-    private void setQuestID(int questID) {
+    public void setQuestID(int questID) {
         this.questID = questID;
     }
 

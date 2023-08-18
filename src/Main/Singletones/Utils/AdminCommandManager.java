@@ -8,6 +8,7 @@ import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Entity;
 import Main.Objects.Unique.Building;
+import Main.Objects.Unique.Enterable;
 import Main.Objects.Unique.Entrance;
 import Main.Objects.Unique.UniqueEntity;
 import Main.Singletones.GameExecutor;
@@ -46,7 +47,7 @@ public class AdminCommandManager {
                 throw new ArrayIndexOutOfBoundsException();
             }
             Entity newObject = Entity.getObjectById(id);
-            if (newObject instanceof UniqueEntity) {
+            if (newObject instanceof Enterable) {
                 setEntrance(x, y, newObject);
             } else {
                 newObject.setX(x);

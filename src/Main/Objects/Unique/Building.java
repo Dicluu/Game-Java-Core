@@ -22,6 +22,19 @@ public class Building extends UniqueEntity implements Enterable {
      * @param name
      * @param mapToID must to referring to unique maps (must be less than zero)
      */
+    public Building(int x, int y, int mapToID, int CID, int mapFromID, String name) {
+        super(x, y, ID);
+        Map map = MapLoader.loadMapById(mapToID);
+        this.name = map.getName();
+        this.symbol = map.getDelegateSymbol();
+        referId = map.getId();
+        this.node = Map.getMapById(referId).getCell(0, 2);
+        Entrance exit = new Entrance(0,2, mapFromID);
+        exit.setNode(x,y);
+        super.setCID(CID);
+        node.addObject(exit);
+    }
+
     public Building(int x, int y, int mapToID, int mapFromID, String name) {
         super(x, y, ID);
         Map map = MapLoader.loadMapById(mapToID);

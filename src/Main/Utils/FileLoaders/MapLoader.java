@@ -5,16 +5,16 @@ import Main.Maps.Instances.Interiors;
 import Main.Maps.Instances.Town;
 import Main.Maps.Map;
 import Main.Objects.Characters.Character;
+import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Entity;
 import Main.Objects.Tile.Tile;
-import Main.Objects.Unique.Building;
-import Main.Objects.Unique.Enterable;
-import Main.Objects.Unique.Location;
+import Main.Objects.Unique.*;
 import Main.Utils.Messenger;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Optional;
 
 public class MapLoader {
 
@@ -39,6 +39,9 @@ public class MapLoader {
                     break;
                 case 2:
                     map = new Town(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                    break;
+                case 3:
+                    map = new Main.Maps.Instances.Location(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
             }
 
             while (br.ready()) {
@@ -55,7 +58,12 @@ public class MapLoader {
                             break;
                         case 5:
                             //e = setBuilding((Building) e, es[3], map.getId(), Integer.parseInt(es[4]));
-                            e = new Building(Integer.parseInt(es[1]), Integer.parseInt(es[2]), Integer.parseInt(es[4]), map.getId(), map.getName());
+                            try {
+                                e = new Building(Integer.parseInt(es[1]), Integer.parseInt(es[2]), Integer.parseInt(es[4]), Integer.parseInt(es[5]), map.getId(), map.getName());
+                            }
+                            catch (ArrayIndexOutOfBoundsException ex) {
+                                e = new Building(Integer.parseInt(es[1]), Integer.parseInt(es[2]), Integer.parseInt(es[4]), map.getId(), map.getName());
+                            }
                             break;
                         case 6:
                             e = new Main.Objects.Unique.Town(Integer.parseInt(es[1]), Integer.parseInt(es[2]), Integer.parseInt(es[3]), map.getId());
@@ -64,21 +72,22 @@ public class MapLoader {
                             e = new Location(Integer.parseInt(es[1]), Integer.parseInt(es[2]), Integer.parseInt(es[3]), map.getId());
                     }
                     if (e instanceof Character) {
-                        e = setCharacter((Character) e, es[3]);
+                        e = setCharacter((Character) e, Integer.parseInt(es[3]));
                     }
                     map.setObject(e);
                 } catch (NumberFormatException exc) {
+                    Entity e;
                     switch (es[0]) {
                         case "description":
                             description = es[1];
                             break;
                         case "tile":
-                            int xf = Integer.parseInt(es[1]);
-                            int xt = Integer.parseInt(es[2]);
-                            int yf = Integer.parseInt(es[3]);
-                            int yt = Integer.parseInt(es[4]);
-                            Tile tile = Tile.findById(Integer.parseInt(es[5]));
-                            setTile(map, xf, xt, yf, yt, tile);
+                                int xf = Integer.parseInt(es[1]);
+                                int xt = Integer.parseInt(es[2]);
+                                int yf = Integer.parseInt(es[3]);
+                                int yt = Integer.parseInt(es[4]);
+                                Tile tile = Tile.findById(Integer.parseInt(es[5]));
+                                setTile(map, xf, xt, yf, yt, tile);
                             break;
                         case "name":
                             name = es[1];
@@ -86,12 +95,28 @@ public class MapLoader {
                         case "symbol":
                             symbol = es[1];
                             break;
+                        case "unique":
+                            e = Entity.newInstance(Integer.parseInt(es[1]));
+                            e.setCID(Integer.parseInt(es[2]));
+                            e.setX(Integer.parseInt(es[3]));
+                            e.setY(Integer.parseInt(es[4]));
+                            map.setObject(e);
+                            break;
+                        case "gates":
+                            e = Entity.newInstance(Integer.parseInt(es[1]));
+                            e.setCID(Integer.parseInt(es[2]));
+                            e.setX(Integer.parseInt(es[3]));
+                            e.setY(Integer.parseInt(es[4]));
+                            ((Gates)e).setLocked(Boolean.parseBoolean(es[5]));
+                            ((Gates)e).setLockedDirection(es[6]);
+                            map.setObject(e);
                     }
                 }
             }
             map.tune(ID, description, name, symbol);
             return map;
         } catch (Exception e) {
+            e.printStackTrace();
             Messenger.systemMessage("Exception loadMap()", MapLoader.class);
         }
         return null;
@@ -106,16 +131,20 @@ public class MapLoader {
         return Building.loadBuildingFromFile(b, name, ID, interiorID);
     }
 
-    private static Entity setCharacter(Character c, String name) {
-        c.setName(name);
+    private static Entity setCharacter(Character c, int CID) {
+        c.setCID(CID);
         return c;
     }
 
     private static void setTile(Map map, int xf, int xt, int yf, int yt, Tile tile) {
-        for (int i = xf; i <= xt; i++) {
-            for (int j = yf; j <= yt; j++) {
-                map.getCell(i, j).setTile(tile);
+        try {
+            for (int i = xf; i <= xt; i++) {
+                for (int j = yf; j <= yt; j++) {
+                    map.getCell(i, j).setTile(tile);
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Messenger.systemMessage("ArrayIndexOutOfBoundsException caught in setTile()", MapLoader.class);
         }
     }
 }

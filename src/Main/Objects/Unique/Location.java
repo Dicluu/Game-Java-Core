@@ -29,8 +29,8 @@ public class Location extends UniqueEntity implements Enterable {
         this.name = map.getName();
         this.symbol = map.getDelegateSymbol();
         referId = map.getId();
-        this.node = Map.getMapById(referId).getCell(0, 2);
-        Entrance exit = new Entrance(0,2, mapFromID);
+        this.node = Map.getMapById(referId).getCell(0, 3);
+        Entrance exit = new Entrance(0,3, mapFromID);
         exit.setNode(x,y);
         node.addObject(exit);
     }

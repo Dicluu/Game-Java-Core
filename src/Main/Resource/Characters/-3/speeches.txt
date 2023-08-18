@@ -4,3 +4,5 @@
 3:is there any job here?:true:3:dynamic
 4:yes:true:2
 5:no, thanks:false
+6:I'm just a wanderer, let me in.:true:1
+7:I'm a merchant, come here to sell my wood:true:2

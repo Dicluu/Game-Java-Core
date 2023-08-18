@@ -1,6 +1,7 @@
 package Main.Objects.Characters;
 
 import Main.Items.Item;
+import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.NPC.Speech;
 import Main.Objects.Entity;
 import Main.Objects.Priority;
@@ -140,6 +141,23 @@ public abstract class Character extends Entity implements Talkable, Serializable
      */
     public int getCID() {
         return CID;
+    }
+
+    public void setCID(int CID) {
+        try {
+            name = PersonLoader.loadName(CID);
+            speeches = PersonLoader.loadSpeeches(CID);
+            introduce = speeches.get(0);
+            inventory = PersonLoader.loadInventory(CID);
+        }
+        catch (Exception e) {
+            Messenger.systemMessage("Exception caught in setCID()", Character.class);
+        }
+        this.CID = CID;
+        allCharacters.remove(UID);
+        this.UID = CID;
+        allCharacters.put(UID, this);
+        super.setCID(CID);
     }
 
     /**
@@ -345,7 +363,7 @@ public abstract class Character extends Entity implements Talkable, Serializable
     }
 
    @Override
-    public void talk(Character c) {
+    public void talk(NonPlayerCharacter c) {
             GameExecutor.initiateDialogue(c, c.getIntroduce());
     }
 

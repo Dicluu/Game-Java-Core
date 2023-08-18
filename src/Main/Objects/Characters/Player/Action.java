@@ -6,6 +6,7 @@ import Main.Items.Tools.Tool;
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Entity;
+import Main.Objects.Unique.Lockable;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.Messenger;
@@ -15,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 public class Action implements Serializable {
 
@@ -23,6 +25,7 @@ public class Action implements Serializable {
     private String rawMethod;
     private List<String> args;
     private Quest quest;
+    private int ownerID, groupID;
     private boolean isCondition;
 
     public Action(Quest quest, boolean isCondition, String... a) {
@@ -37,6 +40,18 @@ public class Action implements Serializable {
         }
     }
 
+    public Action(int ownerID, boolean isCondition, int groupID, String... a) {
+        this.ownerID = ownerID;
+        this.groupID = groupID;
+        this.isCondition = isCondition;
+        args = Arrays.asList(a);
+        rawMethod = args.get(0);
+        try {
+            method = analyzeMethod(rawMethod);
+        } catch (NoSuchMethodException e) {
+            Messenger.systemMessage("NoSuchMethodException caught in Action() constructor", Action.class);
+        }
+    }
     public void execute() {
             try {
                 if ((!isDone()) || (isCondition())) {
@@ -171,6 +186,16 @@ public class Action implements Serializable {
         }
     }
 
+    public void open(List<String> args) {
+        int CID = Integer.parseInt(args.get(1));
+        Lockable e = (Lockable) Entity.getEntityById(CID);
+        e.open();
+        if (ownerID != 0) {
+            NonPlayerCharacter c = (NonPlayerCharacter) Character.getAllCharacters().get(ownerID);
+            c.blockSpeeches(groupID);
+        }
+    }
+
     public Method analyzeMethod(String rawMethod) throws NoSuchMethodException {
         switch (rawMethod) {
             case "remove":
@@ -184,6 +209,9 @@ public class Action implements Serializable {
                 break;
             case "give":
                 method = Action.class.getMethod("give", List.class);
+                break;
+            case "open":
+                method = Action.class.getMethod("open", List.class);
                 break;
         }
         return method;

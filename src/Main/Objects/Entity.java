@@ -18,6 +18,8 @@ public abstract class Entity implements Cloneable, Serializable {
     private int ID;
     private static HashMap<Integer, Entity> allEntities = new HashMap<>();
     private int objectID;
+
+    private int CID = 1;
     private static HashMap<Integer, Entity>  instances = new HashMap<>();
 
     static {
@@ -55,6 +57,18 @@ public abstract class Entity implements Cloneable, Serializable {
 
     public int getID() {
         return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getCID() {
+        return CID;
+    }
+
+    public void setCID(int CID) {
+        this.CID = CID;
     }
 
     public abstract char getSymbol();
@@ -104,7 +118,9 @@ public abstract class Entity implements Cloneable, Serializable {
     }
 
     public void setObjectID(int objectID) {
+        allEntities.remove(objectID);
         this.objectID = objectID;
+        allEntities.put(objectID, this);
     }
 
     public static void showInstancesSystem() {
@@ -152,6 +168,9 @@ public abstract class Entity implements Cloneable, Serializable {
 
     public String getDescription() {
         try {
+            if (CID < 0) {
+                return EntityLoader.loadDescription(this.CID);
+            }
             return EntityLoader.loadDescription(this.ID);
         }
         catch (IOException e) {

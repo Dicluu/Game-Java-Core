@@ -3,15 +3,13 @@ package Main;
 import Main.Items.Item;
 import Main.Maps.Map;
 import Main.Objects.Characters.NPC.Dealer;
+import Main.Objects.Characters.NPC.Guard;
 import Main.Objects.Characters.NPC.Peasant;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
-import Main.Objects.Unique.Building;
-import Main.Objects.Unique.Entrance;
-import Main.Objects.Unique.Location;
-import Main.Objects.Unique.Town;
+import Main.Objects.Unique.*;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedImprovement;
 import Main.Utils.FileLoaders.ItemLoader;
@@ -33,6 +31,11 @@ public class Main {
         new Town();
         new Peasant();
         new Location();
+        new WaterSurface();
+        new Bridge();
+        new Wall();
+        new Gates();
+        new Guard();
     }
 
     @NeedImprovement(comment = "make a class that will scan directories and getting all " +
