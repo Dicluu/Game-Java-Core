@@ -6,7 +6,7 @@ public class Gates extends UniqueEntity implements Lockable{
 
     static {
         try {
-            Entity.addInstance(12, Gates.class);
+            Entity.addInstance(7, Gates.class);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -14,6 +14,8 @@ public class Gates extends UniqueEntity implements Lockable{
         }
     }
 
+    private static int ID = 7;
+    private static String name = "Gates";
     boolean isLocked;
     String lockedDirection;
 
@@ -48,6 +50,8 @@ public class Gates extends UniqueEntity implements Lockable{
 
 
 
+
+
     @Override
     public char getSymbol() {
         if (isLocked) {
@@ -59,11 +63,11 @@ public class Gates extends UniqueEntity implements Lockable{
 
     @Override
     public int getId() {
-        return 12;
+        return ID;
     }
 
     @Override
     public String getName() {
-        return "Gates";
+        return name;
     }
 }

@@ -37,6 +37,17 @@ public abstract class Map implements Serializable {
         allMaps.put(id,this);
     }
 
+    public Map(int x, int y, Tile tile, int scale, int CID) {
+        this.x = x;
+        this.y = y;
+        this.tile = tile;
+        this.scale = scale;
+        this.map = new Cell[y][x];
+        this.id = CID;
+        generateBlank();
+        allMaps.put(id,this);
+    }
+
     public Map(int x, int y, Tile tile, Set<Entity> entities) {
         this.x = x;
         this.y = y;
@@ -190,5 +201,9 @@ public abstract class Map implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

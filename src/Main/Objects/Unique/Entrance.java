@@ -3,12 +3,13 @@ package Main.Objects.Unique;
 import Main.Maps.Cell;
 import Main.Maps.Map;
 import Main.Objects.Entity;
+import Main.Utils.FileLoaders.MapLoader;
 import Main.Utils.Messenger;
 
 public class Entrance extends UniqueEntity implements Enterable {
     static {
         try {
-            Entity.addInstance(2, Entrance.class);
+            Entity.addInstance(6, Entrance.class);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -16,9 +17,12 @@ public class Entrance extends UniqueEntity implements Enterable {
         }
     }
 
-    private static final int ID = 2;
+    private static final int ID = 6;
+    private String name = "Entrance";
     private int referMapId;
     private Cell node = null;
+    private char symbol = 'e';
+
     public Entrance(int x, int y, int referMapId) {
         super(x, y, ID);
         this.referMapId = referMapId;
@@ -35,23 +39,54 @@ public class Entrance extends UniqueEntity implements Enterable {
         Messenger.systemMessage("instance initiated", Entrance.class);
     }
 
+    public Entrance(int x, int y, int mapToID, int mapFromID) {
+        super(x, y, ID);
+        Map map = MapLoader.loadMapById(mapToID);
+        this.name = map.getName();
+        this.symbol = map.getDelegateSymbol();
+        referMapId = map.getId();
+        this.node = Map.getMapById(referMapId).getCell(0, 3);
+        Entrance exit = new Entrance(0,3, mapFromID);
+        exit.setNode(x,y);
+        node.addObject(exit);
+    }
+
     @Override
     public int getId() {
         return ID;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
+    }
+
     @Override
     public char getSymbol() {
-        return "e".charAt(0);
+        return symbol;
     }
 
     public int getReferMapId() {
         return referMapId;
     }
 
+    public void initializeMutualMaps(int x, int y, int nodeX, int nodeY, int mapToID, int mapFromID) {
+        super.setX(x);
+        super.setY(y);
+        Map map = MapLoader.loadMapById(mapToID);
+        referMapId = map.getId();
+        this.node = Map.getMapById(referMapId).getCell(0, 3);
+        Entrance exit = new Entrance(0,3, mapFromID);
+        exit.setNode(x,y);
+        node.addObject(exit);
+    }
+
     @Override
     public String getName() {
-        return "Entrance";
+        return name;
     }
 
     public void setNode(int x, int y) {

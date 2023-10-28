@@ -53,8 +53,8 @@ public class GameExecutor implements Serializable {
     public void render() throws InterruptedException, CloneNotSupportedException {
         timecounter = new TimeCounter();
         Thread.sleep(10);
-        Item.showLastInstance();
-        Entity.showLastInstance();
+        //Item.showLastInstance();
+        //Entity.showLastInstance();
         currentMap.showMap();
         Scanner num = new Scanner(System.in);
         String answer;

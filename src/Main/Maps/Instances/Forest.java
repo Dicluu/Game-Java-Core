@@ -11,6 +11,12 @@ public class Forest extends Map {
     public Forest(int x, int y) {
         super(x, y, Tile.GRASS, 100);
     }
+
+    public Forest(int x, int y, int CID) {
+        super(x, y, Tile.GRASS, 100, CID);
+    }
+
+
     public Forest(int x, int y, Set<Entity> entities) {
         super(x, y, Tile.GRASS, entities);
     }

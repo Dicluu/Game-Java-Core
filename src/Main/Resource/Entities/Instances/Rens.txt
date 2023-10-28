@@ -1,0 +1,4 @@
+Name:Rens
+Symbol:$
+CID:-2
+Description:It's a Rens, good forger.

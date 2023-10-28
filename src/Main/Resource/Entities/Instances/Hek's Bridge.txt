@@ -1,0 +1,3 @@
+Name:Hek's Bridge
+Symbol:B
+Description:It's a bridge to Hek, there is 2 guards near to gates

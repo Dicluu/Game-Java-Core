@@ -1,0 +1,3 @@
+Name:Shopping District
+Symbol:$
+Description:This is a trade fair. Crowds of people shout and fuss

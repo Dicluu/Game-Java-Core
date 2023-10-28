@@ -1,0 +1,3 @@
+Name:Main square
+Symbol:©
+Description:This way to Main Square of Hek

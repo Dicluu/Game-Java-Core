@@ -12,103 +12,51 @@ import Main.Utils.FileLoaders.PersonLoader;
 import java.io.Serializable;
 import java.util.*;
 
-public abstract class Character extends Entity implements Talkable, Serializable {
+public class Character extends Entity implements Serializable {
+
+    static {
+        try {
+            Entity.addInstance(2, Character.class);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
     String name;
     private float wallet = 0;
     int x, y;
     private static int freeID = 0;
-    /*
-    ID - Identifier person's class (Like Dealer, Peasant, etc)
-    UID - Unique ID - auto increment.
-    CID - Character ID - ID from Replicator's list
-     */
     private int UID, CID;
     private final static int priority = Priority.MAX.toInt();
     private Item[] inventory;
-    private final int ID;
+    private final static int ID = 2;
     private static HashMap<Integer, Character> allCharacters = new HashMap();
     private HashMap<Integer, Speech> speeches = new HashMap<>();
     private Speech introduce;
 
     private int intelligence, strength, agility;
 
-    public Character(String name, int x, int y, int id, Item[] inventory) {
-        super(x, y, id);
+    public Character() {
+        name = "Character";
+    }
+
+    public Character(String name, int x, int y, float wallet, int CID) {
         this.name = name;
         this.x = x;
         this.y = y;
-        this.ID = id;
-        this.UID = freeID++;
-        this.inventory = inventory;
-        allCharacters.put(UID, this);
-    }
-
-    public Character(int x, int y, int ID) {
-
-        super(x, y, ID);
-        this.ID = ID;
-        try {
-            this.name = PersonLoader.loadName(ID);
-        }
-        catch (Exception e) {
-            Messenger.systemMessage("Exception Character(int,int,int)", Character.class);
-        }
-        this.UID = freeID;
-        allCharacters.put(UID, this);
-    }
-
-    public Character(String name, int x, int y, int id, int cid) {
-        super(x, y, id);
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.ID = id;
-        this.CID = cid;
-        this.UID = freeID++;
-        this.inventory = PersonLoader.loadInventory(CID);
-        this.speeches = PersonLoader.loadSpeeches(this.CID);
-        this.introduce = speeches.get(0);
-        allCharacters.put(UID, this);
-    }
-
-
-    public Character(String name, int x, int y, int id, float wallet, int CID) {
-        super(x, y, id);
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.ID = id;
+        this.wallet = wallet;
         this.CID = CID;
         this.inventory = PersonLoader.loadInventory(CID);
-        this.wallet = wallet;
         this.UID = freeID++;
         allCharacters.put(UID, this);
     }
 
-    /**
-     * Constructor for initializing instances
-     * @param name
-     */
-    public Character(String name, int CID, int ID) {
-        super();
-        this.name = name;
-        this.ID = ID;
-        this.UID = freeID++;
-        this.speeches = PersonLoader.loadSpeeches(CID);
-        this.introduce = speeches.get(0);
-        this.inventory = PersonLoader.loadInventory(CID);
-        allCharacters.put(UID, this);
+    public int getID() {
+        return ID;
     }
 
-    public Character(String name, HashMap<Integer, Speech> speeches) {
-        super();
-        this.name = name;
-        this.speeches = speeches;
-        this.introduce = speeches.get(0);
-        this.ID = -1;
-        this.UID = freeID++;
-        allCharacters.put(UID, this);
-    }
     public String getName() {
         return name;
     }
@@ -362,7 +310,12 @@ public abstract class Character extends Entity implements Talkable, Serializable
         }
     }
 
-   @Override
+    public void load() {
+        this.speeches = PersonLoader.loadSpeeches(CID);
+        this.introduce = speeches.get(0);
+        this.name = PersonLoader.loadName(CID);
+    }
+
     public void talk(NonPlayerCharacter c) {
             GameExecutor.initiateDialogue(c, c.getIntroduce());
     }

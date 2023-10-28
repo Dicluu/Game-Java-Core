@@ -1,10 +1,10 @@
 package Main;
 
 import Main.Items.Item;
+import Main.Maps.Instances.Forest;
 import Main.Maps.Map;
-import Main.Objects.Characters.NPC.Dealer;
-import Main.Objects.Characters.NPC.Guard;
-import Main.Objects.Characters.NPC.Peasant;
+import Main.Objects.Characters.Character;
+import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
@@ -23,19 +23,15 @@ import java.util.Locale;
 public class Main {
 
     private static void initiateEntities() {
-        new Material(Materials.Tree);
-        new Entrance();
-        new Player();
-        new Dealer();
+        new Material();
+        new Character();
+        new NonPlayerCharacter();
+        new UniqueEntity();
         new Building();
-        new Town();
-        new Peasant();
-        new Location();
-        new WaterSurface();
-        new Bridge();
-        new Wall();
+        new Entrance();
         new Gates();
-        new Guard();
+        new IrresistibleEntity();
+        new RedirectingEntity();
     }
 
     @NeedImprovement(comment = "make a class that will scan directories and getting all " +
@@ -44,15 +40,15 @@ public class Main {
         Messenger.setSystem(true);
         Messenger.setHelp(true);
         initiateEntities();
-        Map map1 = MapLoader.loadMapById(0);
+        //Map map1 = MapLoader.loadMapById(0);
+        MapLoader.loadMapById(-2);
         Map map2 = MapLoader.loadMapById(-1);
+        Map map1 = MapLoader.loadMapById(-7);
         Entity.showInstancesSystem();
-        Item.showInstancesSystem();
+        //Item.showInstancesSystem();
         //TEMPORARY ON TESTING
         // pre-initializing GameExecutor
         GameExecutor.getGame();
-        // setting NPC with quest
-        map1.setObject(new Dealer("QUEST TEST", 2,3,-2, 0));
         GameExecutor.getGame().setCurrentMap(map1);
         GameExecutor.getGame().setCurrentPlayer(new Player("Dicluu",0,1));
         GameExecutor.getGame().render();

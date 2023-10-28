@@ -2,8 +2,10 @@ package Main.Objects.Characters.NPC;
 
 import Main.Objects.Characters.Character;
 import Main.Objects.Characters.Player.Quest;
+import Main.Objects.Entity;
 import Main.Singletones.Utils.QuestLineManager;
 import Main.Utils.Annotations.NeedRevision;
+import Main.Utils.FileLoaders.PersonLoader;
 
 import javax.lang.model.type.ArrayType;
 import java.lang.reflect.Array;
@@ -11,26 +13,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @NeedRevision(comment = "make enum instead of classes")
-public abstract class NonPlayerCharacter extends Character {
+public class NonPlayerCharacter extends Character {
 
+    static {
+        try {
+            Entity.addInstance(3, NonPlayerCharacter.class);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String name = "NonPlayerCharacter";
+    private static final int ID = 3;
     private Quest quest;
-    HashMap<Integer, Speech> activeSpeeches;
-
-    //only for initializing
-    public NonPlayerCharacter(String name, int CID, int ID) {
-        super(name, CID, ID);
-    }
-
-
-    public NonPlayerCharacter(String name, int x, int y, int id, int cid) {
-        super(name, x, y, id, cid);
-    }
-
-    public NonPlayerCharacter(String name, int x, int y, int id, int cid, int questID) {
-        super(name, x, y, id, cid);
-        quest = QuestLineManager.getQuestById(questID);
-        quest.setOwner(this);
-    }
+    private HashMap<Integer, Speech> activeSpeeches;
+    private char symbol;
 
     public Quest getQuest() {
         return quest;
@@ -49,8 +48,6 @@ public abstract class NonPlayerCharacter extends Character {
         }
         return speeches;
     }
-
-
 
     public void blockSpeeches(int groupID) {
         for (Speech s : super.getSpeeches().values()) {
@@ -89,5 +86,29 @@ public abstract class NonPlayerCharacter extends Character {
         }
         updateActiveSpeeches();
         return activeSpeeches;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int getId() {
+        return ID;
+    }
+
+    @Override
+    public char getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
     }
 }

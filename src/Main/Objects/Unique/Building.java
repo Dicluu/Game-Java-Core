@@ -25,8 +25,6 @@ public class Building extends UniqueEntity implements Enterable {
     public Building(int x, int y, int mapToID, int CID, int mapFromID, String name) {
         super(x, y, ID);
         Map map = MapLoader.loadMapById(mapToID);
-        this.name = map.getName();
-        this.symbol = map.getDelegateSymbol();
         referId = map.getId();
         this.node = Map.getMapById(referId).getCell(0, 2);
         Entrance exit = new Entrance(0,2, mapFromID);
@@ -39,7 +37,6 @@ public class Building extends UniqueEntity implements Enterable {
         super(x, y, ID);
         Map map = MapLoader.loadMapById(mapToID);
         this.name = map.getName();
-        this.symbol = map.getDelegateSymbol();
         referId = map.getId();
         this.node = Map.getMapById(referId).getCell(0, 2);
         Entrance exit = new Entrance(0,2, mapFromID);
@@ -100,6 +97,10 @@ public class Building extends UniqueEntity implements Enterable {
     @Override
     public char getSymbol() {
         return symbol;
+    }
+
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
     }
 
     @Override

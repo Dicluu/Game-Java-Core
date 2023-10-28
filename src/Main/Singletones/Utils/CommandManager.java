@@ -9,13 +9,9 @@ import Main.Objects.Characters.NPC.NonPlayerCharacter;
 import Main.Objects.Characters.Player.Journal;
 import Main.Objects.Characters.Player.Player;
 import Main.Objects.Characters.Player.Quest;
-import Main.Objects.Characters.Talkable;
 import Main.Objects.Entity;
 import Main.Objects.Materials.Material;
-import Main.Objects.Unique.Enterable;
-import Main.Objects.Unique.Gates;
-import Main.Objects.Unique.Irresistible;
-import Main.Objects.Unique.Lockable;
+import Main.Objects.Unique.*;
 import Main.Singletones.GameExecutor;
 import Main.Utils.Annotations.NeedRevision;
 import Main.Utils.Messenger;
@@ -90,7 +86,7 @@ public class CommandManager {
             if (object instanceof Enterable) {
                 isEntrance = true;
             }
-            if (object instanceof Irresistible) {
+            if (object instanceof Irresistible || object instanceof Redirecting) {
                 back(direction);
                 Messenger.ingameMessage("You can't overcome this object");
             }
@@ -175,14 +171,14 @@ public class CommandManager {
      * @throws CloneNotSupportedException
      */
     private static void extract(Character person, TimeCounter timecounter, Cell cc, Material material) throws CloneNotSupportedException {
-        if (person.isPresence(material.getMaterial().getTOOLID())) {
-            if (!person.putItem(Item.newInstance(material.getMaterial().toItem().getId()))) {
+        if (person.isPresence(material.getTOOLID())) {
+            if (!person.putItem(Item.newInstance(material.getItem().getId()))) {
                 Messenger.ingameMessage("Your inventory is full");
             } else {
                 Tool ct = chooseTool((Player) person, material);
-                playAnimation((long) material.getMaterial().getComplexity(), (long) ct.getEfficiency());
+                playAnimation((long) material.getComplexity(), (long) ct.getEfficiency());
                 timecounter.createObjectTimeline(material, cc);
-                Messenger.ingameMessage("You got a " + material.getMaterial().toItem().getName());
+                Messenger.ingameMessage("You got a " + material.getItem().getName());
             }
         } else {
             Messenger.ingameMessage("You don't have necessary tools to get this material");
@@ -191,7 +187,7 @@ public class CommandManager {
 
     public static void askWhichMaterialToGet(Character cp, List<Material> materials, TimeCounter timecounter, Cell cc) throws CloneNotSupportedException {
         for (int i = 0; i < materials.size(); i++) {
-            System.out.print(i + 1 + ") " + materials.get(i).getMaterial().getName() + " ");
+            System.out.print(i + 1 + ") " + materials.get(i).getName() + " ");
         }
         System.out.println(" ");
         Messenger.ingameMessage("Type id of material you want to get");
@@ -274,7 +270,7 @@ public class CommandManager {
     }
 
     private static Tool chooseTool(Player cp, Material cm) {
-        ArrayList<Item> desired = cp.getAllOfKind(cm.getMaterial().getTOOLID());
+        ArrayList<Item> desired = cp.getAllOfKind(cm.getTOOLID());
         Scanner num = new Scanner(System.in);
         int id;
         if (desired.size() > 1) {
@@ -310,7 +306,7 @@ public class CommandManager {
         Set<Entity> objects = cc.getObjects();
         List<Character> c = new ArrayList<>();
         for (Entity e : objects) {
-            if (e instanceof Talkable) {
+            if (e instanceof Character) {
                 c.add((Character) e);
             }
         }
@@ -370,7 +366,7 @@ public class CommandManager {
         Player player = GameExecutor.getGame().getCurrentPlayer();
         Cell cc = player.getCurrentCell();
         //Object[] objects = cc.getObjects().toArray();
-        Object[] objects = cc.getObjects().stream().filter(o -> o.getID() != player.getID()).toArray();
+        Object[] objects = cc.getObjects().stream().filter(o -> o.getId() != player.getID()).toArray();
         if (objects.length == 0) {
             Messenger.ingameMessage("Here is nothing to inspect");
         }
@@ -390,7 +386,7 @@ public class CommandManager {
     private static Entity askMultipleOption() {
         Player player = GameExecutor.getGame().getCurrentPlayer();
         Cell cc = player.getCurrentCell();
-        Object[] objects = cc.getObjects().stream().filter(o -> o.getID() != player.getID()).toArray();
+        Object[] objects = cc.getObjects().stream().filter(o -> o.getId() != player.getID()).toArray();
         for (int i = 0; i < objects.length; i++) {
             System.out.println(i + ") " + ((Entity) objects[i]).getName());
         }

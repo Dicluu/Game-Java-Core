@@ -1,0 +1,3 @@
+Name:Hek's gates
+CID:-2
+Description:It's a bridge to Hek, there is 2 guards near to gates

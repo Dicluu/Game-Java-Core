@@ -2,11 +2,11 @@ package Main.Objects.Unique;
 
 import Main.Objects.Entity;
 
-public class Bridge extends UniqueEntity{
+public class IrresistibleEntity extends UniqueEntity implements Irresistible{
 
     static {
         try {
-            Entity.addInstance(10, Bridge.class);
+            Entity.addInstance(8, IrresistibleEntity.class);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -14,18 +14,16 @@ public class Bridge extends UniqueEntity{
         }
     }
 
-    @Override
-    public char getSymbol() {
-        return 'B';
-    }
+    private static final int ID = 8;
+    private static final String name = "IrresistibleEntity";
 
     @Override
     public int getId() {
-        return 10;
+        return ID;
     }
 
     @Override
     public String getName() {
-        return "Bridge";
+        return name;
     }
 }

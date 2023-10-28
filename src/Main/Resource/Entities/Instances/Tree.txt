@@ -1,0 +1,6 @@
+CID:1
+Item:Wood
+Tool:5
+Respawn:5000
+Complexity:10f
+Symbol:1

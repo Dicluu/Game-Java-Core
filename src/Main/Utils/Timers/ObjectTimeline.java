@@ -20,7 +20,7 @@ public class ObjectTimeline implements Serializable {
 
     public ObjectTimeline(Material material, Map map, Cell cell) {
         this.start = new Date().getTime();
-        this.interval = material.getMaterial().getRespawnTime();
+        this.interval = material.getRespawnTime();
         this.end = start+interval;
         this.map = map;
         this.material = material;

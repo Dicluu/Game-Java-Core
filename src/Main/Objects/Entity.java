@@ -1,6 +1,5 @@
 package Main.Objects;
 
-import Main.Items.Item;
 import Main.Objects.Characters.Character;
 import Main.Objects.Materials.Material;
 import Main.Objects.Materials.Materials;
@@ -15,12 +14,16 @@ import java.util.*;
 public abstract class Entity implements Cloneable, Serializable {
     private int x, y;
     private static int freeID;
-    private int ID;
+    /*
+        ID - Identifier of Entity abstract parent.
+        UID - Unique ID - auto increment.
+        CID - Concrete ID - ID from Replicator's list
+    */
+    private int ID, UID, CID;
+    private char symbol;
     private static HashMap<Integer, Entity> allEntities = new HashMap<>();
-    private int objectID;
-
-    private int CID = 1;
     private static HashMap<Integer, Entity>  instances = new HashMap<>();
+    private String description;
 
     static {
         addEnumsInstances();
@@ -30,9 +33,9 @@ public abstract class Entity implements Cloneable, Serializable {
         this.x = x;
         this.y = y;
         this.ID = ID;
-        this.objectID = freeID;
+        this.UID = freeID;
         freeID++;
-        allEntities.put(objectID, this);
+        allEntities.put(UID, this);
     }
 
     public Entity() {
@@ -55,10 +58,6 @@ public abstract class Entity implements Cloneable, Serializable {
         this.y = y;
     }
 
-    public int getID() {
-        return ID;
-    }
-
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -71,7 +70,14 @@ public abstract class Entity implements Cloneable, Serializable {
         this.CID = CID;
     }
 
-    public abstract char getSymbol();
+    public char getSymbol()
+    {
+        return symbol;
+    };
+
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
+    }
 
     public abstract int getPriority();
 
@@ -80,7 +86,7 @@ public abstract class Entity implements Cloneable, Serializable {
     public abstract String getName();
 
     public int getObjectID() {
-        return objectID;
+        return UID;
     }
 
     public static Entity getObjectById(int id) {
@@ -95,16 +101,20 @@ public abstract class Entity implements Cloneable, Serializable {
          return allEntities.get(id);
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     /*
-        public static Entity getObjectByObjectID(int id) {
-            for (Entity entity : allEntities) {
-                if (entity.getObjectID() == id) {
-                    return entity;
+            public static Entity getObjectByObjectID(int id) {
+                for (Entity entity : allEntities) {
+                    if (entity.getObjectID() == id) {
+                        return entity;
+                    }
                 }
+                return null;
             }
-            return null;
-        }
-         */
+             */
     private static void addEnumsInstances() {
         for (Materials material : Materials.values()) {
             instances.put(material.getId(), new Material(0, 0, material, material.getId()));
@@ -117,10 +127,10 @@ public abstract class Entity implements Cloneable, Serializable {
         instances.put(id, e);
     }
 
-    public void setObjectID(int objectID) {
-        allEntities.remove(objectID);
-        this.objectID = objectID;
-        allEntities.put(objectID, this);
+    public void setObjectID(int UID) {
+        allEntities.remove(UID);
+        this.UID = UID;
+        allEntities.put(UID, this);
     }
 
     public static void showInstancesSystem() {
@@ -167,15 +177,15 @@ public abstract class Entity implements Cloneable, Serializable {
     }
 
     public String getDescription() {
-        try {
-            if (CID < 0) {
+        if (description == null) {
+            try {
                 return EntityLoader.loadDescription(this.CID);
+            } catch (IOException e) {
+                Messenger.systemMessage("IOException getDescription()", Entity.class);
+                return "You don't even know what to say";
             }
-            return EntityLoader.loadDescription(this.ID);
-        }
-        catch (IOException e) {
-            Messenger.systemMessage("IOException getDescription()", Entity.class);
-            return "You don't even know what to say";
+        } else {
+            return description;
         }
     }
 }

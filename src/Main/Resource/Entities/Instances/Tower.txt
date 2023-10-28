@@ -1,0 +1,3 @@
+Name:Tower
+Symbol:§
+Description:This is defense tower, it provides security for town.
